@@ -1,0 +1,474 @@
+[
+  {
+    "id": "e7cb979b-d7f6-4758-882d-6bd0622aa831",
+    "type": "movie",
+    "attributes": {
+      "slug": "harry-potter-and-the-philosopher-s-stone",
+      "box_office": "$1.018 million",
+      "budget": "$125 million",
+      "cinematographers": [
+        "John Seale"
+      ],
+      "directors": [
+        "Chris Columbus"
+      ],
+      "distributors": [
+        "Warner Bros. Pictures"
+      ],
+      "editors": [
+        "Richard Francis-Bruce"
+      ],
+      "music_composers": [
+        "John Williams",
+        "Conrad Pope"
+      ],
+      "poster": "https://www.wizardingworld.com/images/products/films/rectangle-1.png",
+      "producers": [
+        "Chris Columbus",
+        "David Heyman",
+        "Mark Radcliffe"
+      ],
+      "rating": "PG",
+      "release_date": "2001-11-04",
+      "running_time": "152 minutes",
+      "screenwriters": [
+        "Steve Kloves"
+      ],
+      "summary": "A vida monótona de Harry Potter muda completamente em seu décimo primeiro aniversário quando uma carta misteriosa endereçada a ele chega pelo correio. Depois de descobrir sobre seus pais verdadeiros e um mundo bruxo inteiro e escondido, ele vai para Hogwarts, sua nova escola de magia. De lutar contra um troll a voar em vassouras para pegar pomos de ouro, a nova vida de Harry promete ser cheia de alegria e aventura, até que ele descobre que um certo Lorde das Trevas que assassinou seus pais está tentando recuperar o poder. Com seus amigos Hermione e Rony, Harry parte em busca da pedra filosofal antes de Voldemort para evitar seu retorno. Após passar por um conjunto de armadilhas particularmente difícil projetado pela escola, Harry enfrenta o Lorde das Trevas e consegue manter a Pedra Filosofal em segurança.",
+      "title": "Harry Potter e a Pedra Filosofal",
+      "trailer": "https://www.youtube.com/watch?v=PbdM1db3JbY",
+      "wiki": "https://harrypotter.fandom.com/wiki/Harry_Potter_and_the_Philosopher's_Stone_(film)"
+    },
+    "links": {
+      "self": "/v1/movies/e7cb979b-d7f6-4758-882d-6bd0622aa831"
+    }
+  },
+  {
+    "id": "1a7e4ca7-d7b6-4a22-9d12-adcf42d8bb98",
+    "type": "movie",
+    "attributes": {
+      "slug": "harry-potter-and-the-chamber-of-secrets",
+      "box_office": "$879.6 million",
+      "budget": "$125 million",
+      "cinematographers": [
+        "Roger Pratt"
+      ],
+      "directors": [
+        "Chris Columbus"
+      ],
+      "distributors": [
+        "Warner Bros. Pictures"
+      ],
+      "editors": [
+        "Peter Honess"
+      ],
+      "music_composers": [
+        "John Williams",
+        "William Ross",
+        "Conrad Pope"
+      ],
+      "poster": "https://www.wizardingworld.com/images/products/films/rectangle-2.png",
+      "producers": [
+        "Chris Columbus",
+        "David Heyman",
+        "Mark Radcliffe"
+      ],
+      "rating": "PG",
+      "release_date": "2002-11-15",
+      "running_time": "161 minutes",
+      "screenwriters": [
+        "Steve Kloves"
+      ],
+      "summary": "O segundo ano de Harry em Hogwarts começa com uma série de infortúnios quando ele e Rony perdem o trem para Hogwarts. Além disso, uma misteriosa Câmara Secreta foi aberta dentro de Hogwarts e os alunos estão sendo petrificados um após o outro. Harry, Rony e Hermione começam a desvendar a sombria história por trás da câmara usando um diário que Harry encontrou, o que os leva à toca de uma Acromântula. Gina é sequestrada e cabe a Harry salvá-la e a escola do monstro da Câmara Secreta.",
+      "title": "Harry Potter e a Câmara Secreta",
+      "trailer": "https://www.youtube.com/watch?v=2lSpGlsZtk0",
+      "wiki": "https://harrypotter.fandom.com/wiki/Harry_Potter_and_the_Chamber_of_Secrets_(film)"
+    },
+    "links": {
+      "self": "/v1/movies/1a7e4ca7-d7b6-4a22-9d12-adcf42d8bb98"
+    }
+  },
+  {
+    "id": "02a55292-7dc3-47c0-9c24-e3215e899540",
+    "type": "movie",
+    "attributes": {
+      "slug": "harry-potter-and-the-prisoner-of-azkaban",
+      "box_office": "$797.4 million",
+      "budget": "$130 million",
+      "cinematographers": [
+        "Michael Seresin"
+      ],
+      "directors": [
+        "Alfonso Cuarón"
+      ],
+      "distributors": [
+        "Warner Bros. Pictures"
+      ],
+      "editors": [
+        "Steven Weisberg"
+      ],
+      "music_composers": [
+        "John Williams",
+        "Conrad Pope"
+      ],
+      "poster": "https://www.wizardingworld.com/images/products/films/rectangle-3.png",
+      "producers": [
+        "Chris Columbus",
+        "David Heyman",
+        "Mark Radcliffe"
+      ],
+      "rating": "PG",
+      "release_date": "2002-11-15",
+      "running_time": "142 minutes",
+      "screenwriters": [
+        "Steve Kloves"
+      ],
+      "summary": "Após usar magia sem querer contra a Tia Guida, Harry chega ao Caldeirão Furado e descobre que um assassino chamado Sirius Black está atrás dele. Hogwarts está sob um feitiço sombrio e sinistro com Dementadores, os guardiões fantasmagóricos de Azkaban, procurando por Black. Harry e seus amigos passam seu terceiro ano aprendendo a lidar com um Hipogrifo meio cavalo meio águia, repelir Bicho-Papões que mudam de forma e dominar a arte da Adivinhação. Harry também herda um mapa estranho e descobre a verdade sobre Sirius Black ser seu padrinho. Lutando contra dementadores e lobisomens, uma história incrível se desenrola enquanto Harry domina magia avançada, atravessa as barreiras do tempo e muda o curso de mais de uma vida.",
+      "title": "Harry Potter e o Prisioneiro de Azkaban",
+      "trailer": "https://www.youtube.com/watch?v=1ZdlAg3j8nI",
+      "wiki": "https://harrypotter.fandom.com/wiki/Harry_Potter_and_the_Prisoner_of_Azkaban_(film)"
+    },
+    "links": {
+      "self": "/v1/movies/02a55292-7dc3-47c0-9c24-e3215e899540"
+    }
+  },
+  {
+    "id": "194ee2a4-30be-428e-a796-ec06e601797f",
+    "type": "movie",
+    "attributes": {
+      "slug": "harry-potter-and-the-goblet-of-fire",
+      "box_office": "$896.7 million",
+      "budget": "$150 million",
+      "cinematographers": [
+        "Roger Pratt"
+      ],
+      "directors": [
+        "Mike Newell"
+      ],
+      "distributors": [
+        "Warner Bros. Pictures"
+      ],
+      "editors": [
+        "Mick Audsley"
+      ],
+      "music_composers": [
+        "Patrick Doyle"
+      ],
+      "poster": "https://www.wizardingworld.com/images/products/films/rectangle-4.png",
+      "producers": [
+        "David Heyman"
+      ],
+      "rating": "PG-13",
+      "release_date": "2005-11-06",
+      "running_time": "157 minutes",
+      "screenwriters": [
+        "Steve Kloves"
+      ],
+      "summary": "Em seu quarto ano em Hogwarts, Harry é misteriosamente selecionado como campeão para o Torneio Tribruxo. Três tarefas perigosas aguardam os campeões de diferentes escolas, cada uma mais difícil que a anterior. Com a ajuda de seu novo professor de Defesa Contra as Artes das Trevas, Professor Moody, Harry consegue avançar através de dragões, demônios aquáticos e labirintos encantados para se encontrar nas garras de Lord Voldemort. Com o retorno do Lorde das Trevas e o Ministério negando as afirmações de Harry, as coisas algum dia voltarão a ser como antes?",
+      "title": "Harry Potter e o Cálice de Fogo",
+      "trailer": "https://www.youtube.com/watch?v=PFWAOnvMd1Q",
+      "wiki": "https://harrypotter.fandom.com/wiki/Harry_Potter_and_the_Goblet_of_Fire_(film)"
+    },
+    "links": {
+      "self": "/v1/movies/194ee2a4-30be-428e-a796-ec06e601797f"
+    }
+  },
+  {
+    "id": "cda845ee-c406-4ce7-ae88-20cbfe3fc659",
+    "type": "movie",
+    "attributes": {
+      "slug": "harry-potter-and-the-order-of-the-phoenix",
+      "box_office": "$942.2 million",
+      "budget": "$150-200 million",
+      "cinematographers": [
+        "Sławomir Idziak"
+      ],
+      "directors": [
+        "David Yates"
+      ],
+      "distributors": [
+        "Warner Bros. Pictures"
+      ],
+      "editors": [
+        "Mark Day"
+      ],
+      "music_composers": [
+        "Nicholas Hooper"
+      ],
+      "poster": "https://www.wizardingworld.com/images/products/films/rectangle-5.png",
+      "producers": [
+        "David Heyman",
+        "David Barron"
+      ],
+      "rating": "PG-13",
+      "release_date": "2007-07-11",
+      "running_time": "138 minutes",
+      "screenwriters": [
+        "Michael Goldenberg"
+      ],
+      "summary": "O quinto ano de Harry em Hogwarts não é isento de problemas quando uma nova professora de Defesa Contra as Artes das Trevas, Dolores Umbridge, é nomeada pelo Ministério da Magia. Umbridge se recusa a ensinar quaisquer feitiços defensivos reais, fazendo com que Harry forme um grupo secreto de alunos chamado “Armada de Dumbledore” para aprender e ensinar feitiços defensivos. A conexão entre a mente de Harry e Voldemort se torna mais forte, e um Dumbledore preocupado pede a Snape para ensinar Oclumência a Harry. Harry experimenta uma onda de sentimentos românticos por alguém. As coisas só pioram quando a Armada de Dumbledore é descoberta e Umbridge é nomeada a nova Diretora. Enquanto Voldemort cresce em poder e o perigo aumenta cada vez mais, Harry pode perder alguém muito próximo a ele.",
+      "title": "Harry Potter e a Ordem da Fênix",
+      "trailer": "https://www.youtube.com/watch?v=47PHbQTmw5g",
+      "wiki": "https://harrypotter.fandom.com/wiki/Harry_Potter_and_the_Order_of_the_Phoenix_(film)"
+    },
+    "links": {
+      "self": "/v1/movies/cda845ee-c406-4ce7-ae88-20cbfe3fc659"
+    }
+  },
+  {
+    "id": "39dddab6-386c-4232-ae63-a624329da548",
+    "type": "movie",
+    "attributes": {
+      "slug": "harry-potter-and-the-half-blood-prince",
+      "box_office": "$934.5 million",
+      "budget": "$250 million",
+      "cinematographers": [
+        "Bruno Delbonnel"
+      ],
+      "directors": [
+        "David Yates"
+      ],
+      "distributors": [
+        "Warner Bros. Pictures"
+      ],
+      "editors": [
+        "Mark Day"
+      ],
+      "music_composers": [
+        "Nicholas Hooper"
+      ],
+      "poster": "https://www.wizardingworld.com/images/products/films/rectangle-6.png",
+      "producers": [
+        "David Heyman",
+        "David Barron"
+      ],
+      "rating": "PG-13",
+      "release_date": "2009-07-07",
+      "running_time": "153 minutes",
+      "screenwriters": [
+        "Steve Kloves"
+      ],
+      "summary": "A sexta parte da série Harry Potter começa com Harry acompanhando Dumbledore para persuadir Horace Slughorn a retornar ao ensino em Hogwarts. Harry suspeita que Malfoy é agora um Comensal da Morte e está determinado a descobrir a verdade. Harry eventualmente se torna o aluno favorito de Slughorn ao encontrar um livro pertencente ao “Príncipe Mestiço”. Usando essa conexão, Dumbledore obtém com sucesso uma memória de Slughorn ligando a um jovem Voldemort e suas perguntas sobre Horcruxes. Harry e Dumbledore se aventuram para encontrar e destruir uma Horcrux, inconscientes do destino sombrio que os aguarda.",
+      "title": "Harry Potter e o Enigma do Príncipe",
+      "trailer": "https://www.youtube.com/watch?v=JYLdTuL9Wjw",
+      "wiki": "https://harrypotter.fandom.com/wiki/Harry_Potter_and_the_Half-Blood_Prince_(film)"
+    },
+    "links": {
+      "self": "/v1/movies/39dddab6-386c-4232-ae63-a624329da548"
+    }
+  },
+  {
+    "id": "236acd42-0d37-4238-87a4-7be74119141b",
+    "type": "movie",
+    "attributes": {
+      "slug": "harry-potter-and-the-deathly-hallows-part-1",
+      "box_office": "$977 million",
+      "budget": "$250 million (shared with part 2)",
+      "cinematographers": [
+        "Eduardo Serra"
+      ],
+      "directors": [
+        "David Yates"
+      ],
+      "distributors": [
+        "Warner Bros. Pictures"
+      ],
+      "editors": [
+        "Mark Day"
+      ],
+      "music_composers": [
+        "Alexandre Desplat"
+      ],
+      "poster": "https://www.wizardingworld.com/images/products/films/rectangle-7.png",
+      "producers": [
+        "David Heyman",
+        "David Barron",
+        "J. K. Rowling"
+      ],
+      "rating": "PG-13",
+      "release_date": "2010-11-11",
+      "running_time": "146 minutes",
+      "screenwriters": [
+        "Steve Kloves"
+      ],
+      "summary": "Após a morte de Dumbledore, cabe a Harry, Rony e Hermione procurar e destruir as Horcruxes restantes se esperam derrotar Voldemort. Cada um deles recebe algo de Dumbledore como pistas para encontrar as Horcruxes. Por conta própria, sem a orientação de seus professores ou a proteção do Professor Dumbledore, os três amigos devem agora confiar um no outro mais do que nunca. Depois de conseguir recuperar e destruir o medalhão da Sonserina, uma das Horcruxes, Hermione descobre sobre as Relíquias da Morte no livro que Dumbledore lhe entregou. Harry será capaz de deter Voldemort se ele recuperar todas as Relíquias da Morte e se tornar o Mestre da Morte?",
+      "title": "Harry Potter e as Relíquias da Morte - Parte 1",
+      "trailer": "https://www.youtube.com/watch?v=Su1LOpjvdZ4",
+      "wiki": "https://harrypotter.fandom.com/wiki/Harry_Potter_and_the_Deathly_Hallows:_Part_1"
+    },
+    "links": {
+      "self": "/v1/movies/236acd42-0d37-4238-87a4-7be74119141b"
+    }
+  },
+  {
+    "id": "a3161207-2344-48ef-983d-44129747e3f7",
+    "type": "movie",
+    "attributes": {
+      "slug": "harry-potter-and-the-deathly-hallows-part-2",
+      "box_office": "$1,342 billion",
+      "budget": "$250 million (shared with part 1)",
+      "cinematographers": [
+        "Eduardo Serra"
+      ],
+      "directors": [
+        "David Yates"
+      ],
+      "distributors": [
+        "Warner Bros. Pictures"
+      ],
+      "editors": [
+        "Mark Day"
+      ],
+      "music_composers": [
+        "Alexandre Desplat"
+      ],
+      "poster": "https://www.wizardingworld.com/images/products/films/rectangle-8.png",
+      "producers": [
+        "David Heyman",
+        "David Barron",
+        "J. K. Rowling"
+      ],
+      "rating": "PG-13",
+      "release_date": "2011-07-07",
+      "running_time": "130 minutes",
+      "screenwriters": [
+        "Steve Kloves"
+      ],
+      "summary": "Na épica conclusão da série Harry Potter, Harry, Rony e Hermione correm para encontrar as Horcruxes restantes e destruí-las. A busca os leva a roubar o banco Gringotes e, finalmente, de volta para casa, Hogwarts. Voldemort mata Snape para ganhar a lealdade da Varinha das Varinhas, que dá a Harry uma memória antes de morrer. Ao rever a memória, Harry percebe a amarga verdade de que ele deve se sacrificar para derrubar Voldemort. Enquanto a batalha final se desenrola em Hogwarts, morte e destruição se seguem, e muitos dos amados personagens dão seu último suspiro. Este filme final pega todas as partes anteriores e as desenvolve, pintando um belo fim para a tão amada história de Harry Potter.",
+      "title": "Harry Potter e as Relíquias da Morte – Parte 2",
+      "trailer": "https://www.youtube.com/watch?v=5NYt1qirBWg",
+      "wiki": "https://harrypotter.fandom.com/wiki/Harry_Potter_and_the_Deathly_Hallows:_Part_2"
+    },
+    "links": {
+      "self": "/v1/movies/a3161207-2344-48ef-983d-44129747e3f7"
+    }
+  },
+  {
+    "id": "4fb4d5c0-4b9a-4a6d-98b3-f2f5f38ba87d",
+    "type": "movie",
+    "attributes": {
+      "slug": "fantastic-beasts-and-where-to-find-them",
+      "box_office": "$814 million",
+      "budget": "$175-200 million",
+      "cinematographers": [
+        "Philippe Rousselot"
+      ],
+      "directors": [
+        "David Yates"
+      ],
+      "distributors": [
+        "Warner Bros. Pictures"
+      ],
+      "editors": [
+        "Mark Day"
+      ],
+      "music_composers": [
+        "James Newton Howard"
+      ],
+      "poster": "https://www.wizardingworld.com/images/products/films/rectangle-9.png",
+      "producers": [
+        "David Heyman",
+        "J. K. Rowling",
+        "Steve Kloves",
+        "Lionel Wigram"
+      ],
+      "rating": "PG-13",
+      "release_date": "2016-11-10",
+      "running_time": "133 minutes",
+      "screenwriters": [],
+      "summary": "Animais Fantásticos e Onde Habitam conta a história do magizoologista Newton (Newt) Scamander e sua aventura por Nova York na década de 1920. Uma perseguição emocionante acontece quando as criaturas mágicas dentro da mala de Newt são libertadas na cidade. Junto com seus novos amigos Jacob, um trouxa, e Queenie, Newt deve recapturar todas as criaturas antes que elas causem destruição na cidade. No entanto, as coisas se complicam quando um Obscurial à espreita se revela e o Congresso Mágico dos Estados Unidos (MACUSA) intervém.",
+      "title": "Animais Fantásticos e Onde Habitam",
+      "trailer": "https://www.youtube.com/watch?v=Vso5o11LuGU",
+      "wiki": "https://harrypotter.fandom.com/wiki/Fantastic_Beasts_and_Where_to_Find_Them_(film)"
+    },
+    "links": {
+      "self": "/v1/movies/4fb4d5c0-4b9a-4a6d-98b3-f2f5f38ba87d"
+    }
+  },
+  {
+    "id": "3853086d-ce41-4129-b8e6-5f60890218d7",
+    "type": "movie",
+    "attributes": {
+      "slug": "fantastic-beasts-the-crimes-of-grindelwald",
+      "box_office": "$654.9 million",
+      "budget": "$200 million",
+      "cinematographers": [
+        "Philippe Rousselot"
+      ],
+      "directors": [
+        "David Yates"
+      ],
+      "distributors": [
+        "Warner Bros. Pictures"
+      ],
+      "editors": [
+        "Mark Day"
+      ],
+      "music_composers": [
+        "James Newton Howard"
+      ],
+      "poster": "https://www.wizardingworld.com/images/products/films/rectangle-10.png",
+      "producers": [
+        "David Heyman",
+        "J. K. Rowling",
+        "Steve Kloves",
+        "Lionel Wigram"
+      ],
+      "rating": "PG-13",
+      "release_date": "2018-11-16",
+      "running_time": "134 minutes",
+      "screenwriters": [],
+      "summary": "Animais Fantásticos: Os Crimes de Grindelwald continua a história de Newt Scamander enquanto ele persegue Credence Barebone sob ordens de Dumbledore, que o suspeita ser Corvus Lestrange V. Uma história distorcida de vingança e traição se revela à medida que a narrativa avança e a verdadeira identidade de Credence se torna ainda mais obscura. O plano de Grindelwald de causar uma guerra entre trouxas e bruxos é posto em movimento, e Credence se junta a ele.",
+      "title": "Animais Fantásticos: Os Crimes de Grindelwald",
+      "trailer": "https://www.youtube.com/watch?v=8bYBOVWLNIs",
+      "wiki": "https://harrypotter.fandom.com/wiki/Fantastic_Beasts:_The_Crimes_of_Grindelwald"
+    },
+    "links": {
+      "self": "/v1/movies/3853086d-ce41-4129-b8e6-5f60890218d7"
+    }
+  },
+  {
+    "id": "72ed50ad-6d54-4b8f-a023-0cbe44a0a8a6",
+    "type": "movie",
+    "attributes": {
+      "slug": "fantastic-beasts-the-secrets-of-dumbledore",
+      "box_office": "$379.8 million",
+      "budget": "$200 million",
+      "cinematographers": [
+        "George Richmond"
+      ],
+      "directors": [
+        "David Yates"
+      ],
+      "distributors": [
+        "Warner Bros. Pictures"
+      ],
+      "editors": [
+        "Mark Day"
+      ],
+      "music_composers": [
+        "James Newton Howard"
+      ],
+      "poster": "https://www.wizardingworld.com/images/products/films/rectangle-11.png",
+      "producers": [
+        "David Heyman",
+        "J. K. Rowling",
+        "Steve Kloves",
+        "Lionel Wigram"
+      ],
+      "rating": "PG-13",
+      "release_date": "2022-04-08",
+      "running_time": "142 minutes",
+      "screenwriters": [
+        "Steve Kloves"
+      ],
+      "summary": "O terceiro filme da série Animais Fantásticos mostra Grindelwald tentando destruir o mundo trouxa enquanto Newt e seus aliados, incluindo Dumbledore, tentam detê-lo. Grindelwald mata um Qilin, uma besta mágica, para se tornar o Líder Supremo da ICW. Credence repensa sua decisão de se juntar a Grindelwald ao perceber que ele é o filho ilegítimo de Aberforth Dumbledore. O confronto épico acontece no Butão, onde Dumbledore e Grindelwald se enfrentam após o pacto de sangue que os impedia de duelar ser quebrado. Grindelwald desaparece do local e seus planos são frustrados.",
+      "title": "Animais Fantásticos: Os Segredos de Dumbledore",
+      "trailer": "https://www.youtube.com/watch?v=Y9dr2zw-TXQ",
+      "wiki": "https://harrypotter.fandom.com/wiki/Fantastic_Beasts:_The_Secrets_of_Dumbledore"
+    },
+    "links": {
+      "self": "/v1/movies/72ed50ad-6d54-4b8f-a023-0cbe44a0a8a6"
+    }
+  }
+]

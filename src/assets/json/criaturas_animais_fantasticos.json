@@ -1,0 +1,578 @@
+[
+  {
+    "animal": "ACROMANTULA (ACROMÂNTULA)",
+    "classification": "XXXXX",
+    "description": "A acromântula é uma aranha monstruosa de oito olhos e dotada de fala humana. É originária de Bórneu, onde habita a mata fechada. Suas características incluem pêlos negros e grossos que lhe cobrem o corpo; as pernas têm uma envergadura que pode abranger ate quatro metros e meio; as pinças produzem um estalido distinto quando ela se excita ou se irrita; e, finalmente, produz uma secreção venenosa e tece teias abobadadas no solo.",
+    "image": "https://static0.gamerantimages.com/wordpress/wp-content/uploads/2023/02/the-acromantula-in-hogwarts-legacy.jpg?w=1600&h=900&fit=crop"
+  },
+  {
+    "animal": "ASHWINDER (CINZAL)",
+    "classification": "XXX",
+    "description": "O ashwinder (cinzal) se forma quando se permite que um fogo mágico arda livremente durante muito tempo. Uma cobra fina, cinza-claro, de olhos rutilante, surgirá das brasas desse fogo e rastejará para as sombras da habitação em que se encontra deixando um rastro de cinzas atrás de si.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr6NpkNgPV-VQChml117MVvgZzsb-MAolPnQ&s"
+  },
+  {
+    "animal": "AUGUREY (AGOUREIRO), também conhecido como Irish Phoenix (fênix irlandesa)",
+    "classification": "XX",
+    "description": "O augurey (agoureiro) é nativo da Grã-Bretanha e da Irlanda, embora por vezes seja encontrado em outros países do norte europeu. Pássaro magro e de aspecto tristonho, que lembra um abutre pequeno e malnutrido, o agoureiro é preto-esverdeado. É extremamente tímido, faz ninhos em moitas espinhosas, come grandes insetos e fadas, só voa sob a chuva pesada e, no restante do tempo, fica escondido em seu ninho em feitio de lágrimas.",
+    "image": "https://uploads.spiritfanfiction.com/historias/capas/202104/agoureiro--uma-historia-dramione-22168139-250420210947.jpg"
+  },
+  {
+    "animal": "BASILISK (BASILISCO), também chamado King of Serpents (Rei das Cobras)",
+    "classification": "XXXXX",
+    "description": "O primeiro basilisco e que se tem notícia foi criado por Herpo, o Sujo, um bruxo das trevas de nacionalidade grega e ofidiglota, que descobriu, após muitas experiências, que um ovo de galinha chocado por um sapo produzia uma cobra gigantesca dotada de poderes extraordinariamente perigosos O basilisco é uma cobra verde-vivo que pode alcançar quinze metros de comprimento.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp_GnzZvK6GI9aMyqYNCOBrTCCL7-Gppb48A&s"
+  },
+  {
+    "animal": "BILLYWIG (GIRA-GIRA)",
+    "classification": "XXX",
+    "description": "O billywig (gira-gira) é um inseto nativo da Austrália. Mede cerca de um centímetro e três milímetros, é azul-safira berrante. Sua velocidade é tão grande que ele raramente é percebido pelos trouxas e, muitas vezes, nem pelos bruxos até receberem sua picada.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9cbJkK7dN9HK_5JYXV1NYk3Ukbvl_u5J8lA&s"
+  },
+  {
+    "animal": "BOWTRUCKLE (TRONQUILHO)",
+    "classification": "XX",
+    "description": "O bowtruckle (tronquilho) é uma criatura que guarda árvores, encontrável principalmente no oeste da Inglaterra, sul da Alemanha e certas florestas da Escandinávia. É dificílimo de localizar por ser pequeno (no máximo vinte centímetros de altura) e aparentemente formado por tronco e gravetos com dois olhinhos castanhos.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQio9lPYrwhLsy3XqwspRK2kuoYO2J_KX4tfQ&s"
+  },
+  {
+    "animal": "BUNDIMUN (BANDINHO)",
+    "classification": "XXX",
+    "description": "O bundimun (bandinho) é encontrado no mundo inteiro. Ele infesta as casas, perito que é em se infiltrar sob as tábuas do soalho e rodapés. A presença do bandinho em geral é anunciada por um fedor de decomposição.",
+    "image": "https://i.pinimg.com/736x/31/80/bb/3180bbc399e04f88f449f154964588f5.jpg"
+  },
+  {
+    "animal": "CENTAUR (CENTAURO)",
+    "classification": "XXXX",
+    "description": "O centauro tem cabeça, tronco e braços humanos ligados a um corpo de cavalo cujo colorido varia. Inteligente e dotado de fala humana, a rigor, não deveria ser chamado de animal, mas a seu próprio pedido foi assim classificado pelo Ministério da Magia (veja Introdução deste livro).",
+    "image": "https://static.wikia.nocookie.net/harrypotter/images/0/06/Centauros.jpg/revision/latest?cb=20191221191615&path-prefix=pt-br"
+  },
+  {
+    "animal": "CHIMERA (QUIMERA)",
+    "classification": "XXXXX",
+    "description": "A chimera (quimera) é um monstro grego raro com cabeça de leão, corpo de bode e rabo de dragão. Feroz e sanguinária, ela é extremamente perigosa. Só se conhece um exemplo de alguém que abatido uma quimera, mas o azarado bruxo em questão caiu do seu cavalo alado (veja página 63) e morreu pouco depois, sem forças.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStT8CJi5gcZv5rvoasgZNjtZ9DzFKGBqHqlg&s"
+  },
+  {
+    "animal": "CHIZPURFLE (CHIZÁCARO)",
+    "classification": "XX",
+    "description": "O chizpurfle (chizácaro) é um pequeno parasita de até um milímetro e meio de altura com a aparência de um caranguejo e dotado de grandes presas. É atraído pela magia e pode infestar o pêlo e as penas de criaturas como os crupes e agoureiros. Penetra também a habitação de bruxos e ataca objetos mágicos tais como varinhas, que ele rói gradualmente até o cerne mágico, ou então se instala em caldeirões sujos, onde engole qualquer restinho de poção.1 Embora o chizácaro possa ser eliminado facilmente com qualquer das poções patenteadas à venda no mercado, várias infestações podem exigir uma visita da Subdivisão de Pragas do Departamento para...",
+    "image": "https://static.wikia.nocookie.net/harrypotter/images/6/62/Chiz%C3%A1caro.png/revision/latest/smart/width/386/height/259?cb=20180502051324&path-prefix=pt-br"
+  },
+  {
+    "animal": "CLABBERT (CLABERTO)",
+    "classification": "XX",
+    "description": "O clabbert (claberto) é um criatura arbórea, que lembra uma cruza de mico com sapo. Teve origem no sul dos Estados Unidos, embora há muito tempo tenha sido exportado para o mundo inteiro. Sua pele lisa e sem pêlos é malhada de verde, as mãos e os pés são palmados e os braços e pernas longos e flexíveis, o que permite ao bicho se balançar de um galho para outro com a agilidade de um orangotango.",
+    "image": "https://static.wikia.nocookie.net/harrypotter/images/c/c6/Clabbert_-_Cases.png/revision/latest?cb=20220729190550&path-prefix=pt-br"
+  },
+  {
+    "animal": "CRUP (CRUPE)",
+    "classification": "XXX",
+    "description": "O crupe é originário do sudeste da Inglaterra e é muito parecido com um terrier, exceto pelo rabo bifurcado. É quase certo que seja um cão criado por magia porque é muito leal aos bruxos e feroz com os trouxas. É um grande comedor de refugo, ingere qualquer coisa desde gnomos a pneus velhos.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhuI0eLPdhX73kAsFt5E575KZDRcV4_O5LaQ&s"
+  },
+  {
+    "animal": "DEMIGUISE (SEMINVISO)",
+    "classification": "XXXX",
+    "description": "O seminviso é encontrado no Extremo Oriente, embora não seja fácil localizá- lo, porque pode se tornar invisível quando ameaçado. Disto decorre que só pode ser visto por bruxos treinados para sua captura. O seminviso é um animal herbívoro e pacífico, cuja aparência lembra a de um gracioso macaco com grandes olhos negros e tristes, em geral escondidos sob os pêlos da cabeça.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLs2e6dD5eT0vxdzBjYNrb_srRPk7wiIIj0Q&s"
+  },
+  {
+    "animal": "DIRICAWL (ORAQUI-ORALÁ)",
+    "classification": "XX",
+    "description": "O diricawl (oraqui-oralá) teve origem na ilha Maurícia. Esta ave roliça, de penas fofas e incapaz de voar, se destaca pelo seu método de fugir do perigo. Ele desaparece em meio a uma nuvem de penas e reaparece em outro lugar (a fênix tem essa mesma capacidade; ver página 53).",
+    "image": "https://i.pinimg.com/736x/86/f2/56/86f256a494d2158230c516e49efaa2d1.jpg"
+  },
+  {
+    "animal": "DOXY (FADA MORDENTE), por vezes chamadas de Biting Fairy",
+    "classification": "XXX",
+    "description": "Muitas vezes a doxy (fada mordente) é confundida com uma fada verdadeira (ver \"Fairy (fada)\"), embora seja uma espécie bem diferente. Como a fada, ela tem uma forma humana minúscula, mas é coberta de pêlos espessos e dotada de dois pares de pernas e braços. As asas da fada mordente são grossas, curvas e brilhantes, muito semelhantes às de um besouro, elas são encontradas em todo norte da Europa e América, preferindo climas frios.",
+    "image": "https://static.wikia.nocookie.net/harrypotterbooks/images/a/a7/Doxy.png/revision/latest?cb=20191025163934"
+  },
+  {
+    "animal": "DRAGON (DRAGÃO)",
+    "classification": "XXXXX",
+    "description": "O dragon (dragão), provavelmente o animal mágico mais famoso do mundo, encontra-se entre os mais difíceis de esconder. A fêmea é em geral maior e mais agressiva do que o macho, embora ninguém deva se aproximar de nenhum dos dois exceto os bruxos com aptidão e treinamento excepcionais.",
+    "image": "https://m.media-amazon.com/images/M/MV5BODhjM2NmYTYtYzE4MC00YmYzLTkyYTgtMmFmM2UxNmIxZjVhXkEyXkFqcGc@._V1_QL75_UX500_CR0,0,500,281_.jpg"
+  },
+  {
+    "animal": "DUGBOG (CAVA-CHARCO)",
+    "classification": "XXX",
+    "description": "O dugbog (cava-charco) é um habitante dos brejos da Europa e das Américas do Norte e do Sul. Lembra um pedaço de madeira sem vida quando está parado, embora a um exame atento revele patas com nadadeiras e dentes muito afiados. Desloca-se pelos brejos, alimentando-se principalmente de pequenos mamíferos e produz graves ferimentos nos tornozelos das pessoas que andam por ali.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaCxvILnozdCNrGJ3NRpaqD0MhYLjax9YgWQ&s"
+  },
+  {
+    "animal": "ERKLING (ELFO-DA-BAVÁRIA)",
+    "classification": "XXXX",
+    "description": "O elfo-da-bavária teve origem na Floresta Negra, na Alemanha. É maior que um gnomo (uns noventa centímetros em média), tem queixo fino e uma gargalhada que encanta principalmente crianças, a quem ele tenta atrair para longe de seus guardiões a fim de as comer. O controle rigoroso exercido pelo Ministério da Magia alemão reduziu drasticamente as mortes causadas pelos elfos-da-bavária nos séculos mais recentes.",
+    "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgLb6N4TJpiN4UAuIXmsrh_63JNkbvqUb99rG_VG-eSep-NSIFofH6Iki7RvGMnBPM0TzkJsIO4VUsvZo6DVhLZQdoTaXEdsvknsHlV-VvybRJQ7I__ZfxUjavm6S9grKxctv4LFIx8jHQ3/s1600/113.png"
+  },
+  {
+    "animal": "ERUMPENT (ERUMPENTE)",
+    "classification": "XXXX",
+    "description": "O erumpent (erumpente) é um animal africano, cinzento, de grande porte e força. À distância, esse bicho, que pesa até uma tonelada, pode ser confundido com um rinoceronte. Tem um couro grosso que repele a maioria dos feitiços e maldições, um chifre afiado sobre o nariz e um grande rabo que lembra uma corda.",
+    "image": "https://static.wikia.nocookie.net/harrypotter/images/6/61/Erumpent_Concept_Art_FB1.png/revision/latest?cb=20170226191641"
+  },
+  {
+    "animal": "FAIRY (FADA)",
+    "classification": "XX",
+    "description": "A fada é um animal pequeno e decorativo mas de pouca inteligência.1 É usada ou conjurada com freqüência pelos bruxos para servir de enfeite na decoração e, em geral, habita as matas e os alagadiços. A fada varia de dois centímetros e meio a doze centímetros de altura, tem corpo, cabeça e ombros minúsculos e humanóides, mas também grandes asas como as e um inseto que podem ser transparentes ou multicoloridas conforme sua espécie.",
+    "image": "https://www.hp-lexicon.org/wp-content/uploads/2017/03/fairy_by_maryquize-dbbfkcc.jpg"
+  },
+  {
+    "animal": "FIRE CRAB (CARANGUEJO-DE-FOGO)",
+    "classification": "XXX",
+    "description": "Apesar do seu nome, o fire crab (caranguejo-de-fogo) é muito semelhante a uma grande tartaruga com uma carapaça cravejada de pedras preciosas. Em sua terra de origem, as ilhas Fiji, uma faixa do litoral foi transformada em reserva para protegê-lo não apenas dos trouxas, que poderiam ser tentados por sua carapaça valiosa mas também dos bruxos inescrupulosos que usam as carapaças como caldeirões muito procurados.",
+    "image": "https://static.wikia.nocookie.net/harrypotter/images/3/32/Fire_Crab.png/revision/latest?cb=20161129180135"
+  },
+  {
+    "animal": "FLOBBERWORM (VERME-CEGO)",
+    "classification": "X",
+    "description": "O flobberworm (verme-cego) vive em valas úmidas. Animal de cor castanha que chega a atingir vinte e cinco centímetros de comprimento, ele se mexe muito pouco. Suas duas extremidades são indistinguíveis uma da outra.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGej1FO2jxOoGR_JY_ojQaDvHvPI9VgSha8g&s"
+  },
+  {
+    "animal": "FWOOPER (FIUUM)",
+    "classification": "XXX",
+    "description": "O fwooper (fiuum) é uma ave africana com plumagem extremamente colorida; pode ser laranja, rosa, verde-clara ou amarela. Há muitos anos o fiuum fornece penas para canetas de luxo bem como põe ovos com desenhos em cores vivas. A princípio prazeroso, o canto desta ave acaba levando quem o escuta à loucura18, por isso ela é vendida com um Feitiço Silenciador que exige um reforço mensal.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLirJtDVx6NvB_Y4p1FT9soF2C4fbz-iH6Dg&s"
+  },
+  {
+    "animal": "GHOUL (VAMPIRO)",
+    "classification": "XX",
+    "description": "O ghoul (vampiro), embora feio, não é uma criatura particularmente perigosa. Parece um ogro escorregadio e dentuço e, em geral, habita os sótãos ou os celeiros de propriedades de bruxos onde come aranhas e mariposas. Ele geme e de vez em quando atira objetos pela habitação, mas é em essência um simplório que, na pior das hipóteses, rosna assustadoramente para todos com quem depara.",
+    "image": "https://static.wikia.nocookie.net/esharrypotter/images/b/bf/P6_Sanguini.jpg/revision/latest/smart/width/386/height/259?cb=20110914170800"
+  },
+  {
+    "animal": "GLUMBUMBLE (BESOURO-DA-MELANCOLIA)",
+    "classification": "XXX",
+    "description": "O glubumblee (besouro-da-melancolia, norte da Europa) é um inseto voador, cinzento, de corpo peludo; produz uma secreção que induz a melancolia e é usado como antídoto para a histeria causada pela ingestão das folhas de aliquente. Sabe-se que esse besouro pode infestar colméias com efeitos desastrosos para o mel.",
+    "image": "https://i.ytimg.com/vi/OkJCSzCO1w0/maxresdefault.jpg"
+  },
+  {
+    "animal": "GNOME (GNOMO)",
+    "classification": "XX",
+    "description": "O gnomo é uma praga comum em jardins, e é encontrado por toda a Europa e América do Norte. Pode atingir até trinta centímetros de altura, tem uma cabeça desproporcionalmente grande e dura e pés ossudos. Para expulsá-los do jardim é preciso girar o animal no alto até deixá-lo tonto e arremessá-lo por cima do muro.",
+    "image": "https://media.harrypotterfanzone.com/garden-gnomes.jpg"
+  },
+  {
+    "animal": "GRAPHORN (ARPÉU)",
+    "classification": "XXXX",
+    "description": "O arpéu é encontrado nas regiões montanhosas da Europa. Animal de grande porte, púrpura-acinzentado e provido de corcova, o arpéu tem dois chifres muito longos e afiados, caminha sobre enormes pés de quatro dedos e tem uma natureza extremamente agressiva. Os trasgos montanheses são por vezes vistos montando em arpéus, embora estes animais pareçam não tolerar as tentativas de domá-los, pois é muito comum encontrar um trasgo coberto de cicatrizes feitas por arpéus.",
+    "image": "https://static.wikia.nocookie.net/harrypotter/images/7/75/Arp%C3%A9u.png/revision/latest/thumbnail/width/360/height/360?cb=20161122011332&path-prefix=pt-br"
+  },
+  {
+    "animal": "GRIFFIN (GRIFO)",
+    "classification": "XXXX",
+    "description": "O grifo é originário da Grécia e tem as pernas dianteira e uma grande cabeça de águia, mas o corpo e as pernas traseiras de leão. Tal como as esfinges (ver adiante), os grifos são com freqüência empregados pelos bruxos para guardar tesouros. E embora ele seja feroz, sabe-se de bruxos que têm feito amizade com esse animal.",
+    "image": "https://static.wikia.nocookie.net/harrypotter/images/9/96/Griffin_FBC.png/revision/latest/thumbnail/width/360/height/360?cb=20170413064633"
+  },
+  {
+    "animal": "GRINDYLOW (GRINDYLOW)",
+    "classification": "XX",
+    "description": "Demônio aquático de chifres e pele verde-clara, o grindylow é encontrado em lagos da Grã-Bretanha e Irlanda. Alimenta-se de pequenos peixes e é igualmente agressivo com bruxos e trouxas, embora se saiba que os merpeople (sereianos) são capazes de domesticá-los. O grindylow tem dedos muito longos que embora possuam grande força são facilmente quebráveis.",
+    "image": "https://i.ytimg.com/vi/no5pyWeX56g/maxresdefault.jpg"
+  },
+  {
+    "animal": "HIPPOCAMPUS (HIPOCAMPO)",
+    "classification": "XXX",
+    "description": "Originário da Grécia, o hipocampo tem a cabeça e os quartos dianteiros de cavalo e o rabo e os quartos traseiros de um peixe gigantes. Embora encontrável comumente no mar Mediterrâneo, um esplêndido espécime ruão azul foi capturado por sereianos ao largo da Escócia em 19 e por eles domesticados.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsIZYO27nDDDwgI_2dhrt4YHmHuCx6P2iJRQ&s"
+  },
+  {
+    "animal": "HIPPOGRIFF (HIPOGRIFO)",
+    "classification": "XXX",
+    "description": "O hipogrifo é nativo da Europa, embora seja atualmente conhecido no mundo inteiro. Tem a cabeça de uma enorme águia e o corpo de cavalo. Pode ser domesticado, embora isso só deva ser tentado por peritos.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHrr6uelwNXTPjslaZu4aB8ywhf_C6z0tJ8Q&s"
+  },
+  {
+    "animal": "HORKLUMP (TOLETE)",
+    "classification": "X",
+    "description": "O horklump (tolete) teve origem na Escandinávia, mas hoje é encontrado em todo o norte europeu. Lembra um cogumelo carnudo e rosado coberto de pêlos ralos, negros e duros. Procriador prodigioso, ele cobre um jardim de tamanho médio em questão de dias.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRE64culSj2Ca_IXU6bOOs0XKGE2SvPjuE0MQ&s"
+  },
+  {
+    "animal": "IMP (DIABINHO)",
+    "classification": "XX",
+    "description": "O imp (diabinho) só é encontrado na Grã-Bretanha e na Irlanda. Por sua vez é confundido com o diabrete. Os dois têm a mesma altura (entre quinze e vinte centímetros), embora o diabinho não seja capaz de voar como o diabrete e nem seja tão colorido (o diabinho normalmente varia de marrom-escuro a preto).",
+    "image": "https://static.wikia.nocookie.net/harrypotter/images/8/85/Imp_HM_Icon.png/revision/latest?cb=20210108185939"
+  },
+  {
+    "animal": "JARVEY (FURANZÃO)",
+    "classification": "XXX",
+    "description": "O furanzão é encontrado na Grã-Bretanha, Irlanda e América do Norte. Assemelha-se a um furão de grande porte na maioria das espécies, exceto pelo fato de que é capaz de falar. Uma conversa propriamente dita, porém, ultrapassa a capacidade do furanzão, que tende a se limitar a frases curtas (e, em geral, grosseiras) ditas num fluxo contínuo.",
+    "image": "https://static.wikia.nocookie.net/harrypotter/images/9/98/Jarvey.png/revision/latest?cb=20161202173149"
+  },
+  {
+    "animal": "JOBBERKNOLL (DEDO-DURO)",
+    "classification": "XX",
+    "description": "O jobberknoll (dedo-duro)(encontrável ao norte da Europa e nas Américas) é uma minúscula ave azul, toda sarapintada, que se alimenta de pequenos insetos. Não produz som algum até a hora de morrer quando deixa escapar um grito longo formado por todos os sons que ouviu durante a vida, regurgitados de trás para frente.",
+    "image": "https://i.pinimg.com/736x/c7/dd/3c/c7dd3ca8a9a6a850f3cbf22535a24962.jpg"
+  },
+  {
+    "animal": "KAPPA (KAPPA)",
+    "classification": "XXXX",
+    "description": "O kappa é um demônio aquático do Japão que habita lagos e rios rasos. Com fama de parecer um macaco com escamas de peixe em lugar de pêlos, esse animal tem um oco no cocuruto da cabeça no qual ele carrega água O kappa se alimenta de sangue humano, mas é possível convencê-lo a não fazer mal a alguém, atirando-lhe um pepino com o nome da pessoa gravado à faca.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJtE1yVTEqQQo1oVTxCG-14WdoAHk_WFFN1g&s"
+  },
+  {
+    "animal": "KELPIE (CAVALO-DO-LAGO)",
+    "classification": "XXXX",
+    "description": "Esse demônio aquático da Grã-Bretanha e da Irlanda pode assumir vária formas, embora na maioria das vezes apareça como um cavalo com crineira de folhas de tabua. Depois de atrair os incautos para montá-lo, ele mergulha direto ao fundo do rio ou lago e devora o cavaleiro deixando suas tripas boiando à superfície.",
+    "image": "https://preview.redd.it/imagine-we-get-a-kelpie-as-a-mount-in-the-sequel-and-we-can-v0-e6pxsuhgft3d1.jpeg?auto=webp&s=d5eac0dbde14365bc190b16878d538e69d05c9d0"
+  },
+  {
+    "animal": "KNARL (OURIÇO)",
+    "classification": "XXX",
+    "description": "O knarl (ouriço) (Europa Setentrional e América do Norte) é em geral confundido pelos trouxas com o porco-espinho. As duas espécies são de fato indistinguíveis, exceto por uma diferença importante em seu comportamento: se deixarmos comida no jardim para um porco- espinho, ele a aceitará e apreciará o presente; por outro lado, se oferecermos comida a um ouriço, ele irá supor que o dono da casa está tentando atraí-lo para uma cilada, e destruirá as plantas e ornamentos do jardim da casa.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiKUJuC0q3Zj-x-It-AZ-fE59UhYftq0vT_g&s"
+  },
+  {
+    "animal": "KNEAZLE (AMASSO)",
+    "classification": "XXX",
+    "description": "O kneazle (amasso) foi originalmente criado na Grã-Bretanha, embora seja atualmente exportado para todo o mundo. Um pequeno felinóide com pêlo pintado ou malhado, grandes orelhas e o rabo igual ao de leão, o amasso é inteligente, independente e, por vezes, agressivo, embora quando se afeiçoa a um bruxo ou bruxa ele se torne um excelente bichinho de estimação.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZTsi-0HcJxHb4Lq5qjpiFAGauazzYfM-p6g&s"
+  },
+  {
+    "animal": "LEPRECHAUN (DUENDE IRLANDÊS), por vezes também chamado Clauricorn (Clauricorne)",
+    "classification": "XXX",
+    "description": "Mais inteligente do que uma fada e menos malicioso do que o diabinho, o diabrete ou fada mordente, ainda assim o leprechaun, que é um duende Irlandês, atinge até um metro e meio de altura e sua cor é verde. Sabe-se que é capaz de criar roupas rústicas com folhas. É a única das \"pequenas criaturas\" dotada de fala, embora nunca tenha solicitado sua reclassificação como \"ser\".",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJRkp8D0UN0bPrn13aayxhclZ1mHPsmTY8Fw&s"
+  },
+  {
+    "animal": "LETHIFOLD (MORTALHA-VIVA), também conhecida como Living Shroud (Manto Letal)",
+    "classification": "XXXXX",
+    "description": "A lethifold (mortalha-viva) é, felizmente, uma criatura rara, encontrada somente em climas tropicais. Lembra um manto negro de pouco mais de um centímetro de espessura (mais grosso quando acabou de matar e digerir uma vítima) que rasteja pelo chão durante a noite. A noticia mais antiga que se tem uma mortalha-viva foi descrita pelo bruxo Flávio Belby, que teve a sorte de sobreviver a um ataque desse animal em 17 quando passava as férias em Papua, na Nova Guiné.",
+    "image": "https://static.wikia.nocookie.net/harrypotter/images/3/31/Lethifold_concept_art_FB1.jpg/revision/latest/scale-to-width-down/1200?cb=20210928054007"
+  },
+  {
+    "animal": "LOBALUG (SERINGA)",
+    "classification": "XXX",
+    "description": "É encontrada nas profundezas do Mar do Norte. É uma criatura simples com vinte e cinco centímetros de comprimento , formada por um esguicho flexível e uma bolsa de veneno. Quando ameaçada, ela contrai essa bolsa e esguicha veneno no atacante.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIkCWYQB8sENLXx0lD_JXdOnhCRrzhjXd61Q&s"
+  },
+  {
+    "animal": "MACKLED  MALACLAW (MALAGARRA)",
+    "classification": "XXX",
+    "description": "A mackled malaclaw (malagarra) é uma criatura terrestre encontrável principalmente nas costas rochosas da Europa. Apesar de sua leve semelhança com a lagosta, ela não deve em hipótese alguma ser ingerida porque sua carne é imprópria para o consumo humano e provocará febre alta e uma feia urticária esverdeada.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRz1anC73ZujMeOrhUZjODVPKGRuWv09Qf1Gg&s"
+  },
+  {
+    "animal": "MANTICORE (MANTICORA)",
+    "classification": "XXXXX",
+    "description": "A manticore (manticora) é um perigosíssimo animal grego com cabeça humana, corpo de leão e rabo de escorpião. Tão feroz quanto a quimera e igualmente rara, a manticora tem fama de cantar baixinho enquanto devora a presa. Sua pele repele quase todos os feitiços conhecidos e sua mordida pode causar morte instantânea.",
+    "image": "https://static.wikia.nocookie.net/harrypotter/images/0/03/Quimera.png/revision/latest/smart/width/386/height/259?cb=20180607050344&path-prefix=pt-br"
+  },
+  {
+    "animal": "MERPEOPLE (SEREIANOS) também conhecidos por seus nomes regionais Sirens, Selkies e Merrows",
+    "classification": "XXXX",
+    "description": "Os merpeople (sereianos) existem em todo o mundo, embora variem de aparência como os humanos. Seus hábitos e costumes permanecem tão misteriosos quanto os do centauro, embora os bruxos que aprendam o serêiaco nos falem de comunidades excepcionalmente organizadas, cujo tamanho varia conforme a localização, havendo algumas com habitações muito bem construídas.",
+    "image": "https://static.wikia.nocookie.net/harrypotter/images/a/a4/One_of_the_Merpeople_of_Hogwarts_Lake_%28Concept_Artwork%29.jpg/revision/latest/smart/width/386/height/259?cb=20091018034049"
+  },
+  {
+    "animal": "MOKE (BRIBA)",
+    "classification": "XXX",
+    "description": "A moke (briba) é um lagarto verde-prateado que atinge até vinte e cinco centímetros de comprimento e é encontrado por todo a Grã-Bretanha e a Irlanda. Tem a capacidade de se encolher quando quer e, conseqüentemente, nunca é vista pelos trouxas. O couro de briba é muito valorizado pelos bruxos para a confecção de carteiras e bolsas pois a pele escamosa se contrai à aproximação de estranhos, do mesmo modo que fazia seu antigo dono; as bolsas de dinheiro feitas de couro de briba são portanto muito difíceis de serem encontradas pelos ladrões.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt49gn26ypbAmTTBiCpXfTwSOqWN89792ATw&s"
+  },
+  {
+    "animal": "MOONCALF (BEZERRO APAIXONADO)",
+    "classification": "XX",
+    "description": "O mooncalf (bezerro apaixonado) é um animal extremamente tímido que sai da toca apenas em noites de lua cheia. Tem o corpo liso e cinza-claro, olhos redondos e salientes no cocuruto da cabeça e quatro perninhas finas que terminam em enormes pés chatos. O bezerro apaixonado executa complicadas danças, apoiado nas patas traseiras, em áreas ermas e banhadas de luar.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHqFMmIByVtZ7YhNe2Zf3sLr5oOnZvxTHV6g&s"
+  },
+  {
+    "animal": "MURTLAP (MURTISCO)",
+    "classification": "XXX",
+    "description": "O murtlap (murtisco) é um animal semelhante a um rato encontrado nas áreas litorâneas da Grã-Bretanha. Tem uma saliência nas costas que lembra uma anêmona-do-mar. Quando essa pseudoflor saliente é ingerida em conserva produz resistência a feitiços e azarações embora uma overdose possa causar crescimento de pêlos de sor púrpura nas orelhas.",
+    "image": "https://static.wikia.nocookie.net/harrypotter/images/4/4f/Murtlap.jpg/revision/latest?cb=20170207175734"
+  },
+  {
+    "animal": "NIFFLER (PELÚCIO)",
+    "classification": "XXX",
+    "description": "O niffler (pelúcio) é um animal britânico. Fofo, preto, de focinho longo, essa criatura que faz tocas subterrâneas tem predileção por tudo que brilha. Ele é muitas vezes criado por duendes para cavar as profundezas da terra em busca de tesouros.",
+    "image": "https://static.wikia.nocookie.net/harrypotter/images/e/e9/Niffler_FBCFTWW.png/revision/latest?cb=20161129180529"
+  },
+  {
+    "animal": "NOGTAIL (RABICURTO)",
+    "classification": "XXX",
+    "description": "O nogtail (rabicurto) é demônio encontrado nas áreas rurais de toda a Europa, Rússia e América do Norte. Ele lembra um porquinho anão com pernas longas, rabo grosso e curto, e olhos pretos e miúdos. O rabicurto entra sorrateiro em uma pocilga e mama em uma porca normal ao lado dos seus filhotes.",
+    "image": "https://static.wikia.nocookie.net/harrypotter/images/5/58/Nogtail_icon_HM.png/revision/latest/scale-to-width-down/190?cb=20230223133623"
+  },
+  {
+    "animal": "NUNDU (NUNDU)",
+    "classification": "XXXXX",
+    "description": "Esse animal da África Oriental é indiscutivelmente o mais perigoso do mundo. Um enorme leopardo que se desloca em silêncio, apesar de seu tamanho, e cujo o hálito causa uma doença capaz de eliminar um povoado inteiro, o nundu nunca foi subjugado por menos de cem bruxos qualificados juntos.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-8GYcT6yEVhFuEnpaPz-F53w4SKHY7DyjrA&s"
+  },
+  {
+    "animal": "OCCAMY (OCCAMI)",
+    "classification": "XXXX",
+    "description": "O occamy (ocami) é encontrado no Extremo Oriente e na Índia. Esse bípede emplumado, com asas e corpo de serpente, pode alcançar o comprimento de quatro metros e meio. Alimenta-se principalmente de ratos e aves, embora haja notícia de que ataque macacos.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTG6B-TEeH28Bpjdo64okLWAHRnvA1pjtpiOQ&s"
+  },
+  {
+    "animal": "PHOENIX (FÊNIX)",
+    "classification": "XXXX",
+    "description": "A fênix é um pássaro magnifico, de cor vermelha e porte de cisne, com um longo rabo, bico e garras dourados. Faz ninho no cume de montanhas no Egito, Índia e China, e tem uma vida longuíssima porque é capaz de se regenerar, irrompendo em chamas quando seu corpo entra em decadência e ressurgindo das cinzas novamente jovem.",
+    "image": "https://i.scdn.co/image/ab67616d00001e02cd1053c99d67f4eb94224486"
+  },
+  {
+    "animal": "PIXIE (DIABRETE)",
+    "classification": "XXX",
+    "description": "O pixie (diabrete) é encontrado principalmente na Cornualha, uma região inglesa. De cor azul-elétrico, medindo até vinte centímetros de altura e muito travesso, ele gosta de pregar peças e fazer brincadeiras de mau gosto de todo o tipo. Embora não seja dotado de asas, é capaz de voar e sabe-se que pode agarrar humanos incautos pelas orelhas e levá-los para o topo de árvores e edifícios de grande altura.",
+    "image": "https://static.wikia.nocookie.net/harry-potter-through-another-looking-glass/images/2/22/Pixie.png/revision/latest?cb=20200414083311"
+  },
+  {
+    "animal": "PLIMPLY (DILÁTEX)",
+    "classification": "XXX",
+    "description": "O plimpy (dilátex) é um peixe esférico e sarapintado que se caracteriza por duas longas pernas que terminam em pés palmados. Habita os lagos profundos cujos leitos ronda à procura de alimento, preferindo lesmas-d'água. O dilátex não é particularmente perigoso, embora roa os pés e as roupas dos nadadores.",
+    "image": "https://static.wikia.nocookie.net/hogwarts-mystery/images/b/b9/Plimpy.png/revision/latest/thumbnail/width/360/height/360?cb=20240609204804"
+  },
+  {
+    "animal": "POGREBIN (POGREBIN)",
+    "classification": "XXX",
+    "description": "O pogrebin é um demônio russo que tem menos de trinta centímetros de altura, um corpo peludo, mas uma enorme cabeça cinzenta e lisa. Quando encolhido, o pogrebin lembra uma pedra redonda e reluzente. Esse demônio é atraído pelos humanos e gosta de segui-los andando à sombra e se abaixando rapidamente quando a sombra se vira para ele.",
+    "image": "https://gamerpeak.com/wp-content/uploads/2022/07/download-51.png"
+  },
+  {
+    "animal": "PORLOCK (POCOTÓ)",
+    "classification": "XXX",
+    "description": "O porlock (pocotó) é um guardião de cavalos encontrável em Dorset, uma região da Inglaterra, e no sul da Irlanda. Tem o corpo coberto por uma pelagem comprida e, na cabeça, uma maçaroca de pêlos duros além de um nariz excepcionalmente grande. Suas patas são cascos fendidos.",
+    "image": "https://i.pinimg.com/736x/43/84/1c/43841c743011ccb4b21bfe33d6d9b580.jpg"
+  },
+  {
+    "animal": "PUFFSKEIN (PUFOSO)",
+    "classification": "XX",
+    "description": "O puffskein (pufoso) é encontrado no mundo inteiro. De forma esférica, coberto de pêlos macios cor de amarelo, é uma criatura dócil que não se importa de ser afagado ou atirado para todo lado. É fácil de cuidar e emite um zumbido surdo quando está satisfeito.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPvgrsUreq9AkALdkPLNzHYbBO07CkrrayjQ&s"
+  },
+  {
+    "animal": "QUINTAPED (QUINTÍPEDE), também chamado MacBoon peludo",
+    "classification": "XXXXX",
+    "description": "O quintaped (quintípede) é um animal carnívoro perigosíssimo com um certo gosto por humanos. Seu corpo atarracado e rente ao chão é coberto por pêlos castanho-avermelhados, do mesmo modo que suas pernas, que terminam em patas tortas. Ele é encontrado na ilha de Drear, ao largo do extremo norte da Escócia, razão pela qual a ilha foi considerada imapeável.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAIASQkOAG_mN6_NSUqpeDnJTnd1VhSmvRRw&s"
+  },
+  {
+    "animal": "RAMORA (RAMORA)",
+    "classification": "XX",
+    "description": "A ramora é um peixe prateado encontrável no Oceano Índico. Dotada de poderosa magia, ela ancora navios e protege os navegantes. Esse peixe é muito valorizado pela Confederação Internacional de Bruxos que estabeleceu várias leis para protegê-lo dos pescadores bruxos.",
+    "image": "https://static.wikia.nocookie.net/harrypotter/images/6/63/Ramora_FB_IE.jpg/revision/latest?cb=20210914155800"
+  },
+  {
+    "animal": "RED CAP (BARRTE VERMELHO)",
+    "classification": "XXX",
+    "description": "Essas criaturas anãs vivem em crateras de antigos campos de batalha ou onde quer eu o sangue humano tenha sido derramado. Embora facilmente repelidas com feitiços de azarações, elas oferecem grande perigo aos trouxas que andam sozinhos, a quem tentarão matar de pancadas nas noites escuras.",
+    "image": "https://static.wikia.nocookie.net/harrypotterbooks/images/7/77/RedCap.png/revision/latest?cb=20191025162559"
+  },
+  {
+    "animal": "RE'EM (RÊS-MA)",
+    "classification": "XXXX",
+    "description": "Boi gigante e raro de couro dourado, a rês-ma é encontrável nas regiões agrestes da América do Norte e do Extremo Oriente. Seu sangue dá a quem bebe uma força imensa, embora a dificuldade em obtê-lo torne o seu estoque mínimo e raramente disponível no mercado livre.",
+    "image": "https://i.pinimg.com/736x/86/63/52/8663524c20b0c7fe098bcb0ca438754c.jpg"
+  },
+  {
+    "animal": "RUNESPOOR (FAROSUTIL)",
+    "classification": "XXXX",
+    "description": "O farosutil é originário de um pequeno país africano, o Burkina Faso. Serpente de três cabeças, ele normalmente atinge entre um metro e oitenta centímetros e dois metros e dez centímetros de comprimento. Laranja berrante com listras negras, o farosutil é facilmente localizável, razão pela qual o Ministério da Magia de Burkina Faso declarou imapeáveis certas áreas de floresta para seu uso exclusivo.",
+    "image": "https://static.wikia.nocookie.net/harrypotter/images/a/a4/Runespoor_FB1.png/revision/latest?cb=20170304175102"
+  },
+  {
+    "animal": "SALAMANDER (SALAMANDRA)",
+    "classification": "XXX",
+    "description": "A salamandra é um pequeno lagarto que habita o fogo e se alimenta de chamas. Brando ofuscante, ela pode se apresentar azul ou vermelha, dependendo do calor do fogo onde surgiu. As salamandras podem sobreviver até seis horas fora do fogo se ingerirem pimenta a intervalos regulares.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX9llE85dioMRev8laHMxFk8gVChMAaOfiSw&s"
+  },
+  {
+    "animal": "SEA SERPENT (SERPENTE MARINHA)",
+    "classification": "XXX",
+    "description": "A serpente marinha é encontrada nos oceanos Atlântico e Pacífico e no Mar Mediterrâneo. Embora de aparência assustadora, não há notícias de que tenha matado seres humanos apesar dos relatos dos trouxas histéricos sobre seu comportamento feroz. Esse animal atinge até trinta metros de comprimento, tem cabeça de cavalo e um corpo longo de serpente que se ergue do mar em corcoveios.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvM_ttmj6EKBPGc_5DwxsAkvzizSH34EBtNQ&s"
+  },
+  {
+    "animal": "SHRAKE (REQUE)",
+    "classification": "XXX",
+    "description": "É um peixe inteiramente coberto de espinhos e encontrável no oceano Atlântico. Acredita-se que o primeiro cardume foi criado como uma vingança contra pescadores trouxas que insultaram navegantes bruxos no início do século XIX. Desde então, quando recolhem suas redes naquela área do mar, os trouxas as encontram rasgadas e esvaziadas pelos reques que nadam sob elas.",
+    "image": "https://static.wikia.nocookie.net/esharrypotter/images/6/6d/HM_TRITURA_LOS_SHRAKES.png/revision/latest?cb=20250523050247"
+  },
+  {
+    "animal": "SNIDGET (POMORIM)",
+    "classification": "XXXX",
+    "description": "O snidget (pomorim) é uma espécie de pássaro extremamente rara e protegida por lei. Com um bico longo e fino, olhos vermelhos e brilhantes como pedras preciosas, o pomorim dourado voa com excepcional velocidade e pode mudar de direção com incrível perícia e rapidez graças às dobradiças giratórias de suas asas.",
+    "image": "https://www.hp-lexicon.org/wp-content/uploads/2016/03/the_golden_snidget_by_emmanuel_oquendo-d9lpkir.png"
+  },
+  {
+    "animal": "SPHINX (ESFINGE)",
+    "classification": "XXXX",
+    "description": "A esfinge egípcia tem cabeça humana e corpo de leão. Há mais de mil anos ela é usada pelos bruxos e bruxas para guardar tesouros e seus esconderijos secretos. Inteligentíssimo, esse animal te prazer em inventar charadas e quebra-cabeças.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa54Lu4AIzMfWUzvpzFsGvInK1qw1yyiEdRw&s"
+  },
+  {
+    "animal": "STREELER (LESMALENTA)",
+    "classification": "XXX",
+    "description": "Esse animal é uma enorme lesma que muda de cor de hora em hora, e quando caminha deixa um rastro tão venenoso que murcha e queima toda a vegetação por onde passa. A lesmalenta é originária de vários países africanos, embora tenha sido reproduzida pelos bruxos, com sucesso, na Europa, na Ásia e nas Américas.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrKtmvX4FBE3voS2v8vDOTosAKhbO9f-YxXA&s"
+  },
+  {
+    "animal": "TEBO (TEBO)",
+    "classification": "XXXX",
+    "description": "O tebo é um javali cinzento, encontrado no Congo e no Zaire. É dotado de invisibilidade, o que dificulta fugir dele ou capturá-lo, tornando-o extremamente perigoso. O tebo é muito valorizado pelos bruxos para fabricar roupas e escudos protetores.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjHQyfbCxlVyjhQNEp9YSrodL2HD94cASxLA&s"
+  },
+  {
+    "animal": "TROLL (TRASGO)",
+    "classification": "XXXX",
+    "description": "O trasgo é uma criatura temível que atinge mais de três metros e meio de altura e pesa mais de uma tonelada. Notável por sua força igualmente prodigiosa e sua pouca inteligência, esse animal é muitas vezes violento e imprevisível. O animal é originário da Escandinávia, mas atualmente pode ser encontrados na Grã-Bretanha, Irlanda e outras áreas do norte da Europa.",
+    "image": "https://static.wikia.nocookie.net/hp-fantastic-beasts/images/b/ba/Mountain_Troll.png/revision/latest?cb=20170610194221"
+  },
+  {
+    "animal": "UNICORN (UNICÓRNIO)",
+    "classification": "XXXX",
+    "description": "O unicórnio é um belo animal encontrado nas florestas do norte europeu. Quando adulto é um cavalo branco-puro, dotado de um chifre, embora seus potrinhos nasçam dourados e se tornem prateados antes de atingir a maturidade. O chifre, o sangue e o pêlo do unicórnio têm propriedade excepcionalmente mágicas.2 Em geral ele evita contatos com humanos, deixa mais facilmente uma bruxa do que um bruxo se aproximar dele e tem patas tão ágeis que torna difícil sua captura.",
+    "image": "https://static.wikia.nocookie.net/harrypotter/images/e/e4/Unicorn_FBCFTWW.png/revision/latest?cb=20161130204538"
+  },
+  {
+    "animal": "WERWWOLF (LOBISOMEM)",
+    "classification": "XXXXX",
+    "description": "O lobisomem é encontrado no mundo inteiro, embora se acredite que tenha se originado no norte europeu. Os humanos somente se transformam em lobisomens quando são mordidos. Não se conhece nenhuma cura para esse mal, embora o recente avanço no preparo de poções tenham em certa medida, aliviado os sintomas mais graves.",
+    "image": "https://static.wikia.nocookie.net/harrypotter/images/2/2e/Professor_Lupin_em_Forma_de_Lobisomen.jpg/revision/latest/thumbnail/width/360/height/360?cb=20160824222529&path-prefix=pt-br"
+  },
+  {
+    "animal": "WINGED HORSE (CAVALO ALADO)",
+    "classification": "XX-XXXX",
+    "description": "Os cavalos alados existem no mundo inteiro. Há diferentes raças, entre elas a Abraxama (um palomino enorme e forte), a Etoniana (castanha, popular na Grã-Bretanha e na Irlanda), a Graniana (cinzento e muito veloz) a Testrália (negra, dotada do poder da invisibilidade e considerada portadora de azar por muitos bruxos).",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXEgA05YXZdFIgnISeMkXVpdB8hq01wX-qoQ&s"
+  },
+  {
+    "animal": "Thunderbolt",
+    "classification": "XXXX",
+    "description": "O Thunderbolt (mais conhecido em inglês como Thunderbird) é uma gigantesca ave mágica originária do sudoeste da América do Norte. Possui um corpo semelhante ao de uma águia, mas com asas enormes e plumagem capaz de refletir tons dourados, prateados e azulados.",
+    "image": "https://static.wikia.nocookie.net/harrypotter/images/d/d7/Thunderbird_concept_art.jpg/revision/latest?cb=20180813231220"
+  },
+  {
+    "animal": "YETI (IÉTI), também conhecido como Bigfoot (Pé-Grande) e Abominable Snowman (Abominável Homem das Neves)",
+    "classification": "XXXX",
+    "description": "Acredita-se que o iéti, nativo do Tibete, seja aparentado com o trasgo, embora até hoje ninguém tenha chegado bastante perto para fazer os testes necessários. Com uma estatura máxima de quatro metros e meio, o iéti é coberto da cabeça aos pés por pêlos alvíssimos. Devora qualquer coisa que cruze o seu caminho, embora tenha medo do fogo e possa ser repelido por buxos experientes.",
+    "image": "https://static.wikia.nocookie.net/monstros-e-lendas/images/a/a7/Ieti-Abomin%C3%A1vel_Homem_das_Neves.jpg/revision/latest?cb=20190428223614&path-prefix=pt-br"
+  },
+  { 
+    "animal": "THESTRAL (TESTRÁLIO)", 
+    "classification": "XXXX", 
+    "description": "Cavalo alado negro de aparência esquelética. Só pode ser visto por pessoas que testemunharam e compreenderam a morte. Inteligente, leal e excelente rastreador.", 
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqZwCnBTZkmlo1-y-jT7jHc_DzdGCMQ6qcKg&s"
+  }, 
+  { 
+    "animal": "ZOUWU", 
+    "classification": "XXXX", 
+    "description": "Gigantesca criatura felina originária da China. Possui corpo colorido, cauda enorme e capacidade de percorrer enormes distâncias em poucos saltos.", 
+    "image": "https://i.redd.it/k9jp84w0rkoe1.jpeg" 
+  }, 
+  { 
+    "animal": "SWOOPING EVIL", 
+    "classification": "XXXX", 
+    "description": "Criatura voadora semelhante a uma borboleta gigante. Seu veneno pode apagar memórias e seu corpo pode se expandir para formas ameaçadoras.", 
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9gwNOR3iqmJrDJPRKwa6IAvHuZYPq-4w90Q&s" 
+  }, 
+  { 
+    "animal": "QILIN", 
+    "classification": "XXXX", 
+    "description": "Criatura rara semelhante a um cervo coberto por escamas. Possui grande pureza espiritual e capacidade de perceber a verdadeira natureza das pessoas.", 
+    "image": "https://static.wikia.nocookie.net/harrypotter/images/b/bc/Unidentified_Qilin_mother_SODM.png/revision/latest/scale-to-width-down/250?cb=20220807130719" 
+  }, 
+  { 
+    "animal": "WAMPUS CAT", 
+    "classification": "XXXX", 
+    "description": "Grande felino mágico norte-americano dotado de força extraordinária, velocidade e habilidades ligadas à magia e ilusão.", 
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRC9hKPZPLTsIty9kymgzrxkYoD3GZzYW4lwA&s" 
+  }, 
+  { 
+    "animal": "HORNED SERPENT (SERPENTE CORNUDA)", 
+    "classification": "XXXX", 
+    "description": "Serpente mágica da América do Norte com um cristal na testa. É associada à sabedoria e possui grande sensibilidade mágica.", 
+    "image": "https://thekingpun.wordpress.com/wp-content/uploads/2016/07/tumblr_o9k80ptwdb1sg49umo1_500.png" 
+  }, 
+  { 
+    "animal": "HODAG", 
+    "classification": "XXX", 
+    "description": "Criatura robusta da América do Norte com espinhos nas costas e comportamento agressivo quando ameaçada.", 
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKgA34bmnnJLDdDk2iyum_krUL71SILcCX-w&s" 
+  }, 
+  { 
+    "animal": "SNALLYGASTER", 
+    "classification": "XXXX", 
+    "description": "Fera híbrida alada da América do Norte. Possui bico serrilhado, tentáculos e grande agressividade.", 
+    "image": "https://static.wikia.nocookie.net/harrypotterbooks/images/6/6b/Snallygaster.jpeg/revision/latest?cb=20240602103116" 
+  }, 
+  { 
+    "animal": "HIDEBEHIND", 
+    "classification": "XXX", 
+    "description": "Criatura capaz de se esconder atrás de qualquer objeto, mesmo muito pequeno, tornando-se extremamente difícil de localizar.", 
+    "image": "https://www.hp-lexicon.org/wp-content/uploads/2016/12/rajz_085_by_szokekissmarton-dbbra0g.jpg" 
+  }, 
+  { 
+    "animal": "CHUPACABRA", 
+    "classification": "XXX", 
+    "description": "Pequena criatura reptiliana conhecida por atacar animais e se alimentar de sangue.", 
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2cXRivtmLmJ7KE4mcOvhI1Vn7fX8S8jlerA&s" 
+  }, 
+  { 
+    "animal": "MATAGOT", 
+    "classification": "XXX", 
+    "description": "Gato mágico negro usado como guardião de propriedades e locais mágicos na França.", 
+    "image": "https://i.pinimg.com/736x/31/1b/64/311b646214fb6b92eb4c728da73a362b.jpg" 
+  }, 
+  { 
+    "animal": "LEUCROTTA", 
+    "classification": "XXXX", 
+    "description": "Criatura semelhante a um cervo de grande porte com boca enorme capaz de imitar vozes humanas para atrair vítimas.", 
+    "image": "https://static.wikia.nocookie.net/harrypotter/images/8/8a/Leucrotta_COGS.jpeg/revision/latest?cb=20250301060050" 
+  }, 
+  { 
+    "animal": "HINKYPUNK", 
+    "classification": "XXX", 
+    "description": "Pequeno ser de aparência esfumaçada que carrega uma lanterna e atrai viajantes para áreas perigosas.", 
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5imDgxTzKbemjbKamOP2_Vl7F3J8_0LoyIg&s" 
+  }, 
+  { 
+    "animal": "INFERI", 
+    "classification": "XXXX", 
+    "description": "Cadáver reanimado por magia das trevas e controlado por um bruxo. Não possui vontade própria.", 
+    "image": "https://static.wikia.nocookie.net/harrypotter/images/1/14/Inferius_%28Desenho%29.jpg/revision/latest?cb=20160825185536&path-prefix=pt-br" 
+  }, 
+  { 
+    "animal": "DEMENTOR", 
+    "classification": "XXXXX", 
+    "description": "Criatura sombria que se alimenta de felicidade e esperança. Capaz de executar o Beijo do Dementador, removendo a alma da vítima.", 
+    "image": "https://static.wikia.nocookie.net/harrypotter/images/1/18/Dementador_001.jpg/revision/latest?cb=20220324043913&path-prefix=pt-br" 
+  }, 
+  { 
+    "animal": "VEELA", 
+    "classification": "XXXX", 
+    "description": "Ser mágico de aparência humana extremamente bela. Pode encantar observadores e assumir uma forma feroz quando enfurecida.", 
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7cJSR2XJFTquxhX4e8wNA8q_Q_bkz0EQrGg&s" 
+  }, 
+  { 
+    "animal": "OBSCURUS", 
+    "classification": "XXXXX", 
+    "description": "Manifestação destrutiva de magia reprimida por jovens bruxos. Extremamente poderosa e instável.", 
+    "image": "https://static.wikia.nocookie.net/harrypotter/images/c/c7/Capture.PNG/revision/latest?cb=20181122064837" 
+  }, 
+  { 
+    "animal": "THREE-HEADED DOG (CÃO DE TRÊS CABEÇAS)", 
+    "classification": "XXXX", 
+    "description": "Gigantesco cão mágico com três cabeças. Extremamente feroz, mas pode ser acalmado por música.", 
+    "image": "https://static.wikia.nocookie.net/harrypotter/images/c/c6/Fluffy_HP1.png/revision/latest?cb=20170925204810" 
+  }, 
+  { 
+    "animal": "BLAST-ENDED SKREWT (EXPLOSIVIM)", 
+    "classification": "XXXX", 
+    "description": "Criatura híbrida criada por Rúbeo Hagrid. Possui ferrão, casco resistente e explosões propulsionadas pela extremidade traseira.", 
+    "image": "https://static.wikia.nocookie.net/harrypotter/images/9/9d/Blast_Ended_Skrewt_Wizarding_World.jpg/revision/latest?cb=20190419151936" 
+  },
+  {
+    "animal": "HOUSE-ELF (ELFO-DOMÉSTICO)",
+    "classification": "BEING",
+    "description": "Ser mágico inteligente que tradicionalmente serve famílias bruxas. Possui poderosa magia própria, capaz de realizar feitiços sem varinha e se deslocar por aparatação mesmo em locais protegidos por magia.",
+    "image": "https://contentful.harrypotter.com/usf1vwtuqyxm/DxKfqdm0vlM656PFLOrcv/17bc8ff3180ce8c430354fb143043cee/Dobby_2_1800x1248.png?q=75&fm=jpg&w=600&h=416&fit=pad"
+  } 
+]
