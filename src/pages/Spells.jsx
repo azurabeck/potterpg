@@ -152,7 +152,7 @@ const Spells = () => {
 
    return (
       <div className="min-h-screen bg-[#2b0038] text-white">
-         <section className="flex bg-[#3b0050]">
+         <section className="sticky top-[65px] z-50 flex bg-[#3b0050]">
             <input
                type="text"
                placeholder="Buscar Feitiços..."

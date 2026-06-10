@@ -131,7 +131,7 @@ const SpellRules = () => {
                                                 </span>
 
                                                 <span className="mx-auto flex h-10 w-10 items-center justify-center rounded-full border border-purple-300">
-                                                   { spell.attributes.maestria_requered }
+                                                   { spell.attributes.maestria_required }
                                                 </span>
                                                 <span className="text-purple-200">
                                                    {spell.attributes.aula ||

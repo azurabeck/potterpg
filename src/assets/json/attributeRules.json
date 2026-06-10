@@ -1,0 +1,176 @@
+{
+   "title": "REGRAS UTILIZAÇÃO DE ATRIBUTO.",
+   "description": [
+      "Os atributos são aplicados a todos os testes, porém para feitiços e habilidade eles só são somados quando o aluno esta no ano compatível com feitiço.",
+      "Exemplo: feitiço disponível no ano 1, e jogador no ano 1."
+   ],
+   "evolutionTitle": "Regras de Evolução de Atributos",
+   "attributes": [
+      {
+         "name": "Coragem",
+         "description": "Ganha quando Tomas enfrenta medo, perigo ou consequências reais mesmo tendo a opção de recuar.",
+         "examples": [
+            "Entrar sozinho em local perigoso.",
+            "Enfrentar criaturas assustadoras.",
+            "Defender alguém colocando-se em risco."
+         ]
+      },
+      {
+         "name": "Inteligência",
+         "description": "Ganha quando Tomas resolve problemas através de raciocínio, estudo ou conexão de pistas.",
+         "examples": [
+            "Resolver enigmas.",
+            "Descobrir teorias corretas.",
+            "Interpretar documentos complexos."
+         ]
+      },
+      {
+         "name": "Agilidade",
+         "description": "Ganha quando Tomas realiza feitos físicos rápidos ou difíceis.",
+         "examples": ["Voo.", "Desvios.", "Escalada.", "Acrobacias."]
+      },
+      {
+         "name": "Carisma",
+         "description": "Ganha quando Tomas conquista simpatia, admiração ou boa vontade naturalmente.",
+         "examples": [
+            "Fazer amigos.",
+            "Ser reconhecido publicamente.",
+            "Criar boa impressão."
+         ]
+      },
+      {
+         "name": "Percepção",
+         "description": "Ganha quando Tomas observa algo importante que outros não perceberam.",
+         "examples": [
+            "Encontrar pistas escondidas.",
+            "Ler o ambiente.",
+            "Notar comportamentos suspeitos."
+         ]
+      },
+      {
+         "name": "Sorte",
+         "description": "Ganha apenas em eventos extremamente raros onde Tomas se beneficia de coincidências improváveis.",
+         "examples": [
+            "Encontrar algo por acaso.",
+            "Escapar de consequências por pura sorte."
+         ]
+      },
+      {
+         "name": "Magia",
+         "description": "Ganha quando Tomas produz demonstrações de poder mágico acima do esperado.",
+         "examples": [
+            "Feitiços excepcionalmente fortes.",
+            "Grandes explosões mágicas.",
+            "Canalização de energia acima do normal."
+         ]
+      },
+      {
+         "name": "Resistência",
+         "description": "Ganha quando Tomas suporta dor, exaustão, frio, fome ou esforço prolongado.",
+         "examples": [
+            "Longos treinamentos.",
+            "Caminhadas extensas.",
+            "Continuar após sofrer ferimentos."
+         ]
+      },
+      {
+         "name": "Ataque",
+         "description": "Ganha quando Tomas utiliza magia ofensiva com sucesso.",
+         "examples": [
+            "Petrificus Totalis.",
+            "Incendio.",
+            "Verdimillious."
+         ]
+      },
+      {
+         "name": "Proteção",
+         "description": "Ganha quando Tomas utiliza magia defensiva ou protege alguém.",
+         "examples": [
+            "Protego.",
+            "Escudos mágicos.",
+            "Interceptar ataques."
+         ]
+      },
+      {
+         "name": "Precisão",
+         "description": "Ganha quando Tomas acerta exatamente o alvo pretendido.",
+         "examples": [
+            "Feitiços de alvo único.",
+            "Captura de objetos.",
+            "Arremessos precisos."
+         ]
+      },
+      {
+         "name": "Controle",
+         "description": "Ganha quando Tomas executa magia delicada ou complexa sem erros.",
+         "examples": ["Wingardium Leviosa.", "Alohomora.", "Reparo."]
+      },
+      {
+         "name": "Magia Antiga",
+         "description": "Ganha apenas ao interagir diretamente com fenômenos de magia antiga.",
+         "examples": [
+            "Artefatos ancestrais.",
+            "Locais antigos.",
+            "Poderes ligados ao mistério principal."
+         ]
+      },
+      {
+         "name": "Liderança",
+         "description": "Ganha quando Tomas coordena, orienta ou inspira outras pessoas.",
+         "examples": [
+            "Liderar grupos.",
+            "Criar planos coletivos.",
+            "Organizar investigações."
+         ]
+      },
+      {
+         "name": "Aprendizado Mágico",
+         "description": "Ganha quando Tomas aprende novas magias, poções ou conhecimentos mágicos.",
+         "examples": [
+            "Aprender feitiços novos.",
+            "Aprender poções novas.",
+            "Aprender criaturas novas."
+         ]
+      },
+      {
+         "name": "Persuasão",
+         "description": "Ganha quando Tomas convence alguém através de argumentos.",
+         "examples": [
+            "Negociações.",
+            "Convencer professores.",
+            "Convencer colegas."
+         ]
+      },
+      {
+         "name": "Astúcia",
+         "description": "Ganha quando Tomas resolve problemas através de criatividade, improviso ou truques.",
+         "examples": [
+            "Enganar adversários.",
+            "Criar planos inesperados.",
+            "Usar o ambiente a seu favor."
+         ]
+      },
+      {
+         "name": "Equilíbrio",
+         "description": "Ganha quando Tomas mantém estabilidade física em situações difíceis.",
+         "examples": [
+            "Voo avançado.",
+            "Caminhar em superfícies instáveis.",
+            "Permanecer montado durante manobras violentas."
+         ]
+      }
+   ],
+   "gainRule": {
+      "title": "Regra de Ganho",
+      "conditions": [
+         "Foi central para resolver uma situação importante.",
+         "Houve demonstração clara daquele atributo.",
+         "O evento foi relevante para a narrativa."
+      ],
+      "normal": [
+         "+1 atributo por sessão.",
+         "Sessões excepcionais podem conceder +2.",
+         "Mais que isso apenas em eventos extraordinários."
+      ]
+   }
+}
