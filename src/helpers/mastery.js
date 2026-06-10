@@ -1,4 +1,4 @@
-import masteryRules from "../../../../../assets/json/mastery_rpg.json";
+import masteryRules from "../assets/json/mastery_rpg.json";
 
 const normalizeText = (text = "") => {
    return text

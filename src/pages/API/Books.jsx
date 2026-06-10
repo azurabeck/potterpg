@@ -6,58 +6,58 @@ import {
    ArrowPathIcon,
 } from "@heroicons/react/24/outline";
 
-import { getMovies } from "../services/potterdb";
-import { translateMoviesBatch } from "../services/translator";
-import { dividirEmLotes } from "../utils/array.utils";
-import { obterCache, salvarCache } from "../utils/storage.utils";
-import moviesJson from "../assets/json/movies.json";
+import { getBooks } from "../../services/potterdb";
+import { translateBooksBatch } from "../../services/translator";
+import { dividirEmLotes } from "../../utils/array.utils";
+import { obterCache, salvarCache } from "../../utils/storage.utils";
+import booksJson from "../../assets/json/books.json";
 
-const CACHE_KEY = "translated-movies-v1";
+const CACHE_KEY = "translated-books-v1";
 
-const Movies = () => {
+const Books = () => {
    // #region State
-   const [movies, setMovies] = useState(moviesJson);
+   const [books, setBooks] = useState(booksJson);
    const [search, setSearch] = useState("");
    const [isLoading, setIsLoading] = useState(false);
    const [progresso, setProgresso] = useState(0);
    const [statusTraducao, setStatusTraducao] = useState("");
-   const [totalMovies, setTotalMovies] = useState(moviesJson.length);
-   const [totalMoviesApi, setTotalMoviesApi] = useState(null);
+   const [totalBooks, setTotalBooks] = useState(booksJson.length);
+   const [totalBooksApi, setTotalBooksApi] = useState(null);
    const [verificandoAtualizacao, setVerificandoAtualizacao] = useState(false);
    const [totalTraduzidos, setTotalTraduzidos] = useState(() => {
-      const moviesEmCache = obterCache(CACHE_KEY) || [];
-      return moviesEmCache.length;
+      const booksEmCache = obterCache(CACHE_KEY) || [];
+      return booksEmCache.length;
    });
    // #endregion
 
    // #region Computed
-   const percentualTraduzido = totalMovies > 0
-      ? Math.round((totalTraduzidos / totalMovies) * 100)
+   const percentualTraduzido = totalBooks > 0
+      ? Math.round((totalTraduzidos / totalBooks) * 100)
       : 0;
 
-   const existemNovosMovies = totalMoviesApi !== null && totalMoviesApi !== moviesJson.length;
+   const existemNovosBooks = totalBooksApi !== null && totalBooksApi !== booksJson.length;
 
-   const filteredMovies = movies?.filter((item) =>
+   const filteredBooks = books?.filter((item) =>
       item.attributes.title?.toLowerCase().includes(search?.toLowerCase())
    );
    // #endregion
 
    // #region Funções de tradução e atualização
-   const traduzirFilmesPendentes = async (moviesOriginais, moviesEmCache) => {
+   const traduzirLivrosPendentes = async (booksOriginais, booksEmCache) => {
       const mapaCache = {};
-      moviesEmCache.forEach((item) => { mapaCache[item.id] = item; });
+      booksEmCache.forEach((item) => { mapaCache[item.id] = item; });
 
-      const moviesPendentes = moviesOriginais.filter((item) => !mapaCache[item.id]);
+      const booksPendentes = booksOriginais.filter((item) => !mapaCache[item.id]);
 
-      console.log(`Filmes já traduzidos: ${moviesEmCache.length}`);
-      console.log(`Filmes pendentes: ${moviesPendentes.length}`);
+      console.log(`Livros já traduzidos: ${booksEmCache.length}`);
+      console.log(`Livros pendentes: ${booksPendentes.length}`);
 
-      if (moviesPendentes.length === 0) {
-         return moviesEmCache;
+      if (booksPendentes.length === 0) {
+         return booksEmCache;
       }
 
-      const lotes = dividirEmLotes(moviesPendentes, 20);
-      const resultadoFinal = [...moviesEmCache];
+      const lotes = dividirEmLotes(booksPendentes, 20);
+      const resultadoFinal = [...booksEmCache];
 
       setIsLoading(true);
 
@@ -68,7 +68,7 @@ const Movies = () => {
             setProgresso(percentual);
             setStatusTraducao(`Traduzindo lote ${indiceLote + 1} de ${lotes.length}`);
 
-            const translated = await translateMoviesBatch(lotes[indiceLote]);
+            const translated = await translateBooksBatch(lotes[indiceLote]);
             const parsedBatch = JSON.parse(translated);
 
             resultadoFinal.push(...parsedBatch);
@@ -92,11 +92,11 @@ const Movies = () => {
       try {
          setVerificandoAtualizacao(true);
 
-         const moviesApi = await getMovies();
-         const existeDiferenca = moviesApi.length !== moviesJson.length;
+         const booksApi = await getBooks();
+         const existeDiferenca = booksApi.length !== booksJson.length;
 
-         setTotalMoviesApi(moviesApi.length);
-         setTotalMovies(moviesApi.length);
+         setTotalBooksApi(booksApi.length);
+         setTotalBooks(booksApi.length);
 
          if (!existeDiferenca) {
             alert("Sem atualizações pendentes");
@@ -110,13 +110,13 @@ const Movies = () => {
 
    const atualizarListaETraduzir = async () => {
       try {
-         const moviesEmCache = obterCache(CACHE_KEY) || [];
-         const moviesOriginais = await getMovies();
+         const booksEmCache = obterCache(CACHE_KEY) || [];
+         const booksOriginais = await getBooks();
 
-         setTotalMovies(moviesOriginais.length);
-         setTotalMoviesApi(moviesOriginais.length);
+         setTotalBooks(booksOriginais.length);
+         setTotalBooksApi(booksOriginais.length);
 
-         const resultado = await traduzirFilmesPendentes(moviesOriginais, moviesEmCache);
+         const resultado = await traduzirLivrosPendentes(booksOriginais, booksEmCache);
 
          setTotalTraduzidos(resultado.length);
       } catch (error) {
@@ -126,7 +126,7 @@ const Movies = () => {
 
    const limparCache = () => {
       localStorage.removeItem(CACHE_KEY);
-      setMovies(moviesJson);
+      setBooks(booksJson);
       setTotalTraduzidos(0);
       setProgresso(0);
       setStatusTraducao("");
@@ -137,14 +137,14 @@ const Movies = () => {
 
    // #region Funções de Download
    const baixarCache = () => {
-      const moviesEmCache = obterCache(CACHE_KEY) || [];
-      const arquivoJson = JSON.stringify(moviesEmCache, null, 2);
+      const booksEmCache = obterCache(CACHE_KEY) || [];
+      const arquivoJson = JSON.stringify(booksEmCache, null, 2);
       const blob = new Blob([arquivoJson], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
 
       link.href = url;
-      link.download = "translated-movies.json";
+      link.download = "translated-books.json";
       link.click();
 
       URL.revokeObjectURL(url);
@@ -156,7 +156,7 @@ const Movies = () => {
          <section className="flex bg-[#3b0050]">
             <input
                type="text"
-               placeholder="Buscar Filmes..."
+               placeholder="Buscar Livros..."
                value={search}
                onChange={(event) => setSearch(event.target.value)}
                className="flex-1 bg-transparent px-8 py-5 text-sm text-white outline-none placeholder:text-purple-300"
@@ -170,7 +170,7 @@ const Movies = () => {
          <main className="p-8">
             <div className="mb-8 flex items-center justify-between">
                <p className="text-sm text-purple-300">
-                  {filteredMovies.length} filmes carregados do JSON estático
+                  {filteredBooks.length} livros carregados do JSON estático
                </p>
 
                <div className="flex gap-3">
@@ -212,9 +212,9 @@ const Movies = () => {
                </div>
             </div>
 
-            {existemNovosMovies && (
+            {existemNovosBooks && (
                <div className="mb-8 rounded bg-yellow-900/40 p-4 text-sm text-yellow-300">
-                  Sua base local possui {moviesJson.length} filmes, mas a PotterDB possui {totalMoviesApi}.
+                  Sua base local possui {booksJson.length} livros, mas a PotterDB possui {totalBooksApi}.
                   Atualize as traduções e baixe um novo JSON.
                </div>
             )}
@@ -223,7 +223,7 @@ const Movies = () => {
                <div className="mb-8 rounded-xl border border-purple-900 bg-[#21002b] p-4">
                   <p className="text-sm">
                      <strong>Tradução:</strong>{" "}
-                     {totalTraduzidos} de {totalMovies} filmes ({percentualTraduzido}%)
+                     {totalTraduzidos} de {totalBooks} livros ({percentualTraduzido}%)
                   </p>
 
                   <div className="mt-3 h-3 w-full overflow-hidden rounded-full bg-purple-950">
@@ -237,7 +237,7 @@ const Movies = () => {
 
             {percentualTraduzido === 100 && totalTraduzidos > 0 && (
                <div className="mb-8 text-sm text-purple-300">
-                  Traduções disponíveis para download! ({totalTraduzidos} filmes)
+                  Traduções disponíveis para download! ({totalTraduzidos} livros)
                </div>
             )}
 
@@ -256,69 +256,62 @@ const Movies = () => {
                </div>
             )}
 
-            <div className="grid grid-cols-1 gap-7 md:grid-cols-2 xl:grid-cols-3">
-               {filteredMovies.map((item) => (
-                  <div key={item.id} className="flex overflow-hidden rounded bg-[#190020]">
-                     <div className="flex w-36 shrink-0 items-center justify-center bg-[#120018] p-2">
-                        {item.attributes.poster && (
-                           <img
-                              src={item.attributes.poster}
-                              alt={item.attributes.title}
-                              onError={(event) => {
-                                 event.currentTarget.style.display = "none";
-                              }}
-                              className="max-h-56 max-w-full object-contain"
-                           />
-                        )}
-                     </div>
+            <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-4">
+                  {filteredBooks.map((item) => (
+                     <div
+                        key={item.id}
+                        className="overflow-hidden rounded bg-[#190020]"
+                     >
+                        <div className="flex h-72 w-full items-center justify-center bg-[#120018] p-3">
+                              {item.attributes.cover && (
+                              <img
+                                 src={item.attributes.cover}
+                                 alt={item.attributes.title}
+                                 onError={(event) => {
+                                    event.currentTarget.style.display = "none";
+                                 }}
+                                 className="max-h-full max-w-full object-contain"
+                              />
+                              )}
+                        </div>
 
-                     <div className="p-4">
-                        <h3 className="mb-2 text-sm font-semibold">
-                           {item.attributes.title}
-                        </h3>
+                        <div className="p-4">
+                              <h3 className="mb-2 text-sm font-semibold">
+                              {item.attributes.title}
+                              </h3>
 
-                        <p className="mb-3 text-xs text-purple-200">
-                           {item.attributes.summary || "-"}
-                        </p>
+                              <p className="text-xs text-purple-200">
+                              {item.attributes.summary || "-"}
+                              </p>
 
-                        <div className="space-y-1 text-xs text-purple-300">
-                           <p>
-                              <strong>Lançamento:</strong>{" "}
-                              {item.attributes.release_date || "-"}
-                           </p>
+                              <div className="mt-3 space-y-1 text-xs text-purple-300">
+                              <p>
+                                 <strong>Autor:</strong>{" "}
+                                 {item.attributes.author || "-"}
+                              </p>
 
-                           <p>
-                              <strong>Duração:</strong>{" "}
-                              {item.attributes.running_time || "-"}
-                           </p>
+                              <p>
+                                 <strong>Páginas:</strong>{" "}
+                                 {item.attributes.pages || "-"}
+                              </p>
 
-                           <p>
-                              <strong>Direção:</strong>{" "}
-                              {item.attributes.directors || "-"}
-                           </p>
+                              <p>
+                                 <strong>Lançamento:</strong>{" "}
+                                 {item.attributes.release_date || "-"}
+                              </p>
 
-                           <p>
-                              <strong>Roteiro:</strong>{" "}
-                              {item.attributes.screenwriters || "-"}
-                           </p>
-
-                           <p>
-                              <strong>Distribuição:</strong>{" "}
-                              {item.attributes.distributors || "-"}
-                           </p>
-
-                           <p>
-                              <strong>Bilheteria:</strong>{" "}
-                              {item.attributes.box_office || "-"}
-                           </p>
+                              <p>
+                                 <strong>Dedicatória:</strong>{" "}
+                                 {item.attributes.dedication || "-"}
+                              </p>
+                              </div>
                         </div>
                      </div>
-                  </div>
-               ))}
+                  ))}
             </div>
          </main>
       </div>
    );
 };
 
-export default Movies;
+export default Books;

@@ -6,14 +6,14 @@ import {
    ArrowPathIcon,
 } from "@heroicons/react/24/outline";
 
-import { getCharacters } from "../services/potterdb";
-import { translateCharactersBatch } from "../services/translator";
+import { getCharacters } from "../../services/potterdb";
+import { translateCharactersBatch } from "../../services/translator";
 
-import { dividirEmLotes } from "../utils/array.utils";
-import { obterCache, salvarCache } from "../utils/storage.utils";
-import { converterTextoParaJson } from "../utils/json.utils";
+import { dividirEmLotes } from "../../utils/array.utils";
+import { obterCache, salvarCache } from "../../utils/storage.utils";
+import { converterTextoParaJson } from "../../utils/json.utils";
 
-import charactersJson from "../assets/json/characters.json";
+import charactersJson from "../../assets/json/characters.json";
 
 const CACHE_KEY = "translated-characters-v1";
 

@@ -1,13 +1,13 @@
 import { Route, Routes } from "react-router-dom";
 
-import Character from "./Character/index.jsx";
-import CreateCharacter from "./CreateCharacter/index.jsx";
+import Container from "./Shared/index.jsx";
+import CreateCharacter from "./Modals/CreateCharacter.jsx";
 
 const RPGSheet = () => {
    return (
       <div className="text-white">
          <Routes>
-            <Route index element={<Character />} />
+            <Route index element={<Container />} />
             <Route path="create" element={<CreateCharacter />} />
          </Routes>
       </div>

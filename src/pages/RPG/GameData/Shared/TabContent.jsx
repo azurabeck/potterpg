@@ -1,5 +1,5 @@
-import AttributeList from "./AttributeList";
-import SpellsTab from "./SpellsTab";
+import AttributeList from "../Tabs/Attributes/index";
+import SpellsTab from "../Tabs/Spells/index";
 
 const TabContent = ({
    activeTab,

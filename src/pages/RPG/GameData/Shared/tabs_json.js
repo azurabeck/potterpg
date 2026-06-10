@@ -69,24 +69,3 @@ export const regrasPorAba = {
          "A relação muda conforme as escolhas, diálogos e acontecimentos da campanha.",
    },
 };
-
-export const atributoOrdem = [
-   "Coragem",
-   "Inteligência",
-   "Agilidade",
-   "Carisma",
-   "Percepção",
-   "Sorte",
-   "Magia",
-   "Resistência",
-   "Ataque",
-   "Proteção",
-   "Precisão",
-   "Controle",
-   "Magia Antiga",
-   "Liderança",
-   "Aprendizado Mágico",
-   "Persuasão",
-   "Astucia",
-   "Equilibrio",
-];

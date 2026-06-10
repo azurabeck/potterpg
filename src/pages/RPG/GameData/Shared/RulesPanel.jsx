@@ -1,4 +1,4 @@
-import attributeRules from "../../../../../assets/json/attributeRules.json";
+import attributeRules from "../../../../assets/json/attributeRules.json";
 
 const RulesPanel = ({ activeTab, currentRules }) => {
    if (activeTab === "attributes") {

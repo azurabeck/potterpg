@@ -14,7 +14,7 @@ import {
 import spellsJson from "../../../../../assets/json/spells_rpg.json";
 import masteryRules from "../../../../../assets/json/mastery_rpg.json";
 import { db } from "../../../../../services/firebase";
-import { getMasteryByXp } from "../helpers/mastery";
+import { getMasteryByXp } from "../../../../../helpers/mastery";
 
 const attributeOptions = [
    "Coragem",

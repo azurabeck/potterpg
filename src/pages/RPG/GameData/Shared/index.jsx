@@ -5,12 +5,13 @@ import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../../../services/firebase";
 import { getCharactersByUserId } from "../../../../services/rpg/character.service";
 
-import { atributoOrdem, regrasPorAba, tabs } from "./constants";
-import SheetHeader from "./components/SheetHeader";
-import CharacterImage from "./components/CharacterImage";
-import SheetTabs from "./components/SheetTabs";
-import TabContent from "./components/TabContent";
-import RulesPanel from "./components/RulesPanel";
+import { regrasPorAba, tabs } from "./tabs_json";
+import { atributoOrdem } from "../Tabs/Attributes/atributoOrdem";
+import Header from "./Header";
+import CharacterImage from "./CharacterImage"
+import SheetTabs from "./Tabs";
+import TabContent from "./TabContent";
+import RulesPanel from "./RulesPanel";
 
 const CharacterSheet = () => {
    const [activeTab, setActiveTab] = useState("attributes");
@@ -200,7 +201,7 @@ const CharacterSheet = () => {
 
    return (
       <section className="flex h-[calc(100vh-65px)] w-full flex-col bg-[#30003f] px-8 pb-7 pt-6 text-white shadow-2xl">
-         <SheetHeader
+         <Header
             characters={characters}
             selectedCharacter={selectedCharacter}
             selectedCharacterId={selectedCharacterId}

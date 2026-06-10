@@ -5,14 +5,14 @@ import { Routes, Route, NavLink } from "react-router-dom";
 import { BoltIcon } from "@heroicons/react/24/solid";
 import { BookOpenIcon, CodeBracketIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import AuthModal from "./components/AuthModal/index.jsx";
-import Spells from "./pages/Spells";
-import Potions from "./pages/Potions";
-import Characters from "./pages/Characters";
-import Movies from "./pages/Movies";
-import Books from "./pages/Books";
-import Creatures from "./pages/Creatures"
+import Spells from "./pages/API/Spells";
+import Potions from "./pages/API/Potions";
+import Characters from "./pages/API/Characters";
+import Movies from "./pages/API/Movies";
+import Books from "./pages/API/Books";
+import Creatures from "./pages/API/Creatures"
 import RPG_SpellsRules from "./pages/RPG/SpellRules"
-import RPG_Sheet from "./pages/RPG/Sheet/index.jsx"
+import RPG_Sheet from "./pages/RPG/GameData/index.jsx"
 
 const App = () => {
    const [rpgApiMode, setRpgApiMode] = useState(false);

@@ -6,11 +6,11 @@ import {
    ArrowPathIcon,
 } from "@heroicons/react/24/outline";
 
-import { getSpells } from "../services/potterdb";
-import { translateSpellsBatch } from "../services/translator";
-import { dividirEmLotes } from "../utils/array.utils";
-import { obterCache, salvarCache } from "../utils/storage.utils";
-import spellsJson from "../assets/json/spells.json";
+import { getSpells } from "../../services/potterdb";
+import { translateSpellsBatch } from "../../services/translator";
+import { dividirEmLotes } from "../../utils/array.utils";
+import { obterCache, salvarCache } from "../../utils/storage.utils";
+import spellsJson from "../../assets/json/spells.json";
 
 const CACHE_KEY = "translated-spells-v1";
 
