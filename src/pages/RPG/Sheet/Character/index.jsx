@@ -216,31 +216,37 @@ const CharacterSheet = () => {
                      onTabChange={handleTabChange}
                   />
 
-                  <div className="min-h-0 overflow-y-auto px-12 py-12">
-                     <div className="grid min-h-full grid-cols-12 gap-8">
-                        <div className="col-span-6 pr-6 text-left">
-                           <TabContent
-                              activeTab={activeTab}
-                              selectedCharacter={selectedCharacter}
-                              attributeEntries={attributeEntries}
-                              editingAttributeName={editingAttributeName}
-                              attributeDraftValue={attributeDraftValue}
-                              savingAttributeName={savingAttributeName}
-                              onSelectAttribute={handleSelectAttribute}
-                              onAttributeValueChange={handleAttributeValueChange}
-                              onSaveAttribute={handleSaveAttribute}
-                              getAttributeChangedStatus={getAttributeChangedStatus}
-                           />
-                        </div>
+     <div className="min-h-0 overflow-y-auto px-12 py-12">
+   <div className="grid min-h-[1200px] grid-cols-12 gap-8">
+      <div className="col-span-6 pr-6 text-left">
+         <div className="sticky top-0">
+            <TabContent
+               activeTab={activeTab}
+               selectedCharacter={selectedCharacter}
+               setCharacters={setCharacters}
+               attributeEntries={attributeEntries}
+               editingAttributeName={editingAttributeName}
+               attributeDraftValue={attributeDraftValue}
+               savingAttributeName={savingAttributeName}
+               onSelectAttribute={handleSelectAttribute}
+               onAttributeValueChange={handleAttributeValueChange}
+               onSaveAttribute={handleSaveAttribute}
+               getAttributeChangedStatus={getAttributeChangedStatus}
+            />
+         </div>
+      </div>
 
-                        <div className="col-span-1 border-l border-dashed border-white/25" />
+      <div className="col-span-1 border-l border-dashed border-white/25" />
 
-                        <RulesPanel
-                           activeTab={activeTab}
-                           currentRules={currentRules}
-                        />
-                     </div>
-                  </div>
+      <div className="col-span-5 pr-2">
+         <RulesPanel
+            activeTab={activeTab}
+            currentRules={currentRules}
+         />
+      </div>
+   </div>
+</div>
+                  
                </div>
             </div>
          </div>

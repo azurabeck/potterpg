@@ -1,8 +1,10 @@
 import AttributeList from "./AttributeList";
+import SpellsTab from "./SpellsTab";
 
 const TabContent = ({
    activeTab,
    selectedCharacter,
+   setCharacters,
    attributeEntries,
    editingAttributeName,
    attributeDraftValue,
@@ -100,9 +102,11 @@ const TabContent = ({
    }
 
    if (activeTab === "spells") {
-      return renderObjectList(
-         selectedCharacter?.habilidades,
-         "Nenhum feitiço ou habilidade cadastrado."
+      return (
+         <SpellsTab
+            selectedCharacter={selectedCharacter}
+            setCharacters={setCharacters}
+         />
       );
    }
 

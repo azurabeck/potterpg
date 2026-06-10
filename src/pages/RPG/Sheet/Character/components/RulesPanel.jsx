@@ -4,9 +4,9 @@ const RulesPanel = ({ activeTab, currentRules }) => {
    if (activeTab === "attributes") {
       return (
          <aside className="col-span-5 pr-2 text-left text-xs leading-4 text-[#736868]">
-            <h3 className="mb-5 uppercase tracking-[0.08em]">
+            <h4 className="mb-5 uppercase text-[#ceb4aa] tracking-[0.08em]">
                {attributeRules.title}
-            </h3>
+            </h4>
 
             {attributeRules.description.map((paragraph) => (
                <p key={paragraph} className="mb-4">
@@ -14,7 +14,7 @@ const RulesPanel = ({ activeTab, currentRules }) => {
                </p>
             ))}
 
-            <h4 className="mb-4 mt-6 uppercase tracking-[0.08em]">
+            <h4 className="mb-4 mt-6 text-[#ceb4aa] uppercase tracking-[0.08em]">
                {attributeRules.evolutionTitle}
             </h4>
 
@@ -38,7 +38,7 @@ const RulesPanel = ({ activeTab, currentRules }) => {
                ))}
             </div>
 
-            <h4 className="mb-4 mt-6 uppercase tracking-[0.08em]">
+            <h4 className="mb-4 mt-6 uppercase text-[#ceb4aa] tracking-[0.08em]">
                {attributeRules.gainRule.title}
             </h4>
 
