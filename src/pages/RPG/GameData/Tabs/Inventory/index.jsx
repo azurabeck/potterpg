@@ -108,19 +108,21 @@ const InventoryTab = ({ selectedCharacter, setCharacters }) => {
          isSaving={isSaving}
       />
 
-      <Side
-         search={search}
-         categoryFilter={categoryFilter}
-         inventory={inventory}
-         moneyDraft={moneyDraft}
-         setSearch={setSearch}
-         setCategoryFilter={setCategoryFilter}
-         setMoneyDraft={setMoneyDraft}
-         onAddItem={openAddItemModal}
-         onOpenRules={() => setModal({ type: "rules", title: "Regras do Inventário" })}
-         onSaveMoney={handleSaveMoney}
-         isSaving={isSaving}
-      />
+      <div className="sticky top-6 self-start">
+         <Side
+            search={search}
+            categoryFilter={categoryFilter}
+            inventory={inventory}
+            moneyDraft={moneyDraft}
+            setSearch={setSearch}
+            setCategoryFilter={setCategoryFilter}
+            setMoneyDraft={setMoneyDraft}
+            onAddItem={openAddItemModal}
+            onOpenRules={() => setModal({ type: "rules", title: "Regras do Inventário" })}
+            onSaveMoney={handleSaveMoney}
+            isSaving={isSaving}
+         />
+      </div>
    </div>
 );
 };

@@ -1,0 +1,11 @@
+{
+   "title": "Regras de Sessões",
+   "text": [
+      "Cada campanha fica salva na coleção campaigns do Firestore, vinculada ao personagem pelo character_id.",
+      "A ficha do personagem guarda apenas os ids das campanhas em campaign_ids, evitando sobrecarregar o documento principal.",
+      "Cada sessão deve registrar evento, local e personagens presentes."
+   ],
+   "subtitle": "Registro por JSON",
+   "highlight": "O campo sessions pode receber um objeto ou uma lista de objetos.",
+   "description": "Se nenhuma campanha estiver expandida, o JSON cria uma nova campanha. Se uma campanha estiver expandida, as sessões são adicionadas nela."
+}

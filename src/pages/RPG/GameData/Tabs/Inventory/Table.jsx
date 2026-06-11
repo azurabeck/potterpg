@@ -6,8 +6,7 @@ const Table = ({ items, onOpenItem, onDeleteItem, isSaving }) => {
    const groupedItems = groupItemsByCategory(items);
 
    return (
-      <div className="relative min-h-[310px] pr-8 text-xs">
-         <div className="absolute bottom-0 right-0 top-10 w-px bg-white/20" />
+      <div className="relative min-h-[310px] pr-8 text-xs border-e border-dashed border-white/25">
 
          <div className="space-y-8">
             {items.length ? (

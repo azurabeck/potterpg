@@ -1,0 +1,11 @@
+{
+   "title": "Regras de Mistérios",
+   "text": [
+      "Cada mistério fica salvo na coleção mysteries do Firestore, vinculado ao personagem pelo character_id.",
+      "A ficha do personagem guarda apenas os ids dos mistérios em mystery_ids, evitando sobrecarregar o documento principal.",
+      "Cada pista deve registrar uma pergunta, detalhes, resolução ou teoria atual e status próprio."
+   ],
+   "subtitle": "Organização",
+   "highlight": "Mistérios são registrados por formulário, não por JSON.",
+   "description": "Use status do mistério para controlar o andamento geral e status da pista para controlar cada descoberta individualmente."
+}
