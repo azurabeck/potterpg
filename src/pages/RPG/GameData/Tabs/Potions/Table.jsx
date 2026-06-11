@@ -98,33 +98,33 @@ const Table = ({
          <div
             className={`grid ${tableColumns} gap-5 border-b border-white/10 pb-3 text-xs text-purple-100/90`}
          >
-            <button type="button" onClick={() => handleSort("year")} className="text-left">
+            <button type="button" onClick={() => handleSort("year")} className="text-left p-2">
                Ano {renderSortIcon("year")}
             </button>
 
-            <button type="button" onClick={() => handleSort("name")} className="text-left">
+            <button type="button" onClick={() => handleSort("name")} className="text-left p-2">
                Nome {renderSortIcon("name")}
             </button>
 
-            <button type="button" onClick={() => handleSort("effect")} className="text-left">
+            <button type="button" onClick={() => handleSort("effect")} className="text-left p-2">
                Efeito {renderSortIcon("effect")}
             </button>
 
-            <span>Ingredientes</span>
+            <div className="flex items-center p-2">Ingredientes</div>
 
-            <button type="button" onClick={() => handleSort("ingredientLocation")} className="text-left">
+            <button type="button" onClick={() => handleSort("ingredientLocation")} className="text-left p-2">
                Local Ingredientes {renderSortIcon("ingredientLocation")}
             </button>
 
-            <button type="button" onClick={() => handleSort("level")} className="text-left">
+            <button type="button" onClick={() => handleSort("level")} className="text-left p-2">
                Nível {renderSortIcon("level")}
             </button>
 
-            <button type="button" onClick={() => handleSort("xp")} className="text-left">
+            <button type="button" onClick={() => handleSort("xp")} className="text-left p-2">
                XP Atual {renderSortIcon("xp")}
             </button>
 
-            <span>Maestria</span>
+            <div className="flex items-center p-2">Maestria</div>
             <span />
          </div>
 
@@ -166,17 +166,17 @@ const Table = ({
                         key={potionId}
                         className={`grid ${tableColumns} min-h-12 items-center gap-5 text-xs text-[#736868] transition hover:bg-white/5`}
                      >
-                        <span>{potion.attributes?.ano_letivo || "-"}</span>
+                        <span className="p-2">{potion.attributes?.ano_letivo || "-"}</span>
 
-                        <span className="flex items-center gap-2 text-white/80">
+                        <span className="flex items-center gap-2 text-white/80  p-2">
                            {getPotionDisplayName(potion)}
                         </span>
 
-                        <span className="line-clamp-2" title={item.effect}>
+                        <span className="line-clamp-2  p-2" title={item.effect}>
                            {item.effect || "-"}
                         </span>
 
-                        <span className="flex items-center gap-2">
+                        <span className="flex items-center gap-2  p-2">
                            <button
                               type="button"
                               onClick={() =>
@@ -191,7 +191,7 @@ const Table = ({
                            </button>
                         </span>
 
-                        <span className="flex items-center gap-2">
+                        <span className="flex items-center gap-2 p-2">
                            {hasIngredientsInfo ? (
                               <button
                                  type="button"
@@ -257,7 +257,7 @@ const Table = ({
                            className="w-full bg-[#9d564c] px-3 py-1 text-center text-xs text-white outline-none ring-1 ring-transparent focus:ring-yellow-400"
                         />
 
-                        <span>{mastery.maestria}</span>
+                        <span>{mastery.maestria} → {mastery.dado}</span>
 
                         <div className="flex items-center gap-2">
                            <button
