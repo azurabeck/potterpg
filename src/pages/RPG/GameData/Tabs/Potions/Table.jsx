@@ -99,7 +99,7 @@ const Table = ({
             className={`grid ${tableColumns} gap-5 border-b border-white/10 pb-3 text-xs text-purple-100/90`}
          >
             <button type="button" onClick={() => handleSort("year")} className="text-left p-2">
-               Ano {renderSortIcon("year")}
+               Ano{renderSortIcon("year")}
             </button>
 
             <button type="button" onClick={() => handleSort("name")} className="text-left p-2">

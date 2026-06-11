@@ -1,4 +1,5 @@
 import { PlusIcon } from "@heroicons/react/24/outline";
+import CustomSelect from "../../../../../components/CustomSelect";
 import { levelOptions } from "./constants";
 import { getPotionDisplayName } from "./helpers";
 
@@ -25,6 +26,16 @@ const Header = ({
    handleSelectPotion,
    handleAddPotion,
 }) => {
+   const yearOptions = [
+      { value: "", label: "Ano" },
+      ...years.map((year) => ({ value: year, label: `Ano ${year}` })),
+   ];
+
+   const levelSelectOptions = [
+      { value: "", label: "Nível" },
+      ...levelOptions.map((level) => ({ value: level, label: level })),
+   ];
+
    return (
       <div className="space-y-3">
          <div className="flex items-start gap-2">
@@ -55,8 +66,7 @@ const Header = ({
                                  </span>
 
                                  <span className="mt-1 text-[11px] text-[#736868]">
-                                    {potion.attributes?.nivel || "-"} • Ano{" "}
-                                    {potion.attributes?.ano_letivo || "-"}
+                                    {potion.attributes?.nivel || "-"} • Ano {potion.attributes?.ano_letivo || "-"}
                                  </span>
                               </button>
                            ))
@@ -98,31 +108,19 @@ const Header = ({
                className="h-9 border border-white/10 bg-white/10 px-3 text-xs text-white outline-none placeholder:text-white/30"
             />
 
-            <select
+            <CustomSelect
                value={yearFilter}
-               onChange={(event) => setYearFilter(event.target.value)}
-               className="h-9 border border-white/10 bg-white/10 text-xs text-white outline-none"
-            >
-               <option value="">Ano</option>
-               {years.map((year) => (
-                  <option key={year} value={year}>
-                     Ano {year}
-                  </option>
-               ))}
-            </select>
+               options={yearOptions}
+               onChange={setYearFilter}
+               placeholder="Ano"
+            />
 
-            <select
+            <CustomSelect
                value={levelFilter}
-               onChange={(event) => setLevelFilter(event.target.value)}
-               className="h-9 border border-white/10 bg-white/10 text-xs text-white outline-none"
-            >
-               <option value="">Nível</option>
-               {levelOptions.map((level) => (
-                  <option key={level} value={level}>
-                     {level}
-                  </option>
-               ))}
-            </select>
+               options={levelSelectOptions}
+               onChange={setLevelFilter}
+               placeholder="Nível"
+            />
 
             <input
                type="text"

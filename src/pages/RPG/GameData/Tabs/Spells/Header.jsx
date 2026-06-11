@@ -1,4 +1,5 @@
 import { PlusIcon } from "@heroicons/react/24/outline";
+import CustomSelect from "../../../../../components/CustomSelect";
 import { attributeOptions, levelOptions } from "./json-files/constants";
 import { getSpellName } from "./helpers";
 
@@ -25,6 +26,21 @@ const Header = ({
    handleSelectSpell,
    handleAddSpell,
 }) => {
+   const yearOptions = [
+      { value: "", label: "Ano" },
+      ...years.map((year) => ({ value: year, label: `Ano ${year}` })),
+   ];
+
+   const levelSelectOptions = [
+      { value: "", label: "Nível" },
+      ...levelOptions.map((level) => ({ value: level, label: level })),
+   ];
+
+   const attributeSelectOptions = [
+      { value: "", label: "Atributo" },
+      ...attributeOptions.map((attribute) => ({ value: attribute, label: attribute })),
+   ];
+
    return (
       <div className="space-y-3">
          <div className="flex items-start gap-2">
@@ -46,20 +62,13 @@ const Header = ({
                               <button
                                  key={spell.id}
                                  type="button"
-                                 onMouseDown={(event) =>
-                                    event.preventDefault()
-                                 }
+                                 onMouseDown={(event) => event.preventDefault()}
                                  onClick={() => handleSelectSpell(spell)}
                                  className="flex w-full flex-col border-b border-white/5 px-4 py-3 text-left text-xs transition hover:bg-white/10"
                               >
-                                 <span className="text-white">
-                                    {getSpellName(spell)}
-                                 </span>
-
+                                 <span className="text-white">{getSpellName(spell)}</span>
                                  <span className="mt-1 text-[11px] text-[#736868]">
-                                    {spell.attributes?.aula || "Feitiço"} •{" "}
-                                    {spell.attributes?.nivel || "-"} • Ano{" "}
-                                    {spell.attributes?.ano_letivo || "-"}
+                                    {spell.attributes?.aula || "Feitiço"} • {spell.attributes?.nivel || "-"} • Ano {spell.attributes?.ano_letivo || "-"}
                                  </span>
                               </button>
                            ))
@@ -74,9 +83,7 @@ const Header = ({
 
                <button
                   type="button"
-                  disabled={
-                     !selectedSpell || savingSpellId === selectedSpell?.id
-                  }
+                  disabled={!selectedSpell || savingSpellId === selectedSpell?.id}
                   onClick={handleAddSpell}
                   className="flex h-10 w-10 items-center justify-center bg-white/10 text-white/70 transition hover:bg-yellow-400 hover:text-[#2b0038] disabled:cursor-not-allowed disabled:opacity-40"
                   title="Adicionar feitiço"
@@ -103,44 +110,26 @@ const Header = ({
                className="h-9 border border-white/10 bg-white/10 px-3 text-xs text-white outline-none placeholder:text-white/30"
             />
 
-            <select
+            <CustomSelect
                value={yearFilter}
-               onChange={(event) => setYearFilter(event.target.value)}
-               className="h-9 border border-white/10 bg-white/10 text-xs text-white outline-none"
-            >
-               <option value="">Ano</option>
-               {years.map((year) => (
-                  <option key={year} value={year}>
-                     Ano {year}
-                  </option>
-               ))}
-            </select>
+               options={yearOptions}
+               onChange={setYearFilter}
+               placeholder="Ano"
+            />
 
-            <select
+            <CustomSelect
                value={levelFilter}
-               onChange={(event) => setLevelFilter(event.target.value)}
-               className="h-9 border border-white/10 bg-white/10 text-xs text-white outline-none"
-            >
-               <option value="">Nível</option>
-               {levelOptions.map((level) => (
-                  <option key={level} value={level}>
-                     {level}
-                  </option>
-               ))}
-            </select>
+               options={levelSelectOptions}
+               onChange={setLevelFilter}
+               placeholder="Nível"
+            />
 
-            <select
+            <CustomSelect
                value={attributeFilter}
-               onChange={(event) => setAttributeFilter(event.target.value)}
-               className="h-9 border border-white/10 bg-white/10 text-xs text-white outline-none"
-            >
-               <option value="">Atributo</option>
-               {attributeOptions.map((attribute) => (
-                  <option key={attribute} value={attribute}>
-                     {attribute}
-                  </option>
-               ))}
-            </select>
+               options={attributeSelectOptions}
+               onChange={setAttributeFilter}
+               placeholder="Atributo"
+            />
          </div>
       </div>
    );
