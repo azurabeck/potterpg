@@ -1,0 +1,11 @@
+{
+   "title": "Regras do Inventário",
+   "text": [
+      "O inventário registra itens, consumíveis, objetos mágicos, itens de mistério e outros recursos encontrados durante a campanha.",
+      "Itens com bônus podem indicar um atributo e um valor de atributo. Esse bônus deve ser aplicado apenas quando fizer sentido narrativo.",
+      "O campo onde encontrou deve guardar a origem do item, como loja, aula, exploração, missão, NPC ou recompensa."
+   ],
+   "subtitle": "Moedas",
+   "highlight": "Nuques, Sicles e Galeões ficam salvos junto ao inventário do personagem.",
+   "description": "Ao gastar ou receber dinheiro, atualize os campos de moeda e salve."
+}

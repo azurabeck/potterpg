@@ -11,7 +11,7 @@ export const tabs = [
    { key: "spells", label: "Feitiços", component: SpellsTab, hideRules: true },
    { key: "potions", label: "Poções", component: PotionsTab, hideRules: true  },
    { key: "mysteries", label: "Mistérios", component: MysteriesTab },
-   { key: "inventory", label: "Inventário", component: InventoryTab },
+   { key: "inventory", label: "Inventário", component: InventoryTab, hideRules: true },
    { key: "sessions", label: "Sessões", component: SessionsTab },
    { key: "relations", label: "Relações", component: RelationsTab },
 ];
