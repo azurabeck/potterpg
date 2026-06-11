@@ -2,25 +2,35 @@ import { useState } from "react";
 import {
    CheckIcon,
    InformationCircleIcon,
+   PlusIcon,
    TrashIcon,
 } from "@heroicons/react/24/outline";
 import { getMasteryByXp } from "../../../../../helpers/mastery";
 import Modal from "../../../../../components/Modal";
 import { levelOptions, tableColumns } from "./constants";
 import { getPotionDisplayName } from "./helpers";
+import IngredientsInfoModal from "./IngredientsInfoModal";
+
+const emptyIngredientInfo = {
+   name: "",
+   drop: "",
+   shop: "",
+   value: "",
+};
 
 const Table = ({
    filteredAndSortedPotions,
    xpDrafts,
    levelDrafts,
    locationDrafts,
+   ingredientsInfoDrafts,
    savingPotionId,
    editingLevelPotionId,
    levelDropdownRef,
    handleSort,
    renderSortIcon,
    handleXpChange,
-   handleLocationChange,
+   handleIngredientsInfoChange,
    handleOpenLevelDropdown,
    handleSelectLevel,
    handleSavePotion,
@@ -28,11 +38,42 @@ const Table = ({
 }) => {
    const [modalContent, setModalContent] = useState(null);
 
-   const openInfoModal = (title, text) => {
+   const closeModal = () => {
+      setModalContent(null);
+   };
+
+   const openTextModal = (title, text) => {
       setModalContent({
+         type: "text",
          title,
          text: text || "Nenhuma informação cadastrada.",
       });
+   };
+
+   const openIngredientsInfoModal = (potionId, ingredientsInfo) => {
+      setModalContent({
+         type: "ingredientsInfo",
+         title: "Informações dos Ingredientes",
+         potionId,
+         ingredientsInfo: Array.isArray(ingredientsInfo) && ingredientsInfo.length
+            ? ingredientsInfo
+            : [emptyIngredientInfo],
+      });
+   };
+
+   const updateIngredientsInfo = (value) => {
+      const potionId = modalContent?.potionId;
+      if (!potionId) return;
+
+      const nextIngredientsInfo =
+         typeof value === "function" ? value(modalContent?.ingredientsInfo || []) : value;
+
+      setModalContent((current) => ({
+         ...current,
+         ingredientsInfo: nextIngredientsInfo,
+      }));
+
+      handleIngredientsInfoChange(potionId, nextIngredientsInfo);
    };
 
    return (
@@ -40,11 +81,18 @@ const Table = ({
          <Modal
             isOpen={!!modalContent}
             title={modalContent?.title}
-            onClose={() => setModalContent(null)}
+            onClose={closeModal}
          >
-            <p className="whitespace-pre-line leading-6">
-               {modalContent?.text}
-            </p>
+            {modalContent?.type === "ingredientsInfo" ? (
+               <IngredientsInfoModal
+                  ingredientsInfo={modalContent?.ingredientsInfo || []}
+                  setIngredientsInfo={updateIngredientsInfo}
+               />
+            ) : (
+               <p className="whitespace-pre-line leading-6">
+                  {modalContent?.text}
+               </p>
+            )}
          </Modal>
 
          <div
@@ -93,16 +141,22 @@ const Table = ({
                      savedData?.local_ingredientes ||
                      potion.attributes?.local_ingredientes ||
                      "";
+                  const currentIngredientsInfo =
+                     savedData?.ingredientes_info || [];
 
                   const draftXp = xpDrafts[potionId] ?? String(currentXp);
                   const draftLevel = levelDrafts[potionId] ?? currentLevel;
                   const draftLocation =
                      locationDrafts[potionId] ?? currentLocation;
+                  const draftIngredientsInfo = ingredientsInfoDrafts[potionId] ?? currentIngredientsInfo;
+                  const hasIngredientsInfo = draftIngredientsInfo.length > 0;
 
                   const hasChanged =
                      Number(draftXp) !== Number(currentXp) ||
                      draftLevel !== currentLevel ||
-                     draftLocation !== currentLocation;
+                     draftLocation !== currentLocation ||
+                     JSON.stringify(draftIngredientsInfo) !==
+                        JSON.stringify(currentIngredientsInfo);
 
                   const mastery = getMasteryByXp(draftLevel, draftXp);
                   const dropdownDirection = index < 3 ? "top-8" : "bottom-8";
@@ -123,47 +177,39 @@ const Table = ({
                         </span>
 
                         <span className="flex items-center gap-2">
-                           <span className="line-clamp-2">
-                              {item.ingredients || "-"}
-                           </span>
-
                            <button
                               type="button"
                               onClick={() =>
-                                 openInfoModal("Ingredientes", item.ingredients)
+                                 openTextModal("Ingredientes", item.ingredients)
                               }
-                              className="text-white/60 transition hover:text-yellow-400"
+                              className="text-xs w-100 flex items-center justify-between cursor-pointer text-[#736868] transition hover:text-yellow-300"
                            >
-                              <InformationCircleIcon className="h-4 w-4" />
+                              <span className="line-clamp-1 w-[150px] text-left">
+                                 {item.ingredients || "-"}
+                              </span>
+                             <InformationCircleIcon className="h-4 w-4" />
                            </button>
                         </span>
 
                         <span className="flex items-center gap-2">
-                           <input
-                              type="text"
-                              value={draftLocation}
-                              onChange={(event) =>
-                                 handleLocationChange(
-                                    potionId,
-                                    event.target.value
-                                 )
-                              }
-                              placeholder="Ex: estoque, floresta..."
-                              className="w-full bg-white/10 px-3 py-1 text-xs text-white outline-none ring-1 ring-transparent placeholder:text-white/30 focus:ring-yellow-400"
-                           />
-
-                           <button
-                              type="button"
-                              onClick={() =>
-                                 openInfoModal(
-                                    "Local dos Ingredientes",
-                                    draftLocation
-                                 )
-                              }
-                              className="text-white/60 transition hover:text-yellow-400"
-                           >
-                              <InformationCircleIcon className="h-4 w-4" />
-                           </button>
+                           {hasIngredientsInfo ? (
+                              <button
+                                 type="button"
+                                 onClick={() => openIngredientsInfoModal(potionId, draftIngredientsInfo)}
+                                 className="text-xs w-100 flex items-center justify-between cursor-pointer text-[#736868] transition hover:text-yellow-300"
+                              >
+                                 Ver locais <InformationCircleIcon className="h-4 w-4" />
+                              </button>
+                           ) : (
+                              <button
+                                 type="button"
+                                 onClick={() => openIngredientsInfoModal(potionId, draftIngredientsInfo)}
+                                 className="flex w-100 h-[30px] items-center cursor-pointer justify-center bg-white/10 text-white/50 transition hover:bg-yellow-400 hover:text-[#2b0038]"
+                                 title="Adicionar informações dos ingredientes"
+                              >
+                                  <PlusIcon className="h-3 w-3" />
+                              </button>
+                           )}
                         </span>
 
                         <div
