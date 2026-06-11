@@ -1,17 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
-import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
-import { auth, db } from "../../../../services/firebase";
+import { auth } from "../../../../services/firebase";
 import { getCharactersByUserId } from "../../../../services/rpg/character.service";
 
 import { regrasPorAba, tabs } from "./tabs_json";
-import { atributoOrdem } from "../Tabs/Attributes/atributoOrdem";
 import Header from "./Header";
-import CharacterImage from "./CharacterImage"
-import SheetTabs from "./Tabs";
-import TabContent from "./TabContent";
-import RulesPanel from "./RulesPanel";
+import Content from "./Content";
 
 const CharacterSheet = () => {
    const [activeTab, setActiveTab] = useState("attributes");
@@ -20,25 +15,13 @@ const CharacterSheet = () => {
    const [loading, setLoading] = useState(true);
    const [error, setError] = useState("");
 
-   const [editingAttributeName, setEditingAttributeName] = useState("");
-   const [attributeDraftValue, setAttributeDraftValue] = useState("");
-   const [savingAttributeName, setSavingAttributeName] = useState("");
-
    const selectedCharacter = useMemo(() => {
-      return characters.find(
-         (character) => character.id === selectedCharacterId
-      );
+      return characters.find((character) => character.id === selectedCharacterId);
    }, [characters, selectedCharacterId]);
 
-   const currentRules = regrasPorAba[activeTab] || regrasPorAba.spells;
-
-   const attributeEntries = useMemo(() => {
-      const atributos = selectedCharacter?.atributos || {};
-
-      return atributoOrdem
-         .filter((attributeName) => attributeName in atributos)
-         .map((attributeName) => [attributeName, atributos[attributeName]]);
-   }, [selectedCharacter]);
+   const currentTab = tabs.find((tab) => tab.key === activeTab) || tabs[0];
+   const CurrentTabComponent = currentTab.component;
+   const currentRules = regrasPorAba[activeTab] || regrasPorAba.attributes;
 
    useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -68,83 +51,8 @@ const CharacterSheet = () => {
       return () => unsubscribe();
    }, []);
 
-   const clearAttributeEditing = () => {
-      setEditingAttributeName("");
-      setAttributeDraftValue("");
-   };
-
-   const handleTabChange = (tabKey) => {
-      setActiveTab(tabKey);
-
-      if (tabKey !== "attributes") {
-         clearAttributeEditing();
-      }
-   };
-
    const handleCharacterChange = (event) => {
       setSelectedCharacterId(event.target.value);
-      clearAttributeEditing();
-   };
-
-   const handleSelectAttribute = (attributeName, attributeValue) => {
-      setEditingAttributeName(attributeName);
-      setAttributeDraftValue(String(attributeValue ?? 0));
-   };
-
-   const handleAttributeValueChange = (event) => {
-      const value = event.target.value;
-
-      if (/^-?\d*$/.test(value)) {
-         setAttributeDraftValue(value);
-      }
-   };
-
-   const getAttributeChangedStatus = (attributeName, originalValue) => {
-      if (editingAttributeName !== attributeName) return false;
-      if (attributeDraftValue === "") return false;
-
-      return Number(attributeDraftValue) !== Number(originalValue);
-   };
-
-   const handleSaveAttribute = async (attributeName, originalValue) => {
-      const hasChanged = getAttributeChangedStatus(attributeName, originalValue);
-
-      if (!selectedCharacter?.id || !hasChanged) return;
-
-      const normalizedValue = Number(attributeDraftValue);
-
-      if (Number.isNaN(normalizedValue)) return;
-
-      try {
-         setSavingAttributeName(attributeName);
-
-         const characterRef = doc(db, "characters", selectedCharacter.id);
-
-         await updateDoc(characterRef, {
-            [`atributos.${attributeName}`]: normalizedValue,
-            updated_at: serverTimestamp(),
-         });
-
-         setCharacters((currentCharacters) =>
-            currentCharacters.map((character) => {
-               if (character.id !== selectedCharacter.id) return character;
-
-               return {
-                  ...character,
-                  atributos: {
-                     ...(character.atributos || {}),
-                     [attributeName]: normalizedValue,
-                  },
-               };
-            })
-         );
-
-         setAttributeDraftValue(String(normalizedValue));
-      } catch (requestError) {
-         console.error("Erro ao salvar atributo:", requestError);
-      } finally {
-         setSavingAttributeName("");
-      }
    };
 
    if (loading) {
@@ -166,9 +74,7 @@ const CharacterSheet = () => {
             <p className="text-sm uppercase tracking-[0.35em] text-yellow-400">
                Perfil RPG
             </p>
-            <h1 className="mt-3 text-sm uppercase tracking-[0.16em]">
-               {error}
-            </h1>
+            <h1 className="mt-3 text-sm uppercase tracking-[0.16em]">{error}</h1>
          </section>
       );
    }
@@ -197,83 +103,29 @@ const CharacterSheet = () => {
       );
    }
 
-   const isSpellsTab = activeTab === "spells";
-
    return (
       <section className="flex h-[calc(100vh-65px)] w-full flex-col bg-[#30003f] px-8 pb-7 pt-6 text-white shadow-2xl">
          <Header
             characters={characters}
             selectedCharacter={selectedCharacter}
             selectedCharacterId={selectedCharacterId}
+            tabs={tabs}
+            activeTab={activeTab}
             onCharacterChange={handleCharacterChange}
+            onTabChange={setActiveTab}
          />
 
-         <div className="mt-5 min-h-0 flex-1 border-t border-white/20 pt-4">
-            <div className="grid h-full min-h-0 w-full grid-cols-12">
-               <CharacterImage character={selectedCharacter} />
-
-               <div className="col-span-9 grid h-full min-h-0 grid-rows-[52px_1fr]">
-                  <SheetTabs
-                     tabs={tabs}
-                     activeTab={activeTab}
-                     onTabChange={handleTabChange}
-                  />
-
-                  <div className="min-h-0 overflow-y-auto px-12 py-12">
-                     <div
-                        className={
-                           isSpellsTab
-                              ? "min-h-full"
-                              : "grid min-h-[1200px] grid-cols-12 gap-8"
-                        }
-                     >
-                        <div
-                           className={
-                              isSpellsTab
-                                 ? "text-left"
-                                 : "col-span-6 pr-6 text-left"
-                           }
-                        >
-                           <div
-                              className={
-                                 isSpellsTab ? "" : "sticky top-0"
-                              }
-                           >
-                              <TabContent
-                                 activeTab={activeTab}
-                                 selectedCharacter={selectedCharacter}
-                                 setCharacters={setCharacters}
-                                 attributeEntries={attributeEntries}
-                                 editingAttributeName={editingAttributeName}
-                                 attributeDraftValue={attributeDraftValue}
-                                 savingAttributeName={savingAttributeName}
-                                 onSelectAttribute={handleSelectAttribute}
-                                 onAttributeValueChange={handleAttributeValueChange}
-                                 onSaveAttribute={handleSaveAttribute}
-                                 getAttributeChangedStatus={
-                                    getAttributeChangedStatus
-                                 }
-                              />
-                           </div>
-                        </div>
-
-                        {!isSpellsTab ? (
-                           <>
-                              <div className="col-span-1 border-l border-dashed border-white/25" />
-
-                              <div className="col-span-5 pr-2">
-                                 <RulesPanel
-                                    activeTab={activeTab}
-                                    currentRules={currentRules}
-                                 />
-                              </div>
-                           </>
-                        ) : null}
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
+         <Content
+            character={selectedCharacter}
+            activeTab={activeTab}
+            currentRules={currentRules}
+            hideRules={currentTab.hideRules}
+         >
+            <CurrentTabComponent
+               selectedCharacter={selectedCharacter}
+               setCharacters={setCharacters}
+            />
+         </Content>
       </section>
    );
 };

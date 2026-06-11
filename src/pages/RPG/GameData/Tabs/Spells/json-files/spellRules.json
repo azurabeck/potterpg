@@ -1,0 +1,11 @@
+{
+   "title": "Regras de Feitiços",
+   "text": [
+      "O XP de feitiço usa o nível de aprendizado para calcular a maestria atual.",
+      "Ao alterar o nível, a maestria é recalculada automaticamente usando o XP atual do feitiço.",
+      "Atributo deve ser escolhido manualmente quando o JSON do feitiço não trouxer essa informação."
+   ],
+   "subtitle": "Uso na ficha",
+   "highlight": "XP + nível definem a maestria.",
+   "description": "A maestria define o dado usado nos testes do feitiço."
+}

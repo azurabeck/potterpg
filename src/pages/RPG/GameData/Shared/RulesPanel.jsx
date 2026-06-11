@@ -62,23 +62,23 @@ const RulesPanel = ({ activeTab, currentRules }) => {
    }
 
    return (
-      <aside className="col-span-5 pr-2 text-left text-xs leading-4 text-[#736868]">
-         <h3 className="mb-5 uppercase tracking-[0.08em]">
+      <aside className="col-span-5 pr-2 text-left text-xs leading-4">
+         <h3 className="mb-5 uppercase text-[#ceb4aa] tracking-[0.08em]">
             {currentRules.title}
          </h3>
 
          {currentRules.text.map((paragraph) => (
-            <p key={paragraph} className="mb-4">
+            <p key={paragraph} className="mb-4 text-[#736868]">
                {paragraph}
             </p>
          ))}
 
-         <h4 className="mb-4 mt-6 uppercase tracking-[0.08em]">
+         <h4 className="mb-4 mt-6 text-[#ceb4aa] uppercase tracking-[0.08em]">
             {currentRules.subtitle}
          </h4>
 
-         <p className="mb-1">{currentRules.highlight}</p>
-         <p>{currentRules.description}</p>
+         <p className="mb-1 text-[#736868]">{currentRules.highlight}</p>
+         <p className="text-[#736868]">{currentRules.description}</p>
       </aside>
    );
 };

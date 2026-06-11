@@ -1,14 +1,32 @@
+import AttributesTab from "../Tabs/Attributes";
+import SpellsTab from "../Tabs/Spells";
+import PotionsTab from "../Tabs/Potions";
+import MysteriesTab from "../Tabs/Mysteries";
+import InventoryTab from "../Tabs/Inventory";
+import SessionsTab from "../Tabs/Sessions";
+import RelationsTab from "../Tabs/Relations";
+
 export const tabs = [
-   { key: "attributes", label: "Atributos" },
-   { key: "spells", label: "Feitiços" },
-   { key: "potions", label: "Poções" },
-   { key: "mysteries", label: "Mistérios" },
-   { key: "inventory", label: "Inventário" },
-   { key: "sessions", label: "Sessões" },
-   { key: "relations", label: "Relações" },
+   { key: "attributes", label: "Atributos", component: AttributesTab },
+   { key: "spells", label: "Feitiços", component: SpellsTab, hideRules: true },
+   { key: "potions", label: "Poções", component: PotionsTab, hideRules: true  },
+   { key: "mysteries", label: "Mistérios", component: MysteriesTab },
+   { key: "inventory", label: "Inventário", component: InventoryTab },
+   { key: "sessions", label: "Sessões", component: SessionsTab },
+   { key: "relations", label: "Relações", component: RelationsTab },
 ];
 
 export const regrasPorAba = {
+   attributes: {
+      title: "REGRAS DE ATRIBUTOS.",
+      text: [
+         "Atributos representam as bases do personagem e podem evoluir conforme treino, escolhas e acontecimentos da campanha.",
+      ],
+      subtitle: "FICHA",
+      highlight: "Atributos",
+      description:
+         "Use esta aba para ajustar valores centrais como coragem, inteligência, magia, proteção e outros atributos globais.",
+   },
    spells: {
       title: "REGRAS DE FEITIÇOS.",
       text: [

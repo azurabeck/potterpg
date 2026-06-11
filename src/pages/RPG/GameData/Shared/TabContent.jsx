@@ -1,5 +1,6 @@
 import AttributeList from "../Tabs/Attributes/index";
 import SpellsTab from "../Tabs/Spells/index";
+import PotionsTab from "../Tabs/Potions/index";
 
 const TabContent = ({
    activeTab,
@@ -112,8 +113,10 @@ const TabContent = ({
 
    if (activeTab === "potions") {
       return renderObjectList(
-         selectedCharacter?.pocoes,
-         "Nenhuma poção cadastrada."
+         <PotionsTab
+            selectedCharacter={selectedCharacter}
+            setCharacters={setCharacters}
+         />
       );
    }
 
