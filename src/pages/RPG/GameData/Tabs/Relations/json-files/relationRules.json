@@ -1,0 +1,8 @@
+{
+  "title": "Regras de Relações",
+  "text": [
+    "Relações representam NPCs ligados a um personagem jogador.",
+    "Use confiança para medir o quanto o NPC acredita no personagem.",
+    "Use amizade para medir vínculo emocional e proximidade." 
+  ]
+}

@@ -13,7 +13,7 @@ export const tabs = [
    { key: "mysteries", label: "Mistérios", component: MysteriesTab, hideRules: true  },
    { key: "inventory", label: "Inventário", component: InventoryTab, hideRules: true },
    { key: "sessions", label: "Sessões", component: SessionsTab, hideRules: true },
-   { key: "relations", label: "Relações", component: RelationsTab },
+   { key: "relations", label: "Relações", component: RelationsTab, hideRules: true },
 ];
 
 export const regrasPorAba = {
