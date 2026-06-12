@@ -37,9 +37,12 @@ const CharacterSheet = () => {
             setError("");
 
             const userCharacters = await getCharactersByUserId(user.uid);
+            const playerCharacters = userCharacters.filter((character) => {
+               return character.character_type === "player";
+            });
 
-            setCharacters(userCharacters);
-            setSelectedCharacterId(userCharacters[0]?.id || "");
+            setCharacters(playerCharacters);
+            setSelectedCharacterId(playerCharacters[0]?.id || "");
          } catch (requestError) {
             console.error("Erro ao carregar personagem:", requestError);
             setError("Não foi possível carregar sua ficha.");

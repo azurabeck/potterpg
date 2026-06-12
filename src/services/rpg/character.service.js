@@ -40,3 +40,14 @@ export const createCharacter = async ({ user_id, character }) => {
 
    return docRef.id;
 };
+
+export const getCharactersByUser = async (userId) => {
+   const charactersRef = collection(db, "characters");
+   const charactersQuery = query(charactersRef, where("user_id", "==", userId));
+   const snapshot = await getDocs(charactersQuery);
+
+   return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+   }));
+};

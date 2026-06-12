@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../../../services/firebase";
 import CustomSelect from "../../../../components/CustomSelect";
 import { createCharacter } from "../../../../services/rpg/character.service";
+import { getCharactersByUser } from "../../../../services/rpg/character.service";
 
 const atributosIniciais = {
    Coragem: 0,
@@ -65,6 +66,12 @@ const wandAttributeOptions = [
 
 const CreateCharacter = () => {
    const navigate = useNavigate();
+   const [playerCharacters, setPlayerCharacters] = useState([]);
+
+   const relatedCharacterOptions = playerCharacters.map((character) => ({
+      value: character.id,
+      label: character.name,
+   }));
 
    const [form, setForm] = useState({
       character_type: "player",
@@ -207,8 +214,26 @@ const CreateCharacter = () => {
       }
    };
 
+   useEffect(() => {
+      const loadCharacters = async () => {
+         const user = auth.currentUser;
+
+         if (!user) return;
+
+         const characters = await getCharactersByUser(user.uid);
+
+         setPlayerCharacters(
+            characters.filter(
+               (character) => character.character_type === "player"
+            )
+         );
+      };
+
+      loadCharacters();
+   }, []);
+
    return (
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto my-[100px] max-w-6xl">
          <div className="mb-8">
             <p className="text-sm uppercase tracking-[0.35em] text-yellow-400">Nova ficha</p>
             <h2 className="mt-2 text-3xl font-bold">Criar personagem</h2>
@@ -361,12 +386,22 @@ const CreateCharacter = () => {
                      </div>
 
                      <div>
-                        <label className={labelClass}>Relacionado ao character_id</label>
-                        <input
+                        <label className={labelClass}>
+                           Relacionado ao jogador
+                        </label>
+
+                        <CustomSelect
                            value={form.relacionado}
-                           onChange={(event) => handleChange("relacionado", event.target.value)}
-                           placeholder="ID do personagem relacionado"
-                           className={inputClass}
+                           options={[
+                              {
+                                 value: "",
+                                 label: "Nenhum",
+                              },
+                              ...relatedCharacterOptions,
+                           ]}
+                           onChange={(value) =>
+                              handleChange("relacionado", value)
+                           }
                         />
                      </div>
 
