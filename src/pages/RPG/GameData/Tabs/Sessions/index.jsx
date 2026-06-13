@@ -167,6 +167,38 @@ const SessionsTab = ({ selectedCharacter, setCharacters }) => {
       }
    };
 
+   const handleCopyAllCampaigns = async () => {
+      const orderedCampaigns = [...campaigns].sort(
+         (a, b) => Number(b.order || 0) - Number(a.order || 0)
+      );
+
+      const text = orderedCampaigns
+         .map((campaign) => {
+            const orderedSessions = [...(campaign.sessions || [])].sort(
+               (a, b) => Number(b.order || 0) - Number(a.order || 0)
+            );
+
+            return [
+               `## Campanha ${campaign.order} - ${campaign.campaign_name}`,
+               "",
+               ...orderedSessions.map((session) => {
+                  const characters = Array.isArray(session.characters)
+                     ? session.characters.join(", ")
+                     : "";
+
+                  return [
+                     `${String(session.order).padStart(2, "0")}. ${session.event}`,
+                     `Local: ${session.local || "-"}`,
+                     `Personagens: ${characters || "-"}`,
+                  ].join("\n");
+               }),
+            ].join("\n\n");
+         })
+         .join("\n\n====================================\n\n");
+
+      await navigator.clipboard.writeText(text);
+   };
+
    return (
       <div className="grid grid-cols-2 gap-12 pb-2">
          <Modal isOpen={!!modal} title={modal?.title} onClose={() => setModal(null)}>
@@ -181,7 +213,7 @@ const SessionsTab = ({ selectedCharacter, setCharacters }) => {
             onEditCampaign={(campaign) => setModal({ type: "edit", title: "Editar Campanha", campaign })}
          />
 
-         <div className="sticky top-6 self-start">
+         <div className="sticky top-0 self-start">
             <Side
                search={search}
                sort={sort}
@@ -193,6 +225,7 @@ const SessionsTab = ({ selectedCharacter, setCharacters }) => {
                setJsonValue={setJsonValue}
                onRegisterSession={handleRegisterSession}
                onOpenModel={() => setModal({ type: "model", title: "Modelo de JSON" })}
+               onCopyAllCampaigns={handleCopyAllCampaigns}
             />
          </div>
       </div>

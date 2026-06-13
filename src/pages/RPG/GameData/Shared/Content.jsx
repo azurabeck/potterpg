@@ -7,7 +7,7 @@ const Content = ({ children, character, activeTab, currentRules, hideRules = fal
          <div className="grid h-full min-h-0 w-full grid-cols-12">
             <CharacterImage character={character} />
 
-            <main className="col-span-9 h-full min-h-0 overflow-y-auto px-12 py-12">
+            <main className="col-span-9 h-full min-h-0 overflow-y-auto px-12 py-6 pt-0">
                <div
                   className={
                      hideRules

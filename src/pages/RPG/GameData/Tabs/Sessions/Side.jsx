@@ -12,6 +12,7 @@ const Side = ({
    setJsonValue,
    onRegisterSession,
    onOpenModel,
+   onCopyAllCampaigns
 }) => {
    return (
       <aside className="space-y-6 text-xs">
@@ -57,6 +58,14 @@ const Side = ({
                   className="bg-white/10 px-4 py-2 text-xs text-white/80 transition hover:bg-white/20 hover:text-yellow-400"
                >
                   Ver Modelo
+               </button>
+
+               <button
+                  type="button"
+                  onClick={onCopyAllCampaigns}
+                  className="bg-white/10 px-4 py-2 text-xs text-white/80 transition hover:bg-white/20 hover:text-yellow-400"
+               >
+                  Copiar
                </button>
             </div>
          </div>

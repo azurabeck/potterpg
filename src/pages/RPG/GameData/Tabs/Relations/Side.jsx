@@ -1,36 +1,86 @@
-import CustomSelect from "../../../../../components/CustomSelect";
-import { relationOptions, sortOptions, typeOptions } from "./constants";
+import { attributeLabels } from "./constants";
+import { getMainAttributes } from "./helpers";
 
-const Side = ({ selectedRelation, search, typeFilter, relationFilter, sort, setSearch, setTypeFilter, setRelationFilter, setSort }) => {
+const InfoLine = ({ label, value }) => {
+   if (value === undefined || value === null || value === "") return null;
+
    return (
-      <aside className="space-y-3 text-xs">
-         <div className="min-h-[350px] bg-white/5">
-            {selectedRelation?.image_url ? (
+      <p>
+         <span className="text-[#ceb4aa]">{label}:</span> {value}
+      </p>
+   );
+};
+
+const Side = ({ selectedRelation }) => {
+   const mainAttributes = getMainAttributes(selectedRelation?.atributos);
+
+   if (!selectedRelation) {
+      return (
+         <aside className="text-xs">
+            <div className="flex min-h-[350px] items-center justify-center border border-white/10 bg-white/5 text-center text-purple-100/50">
+               Selecione um personagem
+            </div>
+         </aside>
+      );
+   }
+
+   return (
+      <aside className="grid grid-cols-[250px_1fr] gap-6 text-xs text-purple-100/75">
+         <div className="w-[250px] h-[390px] bg-white/5" style={{ border: "10px solid #5a0d0d" }}>
+            {selectedRelation.image_url ? (
                <img
                   src={selectedRelation.image_url}
                   alt={selectedRelation.name || "NPC"}
-                  className="h-[350px] w-full object-cover"
+                  className="h-[370px] w-full object-cover"
                />
             ) : (
-               <div className="flex h-[190px] items-center justify-center border border-white/10 text-center text-purple-100/50">
-                  Selecione um personagem
+               <div className="flex h-[350px] items-center justify-center text-center text-purple-100/50">
+                  Sem imagem
                </div>
             )}
          </div>
 
-         <div className="grid grid-cols-3 gap-3">
-            <CustomSelect value={typeFilter} options={typeOptions} onChange={setTypeFilter} placeholder="Tipo" />
-            <CustomSelect value={relationFilter} options={relationOptions} onChange={setRelationFilter} placeholder="Relação" />
-            <CustomSelect value={sort} options={sortOptions} onChange={setSort} placeholder="A-B" />
+         <div className="space-y-5">
+            <div>
+               <h3 className="text-lg font-semibold text-yellow-400">
+                  {selectedRelation.name || "NPC sem nome"}
+               </h3>
+
+               <div className="mt-2 space-y-1 leading-5 text-[#736868]">
+                  <InfoLine label="Tipo" value={selectedRelation.tipo} />
+                  <span className="d-flex gap-3 text-[#736868]">
+                     {selectedRelation.house || selectedRelation.casa} - {selectedRelation.ano || "-"}
+                  </span>
+                  <InfoLine label="Amizade" value={selectedRelation.amizade ?? 0} />
+                  <InfoLine label="Confiança" value={selectedRelation.confianca ?? 0} />
+                  <InfoLine label="Principais atributos" value={mainAttributes} />
+               </div>
+            </div>
+
+            <div className="space-y-2 leading-5 text-[#736868]">
+               <InfoLine label="Características" value={selectedRelation.caracteristicas} />
+               <InfoLine label="Personalidade" value={selectedRelation.personalidade} />
+               <InfoLine label="Detalhes" value={selectedRelation.detalhes} />
+            </div>
          </div>
 
-         <input
-            type="text"
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            placeholder="Procurar relação"
-            className="w-full bg-white/10 px-3 py-2 text-xs text-white outline-none placeholder:text-white/40 focus:ring-1 focus:ring-yellow-400"
-         />
+         <div className="col-span-full mt-2">
+            <p className="mb-2 text-[12px] uppercase text-[#ceb4aa]">
+               Atributos
+            </p>
+
+            <div className="grid grid-cols-3 gap-x-8 gap-y-1 text-[12px] leading-4 text-[#736868]">
+               {attributeLabels.map((attribute) => (
+                  <p key={attribute} className="flex items-center justify-between">
+                     <span className="text-yellow-500">*{attribute}</span> 
+                     <span className="border border-dashed w-100 mx-2"></span>
+                     <span className="font-bold text-yellow-700">
+                        {selectedRelation.atributos?.[attribute] ?? 0}
+                     </span>
+                  </p>
+               ))}
+            </div>
+         </div>
       </aside>
    );
 };
