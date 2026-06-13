@@ -16,10 +16,12 @@ const Table = ({ items, onOpenItem, onDeleteItem, isSaving }) => {
 
                   return (
                      <section key={category} className="relative pl-4">
-                        <div className="absolute left-0 top-1 h-full" />
-                        <div className="absolute -left-[3px] top-0 h-2 w-2 rounded-full bg-yellow-400" />
+                        
 
-                        <h4 className="mb-4 text-yellow-400">{category}</h4>
+                        <h4 className="mb-4 text-yellow-400">
+                           <span className="absolute left-[-2px] top-[6px] h-2 w-2 rounded-full bg-yellow-400" />
+                           {category}
+                        </h4>
 
                         <div className="space-y-3 pl-8">
                            {categoryItems.map((item) => (
