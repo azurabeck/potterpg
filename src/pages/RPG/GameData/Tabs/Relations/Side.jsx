@@ -24,6 +24,10 @@ const Side = ({ selectedRelation }) => {
       );
    }
 
+const bullet = (
+   <span className="inline-block h-2 w-2 rounded-full bg-yellow-900" />
+);
+
    return (
       <aside className="grid grid-cols-[250px_1fr] gap-6 text-xs text-purple-100/75">
          <div className="w-[250px] h-[390px] bg-white/5" style={{ border: "10px solid #5a0d0d" }}>
@@ -42,15 +46,21 @@ const Side = ({ selectedRelation }) => {
 
          <div className="space-y-5">
             <div>
-               <h3 className="text-lg font-semibold text-yellow-400">
+               <h3 className="flex items-baseline text-lg font-semibold text-yellow-400">
                   {selectedRelation.name || "NPC sem nome"}
+                  <div className="flex items-center text-xs ml-2 gap-3 text-[#736868]">
+                     {bullet}
+                     <span>{selectedRelation.tipo}</span>
+                     -
+                     <span>{selectedRelation.house || selectedRelation.casa}</span>
+                     -
+                     <span>{selectedRelation.ano || "-"}</span>
+                  </div>
                </h3>
 
-               <div className="mt-2 space-y-1 leading-5 text-[#736868]">
-                  <InfoLine label="Tipo" value={selectedRelation.tipo} />
-                  <span className="d-flex gap-3 text-[#736868]">
-                     {selectedRelation.house || selectedRelation.casa} - {selectedRelation.ano || "-"}
-                  </span>
+
+
+               <div className="mt-5 mb-2 space-y-1 leading-5 text-[#736868]">
                   <InfoLine label="Amizade" value={selectedRelation.amizade ?? 0} />
                   <InfoLine label="Confiança" value={selectedRelation.confianca ?? 0} />
                   <InfoLine label="Principais atributos" value={mainAttributes} />

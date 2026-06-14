@@ -12,7 +12,7 @@ import Movies from "./pages/API/Movies";
 import Books from "./pages/API/Books";
 import Creatures from "./pages/API/Creatures"
 import RPG_SpellsRules from "./pages/RPG/SpellRules"
-import RPG_Sheet from "./pages/RPG/GameData/index.jsx"
+import RPG_USER_PROFILE from "./pages/RPG/GameData/index.jsx"
 
 const App = () => {
    const [rpgApiMode, setRpgApiMode] = useState(false);
@@ -70,13 +70,12 @@ const App = () => {
                   {rpgApiMode && (
                      <>
                         <NavLink to="/rpg/spells" className={menuClass}> Feitiços RPG </NavLink>
-                        <NavLink to="/rpg/classes" className={menuClass}> Classes </NavLink>
-                        <NavLink to="/rpg/campaigns" className={menuClass}> Campanhas </NavLink>
+                        <NavLink to="/rpg/rules" className={menuClass}> Regras </NavLink>
                      </>
                   )}
 
                   {user && (
-                     <NavLink to="/rpg/sheet" className={menuClass}>
+                     <NavLink to="/rpg/user-profile" className={menuClass}>
                         Minha Ficha
                      </NavLink>
                   )}
@@ -102,9 +101,8 @@ const App = () => {
                <Route path="/movies" element={<Movies />} />
                <Route path="/books" element={<Books />} />
                <Route path="/rpg/spells" element={<RPG_SpellsRules />} />
-               <Route path="/rpg/classes" element={<div>Classes RPG</div>} />
-               <Route path="/rpg/campaigns" element={<div>Campanhas RPG</div>} />
-               <Route path="/rpg/sheet/*" element={<RPG_Sheet />} />
+               <Route path="/rpg/rules" element={<div>Classes RPG</div>} />
+               <Route path="/rpg/user-profile/*" element={<RPG_USER_PROFILE />} />
             </Routes>
          
             { openAuth && <AuthModal open={openAuth} onClose={() => setOpenAuth(false)} /> }

@@ -94,7 +94,7 @@ const AttributesTab = ({ selectedCharacter, setCharacters }) => {
                <div
                   key={name}
                   onClick={() => handleSelectAttribute(name, value)}
-                  className="group grid cursor-pointer grid-cols-[1fr_84px_36px] items-center gap-4 rounded-md p-2 text-sm text-[#736868] transition-all duration-200 hover:bg-white/60 hover:text-[#2b0038]"
+                  className="group grid cursor-pointer grid-cols-[1fr_84px_36px] items-center gap-2 rounded-md p-2 text-sm text-[#736868] transition-all duration-200 hover:bg-white/60 hover:text-[#2b0038]"
                >
                   <span>{name}</span>
 
