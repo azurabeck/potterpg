@@ -13,6 +13,7 @@ import Books from "./pages/API/Books";
 import Creatures from "./pages/API/Creatures"
 import RPG_SpellsRules from "./pages/RPG/SpellRules"
 import RPG_USER_PROFILE from "./pages/RPG/GameData/index.jsx"
+import RPG_RULES from "./pages/RPG/GameRules/index.jsx"
 
 const App = () => {
    const [rpgApiMode, setRpgApiMode] = useState(false);
@@ -101,7 +102,7 @@ const App = () => {
                <Route path="/movies" element={<Movies />} />
                <Route path="/books" element={<Books />} />
                <Route path="/rpg/spells" element={<RPG_SpellsRules />} />
-               <Route path="/rpg/rules" element={<div>Classes RPG</div>} />
+               <Route path="/rpg/rules" element={<RPG_RULES />} />
                <Route path="/rpg/user-profile/*" element={<RPG_USER_PROFILE />} />
             </Routes>
          
