@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { addDoc, collection, deleteDoc, doc, getDocs, query, serverTimestamp, updateDoc, where } from "firebase/firestore";
 import { db } from "../../../../../services/firebase";
 import Modal from "../../../../../components/Modal";
@@ -20,6 +20,8 @@ const RelationsTab = ({ selectedCharacter }) => {
    const [modal, setModal] = useState(null);
    const [isLoading, setIsLoading] = useState(false);
 
+   const detailsRef = useRef(null);
+
    const relatedCharacters = useMemo(() => {
       return getRelatedCharacters({ characters, selectedCharacter });
    }, [characters, selectedCharacter]);
@@ -39,6 +41,19 @@ const RelationsTab = ({ selectedCharacter }) => {
    }, [filteredRelations, selectedRelationId]);
 
    const activeRelationId = selectedRelation?.id || "";
+
+   const handleSelectRelation = (relation) => {
+      setSelectedRelationId(relation.id);
+
+      if (window.innerWidth < 1024) {
+         setTimeout(() => {
+            detailsRef.current?.scrollIntoView({
+               behavior: "smooth",
+               block: "start",
+            });
+         }, 100);
+      }
+   };
 
    useEffect(() => {
       const loadRelations = async () => {
@@ -62,10 +77,6 @@ const RelationsTab = ({ selectedCharacter }) => {
 
       loadRelations();
    }, [selectedCharacter]);
-
-   const handleSelectRelation = (relation) => {
-      setSelectedRelationId(relation.id);
-   };
 
    const handleEditRelation = (relation) => {
       setModal({ type: "form", title: relation.name || "Editar Relação", relation });
@@ -247,7 +258,7 @@ const RelationsTab = ({ selectedCharacter }) => {
             allRelations={relatedCharacters}
          />
 
-         <div className="lg:sticky lg:top-0 lg:self-start">
+         <div className="lg:sticky lg:top-0 lg:self-start" ref={detailsRef}>
             <Side selectedRelation={selectedRelation} />
          </div>
 
