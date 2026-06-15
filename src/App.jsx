@@ -23,6 +23,7 @@ import Creatures from "@/pages/API/Creatures";
 import RPG_SpellsRules from "@/pages/RPG/SpellRules";
 import RPG_USER_PROFILE from "@/pages/RPG/GameData/index.jsx";
 import RPG_RULES from "@/pages/RPG/GameRules/index.jsx";
+import { rulesTabs } from "@/pages/RPG/GameRules/Shared/rules_tabs";
 
 const potterDbLinks = [
    { to: "/", label: "Feitiços" },
@@ -35,8 +36,12 @@ const potterDbLinks = [
 
 const rpgMenuLinks = [
    { to: "/rpg/spells", label: "Feitiços RPG" },
-   { to: "/rpg/rules", label: "Regras" },
 ];
+
+const ruleMenuLinks = rulesTabs.map((tab) => ({
+   to: `/rpg/rules/${tab.key}`,
+   label: tab.label,
+}));
 
 const loggedMenuLinks = [
    { to: "/rpg/user-profile/attributes", label: "Atributos" },
@@ -162,6 +167,16 @@ const App = () => {
                            {link.label}
                         </NavLink>
                      ))}
+
+                     <div className="mt-2 border-t border-white/10 px-4 pb-1 pt-3 text-[10px] uppercase tracking-[0.18em] text-yellow-400/80">
+                        Regras
+                     </div>
+
+                     {ruleMenuLinks.map((link) => (
+                        <NavLink key={link.to} to={link.to} className={menuClass}>
+                           {link.label}
+                        </NavLink>
+                     ))}
                   </DropdownMenu>
 
                   {user ? (
@@ -244,6 +259,21 @@ const App = () => {
                            {link.label}
                         </NavLink>
                      ))}
+
+                     <div className="mt-2 px-4 pb-1 pt-3 text-[10px] uppercase tracking-[0.18em] text-yellow-400/80">
+                        Regras
+                     </div>
+
+                     {ruleMenuLinks.map((link) => (
+                        <NavLink
+                           key={link.to}
+                           to={link.to}
+                           onClick={closeMobileMenu}
+                           className={menuClass}
+                        >
+                           {link.label}
+                        </NavLink>
+                     ))}
                   </MobileMenuSection>
 
                   {user && (
@@ -300,7 +330,7 @@ const App = () => {
             <Route path="/movies" element={<Movies />} />
             <Route path="/books" element={<Books />} />
             <Route path="/rpg/spells" element={<RPG_SpellsRules />} />
-            <Route path="/rpg/rules" element={<RPG_RULES />} />
+            <Route path="/rpg/rules/*" element={<RPG_RULES />} />
             <Route path="/rpg/user-profile/*" element={<RPG_USER_PROFILE />} />
          </Routes>
 
