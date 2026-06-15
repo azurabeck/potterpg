@@ -9,7 +9,6 @@ const Header = ({
    tabs,
    activeTab,
    onCharacterChange,
-   onTabChange,
 }) => {
    return (
       <header className="space-y-5">
@@ -44,7 +43,7 @@ const Header = ({
             </div>
 
             <NavLink
-               to="/rpg/sheet/create"
+               to="/rpg/user-profile/create"
                className="flex h-10 w-10 items-center justify-center text-yellow-400 transition hover:text-yellow-300"
                title="Criar personagem"
             >
@@ -52,7 +51,7 @@ const Header = ({
             </NavLink>
          </div>
 
-         <SheetTabs tabs={tabs} activeTab={activeTab} onTabChange={onTabChange} />
+         <SheetTabs tabs={tabs} activeTab={activeTab} />
       </header>
    );
 };

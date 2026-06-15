@@ -1,9 +1,10 @@
+import { Navigate, Route, Routes } from "react-router-dom";
+
 import AttributeList from "../Tabs/Attributes/index";
 import SpellsTab from "../Tabs/Spells/index";
 import PotionsTab from "../Tabs/Potions/index";
 
 const TabContent = ({
-   activeTab,
    selectedCharacter,
    setCharacters,
    attributeEntries,
@@ -19,31 +20,6 @@ const TabContent = ({
       return (
          <div className="flex min-h-[260px] items-center justify-center text-center text-sm text-purple-200/70">
             {message}
-         </div>
-      );
-   };
-
-   const renderObjectList = (data, emptyMessage) => {
-      const entries = Object.entries(data || {});
-
-      if (!entries.length) return renderEmptyContent(emptyMessage);
-
-      return (
-         <div className="space-y-3">
-            {entries.map(([name, value]) => (
-               <div
-                  key={name}
-                  className="grid cursor-pointer grid-cols-[1fr_84px] items-center gap-4 rounded-md px-3 py-2 text-sm transition-all duration-200 hover:bg-white/10 hover:text-white"
-               >
-                  <span className="text-[#736868]">{name}</span>
-
-                  <span className="bg-[#9d564c] px-3 py-1 text-center text-xs text-white">
-                     {typeof value === "object"
-                        ? JSON.stringify(value)
-                        : value}
-                  </span>
-               </div>
-            ))}
          </div>
       );
    };
@@ -86,55 +62,69 @@ const TabContent = ({
       );
    };
 
-   if (activeTab === "attributes") {
-      return (
-         <AttributeList
-            entries={attributeEntries}
-            editingAttributeName={editingAttributeName}
-            attributeDraftValue={attributeDraftValue}
-            savingAttributeName={savingAttributeName}
-            onSelectAttribute={onSelectAttribute}
-            onAttributeValueChange={onAttributeValueChange}
-            onSaveAttribute={onSaveAttribute}
-            getAttributeChangedStatus={getAttributeChangedStatus}
-            renderEmptyContent={renderEmptyContent}
+   return (
+      <Routes>
+         <Route index element={<Navigate to="attributes" replace />} />
+
+         <Route
+            path="attributes"
+            element={
+               <AttributeList
+                  entries={attributeEntries}
+                  editingAttributeName={editingAttributeName}
+                  attributeDraftValue={attributeDraftValue}
+                  savingAttributeName={savingAttributeName}
+                  onSelectAttribute={onSelectAttribute}
+                  onAttributeValueChange={onAttributeValueChange}
+                  onSaveAttribute={onSaveAttribute}
+                  getAttributeChangedStatus={getAttributeChangedStatus}
+                  renderEmptyContent={renderEmptyContent}
+               />
+            }
          />
-      );
-   }
 
-   if (activeTab === "spells") {
-      return (
-         <SpellsTab
-            selectedCharacter={selectedCharacter}
-            setCharacters={setCharacters}
+         <Route
+            path="spells"
+            element={
+               <SpellsTab
+                  selectedCharacter={selectedCharacter}
+                  setCharacters={setCharacters}
+               />
+            }
          />
-      );
-   }
 
-   if (activeTab === "potions") {
-      return renderObjectList(
-         <PotionsTab
-            selectedCharacter={selectedCharacter}
-            setCharacters={setCharacters}
+         <Route
+            path="potions"
+            element={
+               <PotionsTab
+                  selectedCharacter={selectedCharacter}
+                  setCharacters={setCharacters}
+               />
+            }
          />
-      );
-   }
 
-   if (activeTab === "inventory") return renderInventory();
+         <Route path="inventory" element={renderInventory()} />
 
-   if (activeTab === "mysteries") {
-      return renderEmptyContent("Mistérios serão vinculados nas próximas sessões.");
-   }
+         <Route
+            path="mysteries"
+            element={renderEmptyContent(
+               "Mistérios serão vinculados nas próximas sessões."
+            )}
+         />
 
-   if (activeTab === "sessions") {
-      return renderEmptyContent("Sessões da campanha ainda não cadastradas.");
-   }
+         <Route
+            path="sessions"
+            element={renderEmptyContent("Sessões da campanha ainda não cadastradas.")}
+         />
 
-   if (activeTab === "relations") {
-      return renderEmptyContent("Relações ainda não cadastradas.");
-   }
+         <Route
+            path="relations"
+            element={renderEmptyContent("Relações ainda não cadastradas.")}
+         />
 
-   return null;
+         <Route path="*" element={<Navigate to="attributes" replace />} />
+      </Routes>
+   );
 };
 
 export default TabContent;

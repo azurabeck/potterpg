@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Navigate, NavLink, useParams } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../../services/firebase";
 import { getCharactersByUserId } from "../../../../services/rpg/character.service";
@@ -9,19 +9,20 @@ import Header from "./Header";
 import Content from "./Content";
 
 const CharacterSheet = () => {
-   const [activeTab, setActiveTab] = useState("attributes");
+   const { tabKey = "attributes" } = useParams();
    const [characters, setCharacters] = useState([]);
    const [selectedCharacterId, setSelectedCharacterId] = useState("");
    const [loading, setLoading] = useState(true);
    const [error, setError] = useState("");
 
+   const currentTab = tabs.find((tab) => tab.key === tabKey);
+   const activeTab = currentTab?.key || "attributes";
+   const CurrentTabComponent = currentTab?.component;
+   const currentRules = regrasPorAba[activeTab] || regrasPorAba.attributes;
+
    const selectedCharacter = useMemo(() => {
       return characters.find((character) => character.id === selectedCharacterId);
    }, [characters, selectedCharacterId]);
-
-   const currentTab = tabs.find((tab) => tab.key === activeTab) || tabs[0];
-   const CurrentTabComponent = currentTab.component;
-   const currentRules = regrasPorAba[activeTab] || regrasPorAba.attributes;
 
    useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -57,6 +58,10 @@ const CharacterSheet = () => {
    const handleCharacterChange = (event) => {
       setSelectedCharacterId(event.target.value);
    };
+
+   if (!currentTab) {
+      return <Navigate to="/rpg/user-profile/attributes" replace />;
+   }
 
    if (loading) {
       return (
@@ -96,7 +101,7 @@ const CharacterSheet = () => {
                </div>
 
                <NavLink
-                  to="/rpg/sheet/create"
+                  to="/rpg/user-profile/create"
                   className="text-3xl font-bold text-yellow-400 transition hover:text-yellow-300"
                >
                   +
@@ -115,7 +120,6 @@ const CharacterSheet = () => {
             tabs={tabs}
             activeTab={activeTab}
             onCharacterChange={handleCharacterChange}
-            onTabChange={setActiveTab}
          />
 
          <Content
