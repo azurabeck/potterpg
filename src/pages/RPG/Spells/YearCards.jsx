@@ -24,8 +24,9 @@ const YearCards = ({ spellsByYear, selectedYear, onSelectYear }) => {
          </div>
 
          <div className="flex w-full gap-3 overflow-x-auto pb-4 xl:w-auto">
-            {spellsByYear.map((yearData) => {
+            {spellsByYear.map((yearData, index) => {
                const isActive = selectedYear === yearData.year;
+               const bgImage = YEAR_CARD_BG[index];
 
                return (
                   <button
@@ -38,12 +39,13 @@ const YearCards = ({ spellsByYear, selectedYear, onSelectYear }) => {
                            : "w-24 bg-purple-950 opacity-80 hover:opacity-100"
                      }`}
                   >
-                     {!isActive && (
+                     {!isActive && bgImage && (
                         <>
-                           <img
-                              src={YEAR_CARD_BG}
-                              alt=""
-                              className="absolute inset-0 h-full w-full object-cover"
+                           <div
+                              className="absolute inset-0 bg-cover bg-center"
+                              style={{
+                                 backgroundImage: `url("${bgImage}")`,
+                              }}
                            />
 
                            <span className="absolute inset-0 bg-black/35" />
