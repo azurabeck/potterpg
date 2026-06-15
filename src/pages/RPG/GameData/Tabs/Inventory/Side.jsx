@@ -65,7 +65,7 @@ const Header = ({
             </div>
          </div>
 
-         <div className="flex items-center justify-between">
+         <div className="block md:flex items-center justify-between">
             <div className="flex gap-5">
                <label className="text-[#CA3F3F]">
                   <span>Nuques * </span>
@@ -102,7 +102,7 @@ const Header = ({
                type="button"
                disabled={!hasMoneyChanged || isSaving}
                onClick={onSaveMoney}
-               className={`px-4 py-2 text-xs transition ${
+               className={`mt-[50px] md:mt-0 px-4 py-2 text-xs transition ${
                   hasMoneyChanged && !isSaving
                      ? "bg-yellow-400 text-[#2b0038] hover:bg-yellow-300"
                      : "bg-white/10 text-white/30"

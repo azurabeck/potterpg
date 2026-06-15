@@ -29,7 +29,19 @@ const Table = ({
 }) => {
    const [editingName, setEditingName] = useState("");
    const [draftValue, setDraftValue] = useState("");
-   const [collapsedTypes, setCollapsedTypes] = useState({});
+   const [collapsedTypes, setCollapsedTypes] = useState(() => {
+      if (typeof window === "undefined") return {};
+
+      const isMobile = window.innerWidth < 768;
+
+      return isMobile
+         ? {
+            atributo: true,
+            talento: true,
+            titulo: true,
+         }
+         : {};
+   });
 
    const groupedRows = rows.reduce((acc, row) => {
       acc[row.tipo] = [...(acc[row.tipo] || []), row];
@@ -58,7 +70,17 @@ const Table = ({
    }
 
    return (
-      <div className="space-y-7 text-xs text-purple-100 pr-[60px] border-e border-dashed border-white/20">
+      <div className="
+            space-y-7
+            text-xs
+            text-purple-100
+            pr-0
+            md:pr-[60px]
+            border-0
+            md:border-e
+            border-dashed
+            border-white/20
+         ">
          {["atributo", "talento", "titulo"].map((type) => {
             const items = groupedRows[type] || [];
             if (!items.length) return null;
