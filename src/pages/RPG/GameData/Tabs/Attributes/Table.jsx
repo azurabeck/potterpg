@@ -91,7 +91,7 @@ const Table = ({
                   </button>
 
                   {!isCollapsed && (
-                     <div className="space-y-5 pl-3">
+                     <div className="space-y-5 pl-1 sm:pl-3">
                         {items.map((item) => {
                            const isAttribute = item.tipo === "atributo";
                            const isEditing = editingName === item.nome;
@@ -100,7 +100,7 @@ const Table = ({
 
                            return (
                               <div key={`${item.tipo}-${item.id || item.nome}`}>
-                                 <div className="grid grid-cols-[1fr_auto_auto_auto] items-center gap-3">
+                                 <div className="grid grid-cols-[minmax(0,1fr)_auto_auto_auto] items-center gap-3">
                                     <div className="flex min-w-0 items-center gap-3">
                                        <span className="h-1 w-1 shrink-0 rounded-full bg-purple-100" />
 

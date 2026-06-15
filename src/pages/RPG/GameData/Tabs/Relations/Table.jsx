@@ -19,8 +19,8 @@ const Table = ({
    onOpenBulkJsonModal,
 }) => {
    return (
-      <div className="relative min-h-[310px] pr-10 text-xs border-e border-dashed border-white/25">
-         <div className="sticky top-0 self-start">
+      <div className="relative min-h-[310px] text-xs lg:border-e lg:border-dashed lg:border-white/25 lg:pr-10">
+         <div className="sticky top-0 hidden self-start lg:block">
             <RelationsFilters
                search={search}
                typeFilter={typeFilter}

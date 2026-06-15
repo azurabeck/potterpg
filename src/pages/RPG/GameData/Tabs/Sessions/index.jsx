@@ -14,6 +14,7 @@ import { db } from "../../../../../services/firebase";
 import Modal from "../../../../../components/Modal";
 import CampaignEditModal from "./CampaignEditModal";
 import ModelModal from "./ModelModal";
+import MobileFilterDrawer from "../../Shared/MobileFilterDrawer";
 import Side from "./Side";
 import Timeline from "./Timeline";
 import {
@@ -200,7 +201,7 @@ const SessionsTab = ({ selectedCharacter, setCharacters }) => {
    };
 
    return (
-      <div className="grid grid-cols-2 gap-12 pb-2">
+      <div className="grid grid-cols-1 gap-8 pb-2 lg:grid-cols-2 lg:gap-12">
          <Modal isOpen={!!modal} title={modal?.title} onClose={() => setModal(null)}>
             {modal?.type === "edit" ? <CampaignEditModal campaign={modal.campaign} onSave={handleSaveCampaignJson} /> : null}
             {modal?.type === "model" ? <ModelModal /> : null}
@@ -213,7 +214,23 @@ const SessionsTab = ({ selectedCharacter, setCharacters }) => {
             onEditCampaign={(campaign) => setModal({ type: "edit", title: "Editar Campanha", campaign })}
          />
 
-         <div className="sticky top-0 self-start">
+         <MobileFilterDrawer title="Filtros de Sessões">
+            <Side
+               search={search}
+               sort={sort}
+               jsonValue={jsonValue}
+               error={error}
+               isSaving={isSaving}
+               setSearch={setSearch}
+               setSort={setSort}
+               setJsonValue={setJsonValue}
+               onRegisterSession={handleRegisterSession}
+               onOpenModel={() => setModal({ type: "model", title: "Modelo de JSON" })}
+               onCopyAllCampaigns={getAllCampaignsText}
+            />
+         </MobileFilterDrawer>
+
+         <div className="hidden lg:sticky lg:top-0 lg:block lg:self-start">
             <Side
                search={search}
                sort={sort}

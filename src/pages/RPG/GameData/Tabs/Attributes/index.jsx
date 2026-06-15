@@ -3,6 +3,7 @@ import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { db } from "@/services/firebase";
 import Modal from "@/components/Modal";
 import RulesPanel from "../../Shared/RulesPanel";
+import MobileFilterDrawer from "../../Shared/MobileFilterDrawer";
 import CopyButton from "@/components/CopyButton";
 
 import Side from "./Side";
@@ -304,7 +305,22 @@ const AttributesTab = ({ selectedCharacter, setCharacters }) => {
             }
          />
 
-         <div className="lg:sticky lg:top-0 lg:self-start">
+         <MobileFilterDrawer title="Filtros de Atributos">
+            <Side
+               search={search}
+               typeFilter={typeFilter}
+               orderBy={orderBy}
+               setSearch={setSearch}
+               setTypeFilter={setTypeFilter}
+               setOrderBy={setOrderBy}
+               onAddTalent={openAddTalentModal}
+               onAddTitle={openAddTitleModal}
+               onOpenRules={openRulesModal}
+               onCopyAllAttributes={getAllAttributesText}
+            />
+         </MobileFilterDrawer>
+
+         <div className="hidden lg:sticky lg:top-0 lg:block lg:self-start">
             <Side
                search={search}
                typeFilter={typeFilter}

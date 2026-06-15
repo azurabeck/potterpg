@@ -15,6 +15,7 @@ import {
 import { db } from "../../../../../services/firebase";
 import Modal from "../../../../../components/Modal";
 import RulesPanel from "../../Shared/RulesPanel";
+import MobileFilterDrawer from "../../Shared/MobileFilterDrawer";
 import MysteryFormModal from "./MysteryFormModal";
 import Side from "./Side";
 import Timeline from "./Timeline";
@@ -152,7 +153,7 @@ const MysteriesTab = ({ selectedCharacter, setCharacters }) => {
    };
 
    return (
-      <div className="grid grid-cols-2 gap-12 pb-2">
+      <div className="grid grid-cols-1 gap-8 pb-2 lg:grid-cols-2 lg:gap-12">
          <Modal isOpen={!!modal} title={modal?.title} onClose={() => setModal(null)}>
             {modal?.type === "form" ? (
                <MysteryFormModal
@@ -174,7 +175,23 @@ const MysteriesTab = ({ selectedCharacter, setCharacters }) => {
             onDeleteMystery={handleDeleteMystery}
          />
 
-         <div className="sticky top-6 self-start">
+         <MobileFilterDrawer title="Filtros de Mistérios">
+            <Side
+               search={search}
+               sort={sort}
+               statusFilter={statusFilter}
+               yearFilter={yearFilter}
+               years={years}
+               setSearch={setSearch}
+               setSort={setSort}
+               setStatusFilter={setStatusFilter}
+               setYearFilter={setYearFilter}
+               onAddMystery={() => setModal({ type: "form", title: "Adicionar Mistério", mystery: null })}
+               onOpenRules={() => setModal({ type: "rules", title: "Regras de Mistérios" })}
+            />
+         </MobileFilterDrawer>
+
+         <div className="hidden lg:sticky lg:top-6 lg:block lg:self-start">
             <Side
                search={search}
                sort={sort}

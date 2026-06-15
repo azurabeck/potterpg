@@ -29,16 +29,16 @@ const bullet = (
 );
 
    return (
-      <aside className="grid grid-cols-[250px_1fr] gap-6 text-xs text-purple-100/75">
-         <div className="w-[250px] h-[390px] bg-white/5" style={{ border: "10px solid #5a0d0d" }}>
+      <aside className="grid grid-cols-1 gap-6 text-xs text-purple-100/75 lg:grid-cols-[250px_1fr]">
+         <div className="h-[240px] w-full bg-white/5 lg:h-[390px] lg:w-[250px]" style={{ border: "10px solid #5a0d0d" }}>
             {selectedRelation.image_url ? (
                <img
                   src={selectedRelation.image_url}
                   alt={selectedRelation.name || "NPC"}
-                  className="h-[370px] w-full object-cover"
+                  className="h-[220px] w-full object-cover object-top lg:h-[370px]"
                />
             ) : (
-               <div className="flex h-[350px] items-center justify-center text-center text-purple-100/50">
+               <div className="flex h-[220px] items-center justify-center text-center text-purple-100/50 lg:h-[350px]">
                   Sem imagem
                </div>
             )}
@@ -79,7 +79,7 @@ const bullet = (
                Atributos
             </p>
 
-            <div className="grid grid-cols-3 gap-x-8 gap-y-1 text-[12px] leading-4 text-[#736868]">
+            <div className="grid grid-cols-1 gap-x-8 gap-y-1 text-[12px] leading-4 text-[#736868] sm:grid-cols-2 lg:grid-cols-3">
                {attributeLabels.map((attribute) => (
                   <p key={attribute} className="flex items-center justify-between">
                      <span className="text-yellow-500">*{attribute}</span> 

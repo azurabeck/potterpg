@@ -30,7 +30,7 @@ const Table = ({
    handleDeleteSpell,
 }) => {
    return (
-      <div className="overflow-visible">
+      <div className="overflow-x-auto md:overflow-visible">
          <div
             className={`grid ${tableColumns} gap-5 border-b border-white/10 pb-3 text-xs text-purple-100/90`}
          >

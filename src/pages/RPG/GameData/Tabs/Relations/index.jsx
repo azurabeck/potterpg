@@ -4,6 +4,8 @@ import { db } from "../../../../../services/firebase";
 import Modal from "../../../../../components/Modal";
 import Side from "./Side";
 import Table from "./Table";
+import RelationsFilters from "./RelationsFilters";
+import MobileFilterDrawer from "../../Shared/MobileFilterDrawer";
 import RelationFormModal from "./RelationFormModal";
 import BulkNpcJsonModal from "./BulkNpcJsonModal";
 import { getCharacterUserId, getFilteredAndSortedRelations, getRelatedCharacters } from "./helpers";
@@ -194,7 +196,7 @@ const RelationsTab = ({ selectedCharacter }) => {
    };
 
    return (
-      <div className="grid grid-cols-[0.85fr_1.45fr] gap-12 pb-2">
+      <div className="grid grid-cols-1 gap-8 pb-2 lg:grid-cols-[0.85fr_1.45fr] lg:gap-12">
          <Modal isOpen={!!modal} title={modal?.title} onClose={() => setModal(null)}>
             {modal?.type === "form" ? (
                <RelationFormModal key={modal.relation?.id} relation={modal.relation} onSubmit={handleSaveRelation} />
@@ -210,6 +212,22 @@ const RelationsTab = ({ selectedCharacter }) => {
                <BulkNpcJsonModal onSubmit={handleCreateRelationsFromJson} />
             ) : null}
          </Modal>
+
+
+         <MobileFilterDrawer title="Filtros de Relações">
+            <RelationsFilters
+               search={search}
+               typeFilter={typeFilter}
+               relationFilter={relationFilter}
+               sort={sort}
+               setSearch={setSearch}
+               setTypeFilter={setTypeFilter}
+               setRelationFilter={setRelationFilter}
+               setSort={setSort}
+               relations={relatedCharacters}
+               onOpenBulkJsonModal={() => setModal({ type: "bulk-json", title: "Cadastrar NPCs por JSON" })}
+            />
+         </MobileFilterDrawer>
 
          <Table
             relations={filteredRelations}
@@ -229,12 +247,12 @@ const RelationsTab = ({ selectedCharacter }) => {
             allRelations={relatedCharacters}
          />
 
-         <div className="sticky top-0 self-start">
+         <div className="lg:sticky lg:top-0 lg:self-start">
             <Side selectedRelation={selectedRelation} />
          </div>
 
          {isLoading ? (
-            <div className="col-span-2 text-center text-xs text-purple-100/50">Carregando relações...</div>
+            <div className="lg:col-span-2 text-center text-xs text-purple-100/50">Carregando relações...</div>
          ) : null}
       </div>
    );

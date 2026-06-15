@@ -19,7 +19,7 @@ const Timeline = ({
    }
 
    return (
-      <div className="relative min-h-[330px] pr-10 text-xs border-e border-dashed border-white/25">
+      <div className="relative min-h-[330px] text-xs lg:border-e lg:border-dashed lg:border-white/25 lg:pr-10">
 
          <div className="space-y-8">
             {campaigns.map((campaign) => {
@@ -27,7 +27,7 @@ const Timeline = ({
 
                return (
                   <section key={campaign.id}>
-                     <div className="grid grid-cols-[minmax(120px,auto)_1fr_24px_20px] items-center gap-3">
+                     <div className="grid grid-cols-[minmax(0,auto)_1fr_24px_20px] items-center gap-3">
                         <button
                            type="button"
                            onClick={() => setExpandedCampaignId(isOpen ? "" : campaign.id)}
@@ -58,7 +58,7 @@ const Timeline = ({
                      </div>
 
                      {isOpen ? (
-                        <div className="mt-4 space-y-3 pl-8 text-purple-100/80">
+                        <div className="mt-4 space-y-3 pl-3 text-purple-100/80 sm:pl-8">
                            {campaign.sessions?.length ? (
                               campaign.sessions.map((session, index) => (
                                  <button

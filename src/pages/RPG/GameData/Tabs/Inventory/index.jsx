@@ -3,6 +3,7 @@ import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { db } from "../../../../../services/firebase";
 import Modal from "../../../../../components/Modal";
 import RulesPanel from "../../Shared/RulesPanel";
+import MobileFilterDrawer from "../../Shared/MobileFilterDrawer";
 import Side from "./Side";
 import Table from "./Table";
 import ItemFormModal from "./ItemFormModal";
@@ -94,7 +95,7 @@ const InventoryTab = ({ selectedCharacter, setCharacters }) => {
    };
 
    return (
-   <div className="grid grid-cols-[1.3fr_1fr] gap-12 pb-2">
+   <div className="grid grid-cols-1 gap-8 pb-2 lg:grid-cols-[1.3fr_1fr] lg:gap-12">
       <Modal isOpen={!!modal} title={modal?.title} onClose={() => setModal(null)}>
          {modal?.type === "form" ? <ItemFormModal key={modal.item?.id || "new-item"} item={modal.item} onSubmit={handleSaveItem}/> : null}
          {modal?.type === "details" ? <ItemDetailsModal item={modal.item} onEdit={openEditItemModal} /> : null}
@@ -108,7 +109,23 @@ const InventoryTab = ({ selectedCharacter, setCharacters }) => {
          isSaving={isSaving}
       />
 
-      <div className="sticky top-6 self-start">
+      <MobileFilterDrawer title="Filtros do Inventário">
+         <Side
+            search={search}
+            categoryFilter={categoryFilter}
+            inventory={inventory}
+            moneyDraft={moneyDraft}
+            setSearch={setSearch}
+            setCategoryFilter={setCategoryFilter}
+            setMoneyDraft={setMoneyDraft}
+            onAddItem={openAddItemModal}
+            onOpenRules={() => setModal({ type: "rules", title: "Regras do Inventário" })}
+            onSaveMoney={handleSaveMoney}
+            isSaving={isSaving}
+         />
+      </MobileFilterDrawer>
+
+      <div className="hidden lg:sticky lg:top-6 lg:block lg:self-start">
          <Side
             search={search}
             categoryFilter={categoryFilter}

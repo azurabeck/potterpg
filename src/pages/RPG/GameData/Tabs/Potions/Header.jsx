@@ -1,5 +1,6 @@
 import { PlusIcon } from "@heroicons/react/24/outline";
 import CustomSelect from "../../../../../components/CustomSelect";
+import MobileFilterDrawer from "../../Shared/MobileFilterDrawer";
 import { levelOptions } from "./constants";
 import { getPotionDisplayName } from "./helpers";
 
@@ -38,7 +39,7 @@ const Header = ({
 
    return (
       <div className="space-y-3">
-         <div className="flex items-start gap-2">
+         <div className="flex flex-col items-stretch gap-2 md:flex-row md:items-start">
             <div ref={dropdownRef} className="relative flex flex-1 gap-2">
                <div className="relative flex-1">
                   <input
@@ -99,7 +100,41 @@ const Header = ({
             </button>
          </div>
 
-         <div className="grid grid-cols-[1fr_120px_120px_170px] gap-3">
+         <MobileFilterDrawer title="Filtros de Poções">
+            <div className="space-y-3">
+               <input
+                  type="text"
+                  value={tableSearch}
+                  onChange={(event) => setTableSearch(event.target.value)}
+                  placeholder="Filtrar tabela..."
+                  className="h-9 w-full border border-white/10 bg-white/10 px-3 text-xs text-white outline-none placeholder:text-white/30"
+               />
+
+               <CustomSelect
+                  value={yearFilter}
+                  options={yearOptions}
+                  onChange={setYearFilter}
+                  placeholder="Ano"
+               />
+
+               <CustomSelect
+                  value={levelFilter}
+                  options={levelSelectOptions}
+                  onChange={setLevelFilter}
+                  placeholder="Nível"
+               />
+
+               <input
+                  type="text"
+                  value={locationFilter}
+                  onChange={(event) => setLocationFilter(event.target.value)}
+                  placeholder="Local ingredientes"
+                  className="h-9 w-full border border-white/10 bg-white/10 px-3 text-xs text-white outline-none placeholder:text-white/30"
+               />
+            </div>
+         </MobileFilterDrawer>
+
+         <div className="hidden grid-cols-[1fr_120px_120px_170px] gap-3 md:grid">
             <input
                type="text"
                value={tableSearch}

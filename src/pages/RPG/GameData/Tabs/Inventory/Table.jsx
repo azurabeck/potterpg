@@ -6,7 +6,7 @@ const Table = ({ items, onOpenItem, onDeleteItem, isSaving }) => {
    const groupedItems = groupItemsByCategory(items);
 
    return (
-      <div className="relative min-h-[310px] pr-8 text-xs border-e border-dashed border-white/25">
+      <div className="relative min-h-[310px] text-xs lg:border-e lg:border-dashed lg:border-white/25 lg:pr-8">
 
          <div className="space-y-8">
             {items.length ? (
@@ -23,9 +23,9 @@ const Table = ({ items, onOpenItem, onDeleteItem, isSaving }) => {
                            {category}
                         </h4>
 
-                        <div className="space-y-3 pl-8">
+                        <div className="space-y-3 pl-2 sm:pl-8">
                            {categoryItems.map((item) => (
-                              <div key={item.id} className="grid grid-cols-[minmax(160px,1fr)_48px_52px] items-center gap-3">
+                              <div key={item.id} className="grid grid-cols-[minmax(0,1fr)_48px_52px] items-center gap-3">
                                  <button
                                     type="button"
                                     onClick={() => onOpenItem(item)}

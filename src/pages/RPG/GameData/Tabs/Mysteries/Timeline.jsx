@@ -22,7 +22,7 @@ const Timeline = ({ mysteries, expandedMysteryId, setExpandedMysteryId, onEditMy
    }
 
    return (
-      <div className="relative min-h-[330px] pr-10 text-xs border-e border-dashed border-white/25">
+      <div className="relative min-h-[330px] text-xs lg:border-e lg:border-dashed lg:border-white/25 lg:pr-10">
 
          <div className="space-y-8">
             {mysteries.map((mystery) => {
@@ -30,7 +30,7 @@ const Timeline = ({ mysteries, expandedMysteryId, setExpandedMysteryId, onEditMy
 
                return (
                   <section key={mystery.id}>
-                     <div className="grid grid-cols-[minmax(160px,auto)_1fr_24px_24px_20px] items-center gap-3">
+                     <div className="grid grid-cols-[minmax(0,auto)_1fr_24px_24px_20px] items-center gap-3">
                         <button
                            type="button"
                            onClick={() => setExpandedMysteryId(isOpen ? "" : mystery.id)}
@@ -74,7 +74,7 @@ const Timeline = ({ mysteries, expandedMysteryId, setExpandedMysteryId, onEditMy
                      </div>
 
                      {isOpen ? (
-                        <div className="mt-5 space-y-5 pl-8 text-purple-100/80">
+                        <div className="mt-5 space-y-5 pl-3 text-purple-100/80 sm:pl-8">
                            {mystery.clues?.length ? (
                               mystery.clues.map((clue, index) => (
                                  <article key={`${mystery.id}-${index}`} className="border-l border-white/10 pl-4 leading-5">

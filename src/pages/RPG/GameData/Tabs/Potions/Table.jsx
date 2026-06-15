@@ -77,7 +77,7 @@ const Table = ({
    };
 
    return (
-      <div className="overflow-visible">
+      <div className="overflow-x-auto md:overflow-visible">
          <Modal
             isOpen={!!modalContent}
             title={modalContent?.title}

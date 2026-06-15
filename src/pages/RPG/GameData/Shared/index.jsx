@@ -111,7 +111,7 @@ const CharacterSheet = () => {
    }
 
    return (
-      <section className="flex h-[calc(100vh-65px)] w-full flex-col bg-[#30003f] px-8 pb-7 pt-6 text-white shadow-2xl">
+      <section className="flex min-h-[calc(100vh-65px)] w-full flex-col bg-[#30003f] px-4 pb-7 pt-5 text-white shadow-2xl md:h-[calc(100vh-65px)] md:px-8 md:pt-6">
          <Header
             characters={characters}
             selectedCharacter={selectedCharacter}
