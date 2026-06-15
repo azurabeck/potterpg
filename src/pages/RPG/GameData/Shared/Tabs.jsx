@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 const SheetTabs = ({ tabs }) => {
    return (
-      <nav className="flex flex-wrap items-center justify-end gap-x-10 gap-y-3 px-8 text-sm">
+      <nav className="hidden flex-wrap items-center justify-end gap-x-10 gap-y-3 px-8 text-sm md:flex">
          {tabs.map((tab) => (
             <NavLink
                key={tab.key}

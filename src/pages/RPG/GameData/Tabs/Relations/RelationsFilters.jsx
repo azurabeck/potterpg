@@ -1,5 +1,6 @@
 import { CodeBracketSquareIcon } from "@heroicons/react/24/outline";
-import CustomSelect from "../../../../../components/CustomSelect";
+import CopyButton from "@/components/CopyButton";
+import CustomSelect from "@/components/CustomSelect";
 import { relationOptions, sortOptions, typeOptions } from "./constants";
 
 const RelationsFilters = ({
@@ -14,10 +15,10 @@ const RelationsFilters = ({
    relations = [],
    onOpenBulkJsonModal,
 }) => {
-   const copyAllNpcs = async () => {
-      if (!relations.length) return;
+   const getAllNpcsText = () => {
+      if (!relations.length) return "";
 
-      const text = relations
+      return relations
          .map((npc) =>
             [
                `Nome: ${npc.name || ""}`,
@@ -33,8 +34,6 @@ const RelationsFilters = ({
             ].join("\n")
          )
          .join("\n\n---\n\n");
-
-      await navigator.clipboard.writeText(text);
    };
 
    return (
@@ -54,14 +53,12 @@ const RelationsFilters = ({
                className="w-full bg-white/10 px-3 py-2 text-xs text-white outline-none placeholder:text-white/40 focus:ring-1 focus:ring-yellow-400"
             />
 
-            <button
-               type="button"
-               onClick={copyAllNpcs}
+            <CopyButton
+               getText={getAllNpcsText}
                disabled={!relations.length}
-               className="border border-yellow-400/40 bg-yellow-400/10 px-3 py-2 text-xs text-yellow-100 transition hover:bg-yellow-400/20 disabled:cursor-not-allowed disabled:opacity-40"
-            >
-               Copiar NPCs
-            </button>
+               title="Copiar NPCs"
+               className="border border-yellow-400/40 bg-yellow-400/10 px-3 py-2 text-yellow-100 hover:bg-yellow-400/20 hover:text-yellow-100"
+            />
 
             <button
                type="button"

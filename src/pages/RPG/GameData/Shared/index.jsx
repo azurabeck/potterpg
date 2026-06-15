@@ -4,7 +4,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../../services/firebase";
 import { getCharactersByUserId } from "../../../../services/rpg/character.service";
 
-import { regrasPorAba, tabs } from "./tabs_json";
+import { tabs } from "./tabs_json";
 import Header from "./Header";
 import Content from "./Content";
 
@@ -18,7 +18,6 @@ const CharacterSheet = () => {
    const currentTab = tabs.find((tab) => tab.key === tabKey);
    const activeTab = currentTab?.key || "attributes";
    const CurrentTabComponent = currentTab?.component;
-   const currentRules = regrasPorAba[activeTab] || regrasPorAba.attributes;
 
    const selectedCharacter = useMemo(() => {
       return characters.find((character) => character.id === selectedCharacterId);
@@ -122,12 +121,7 @@ const CharacterSheet = () => {
             onCharacterChange={handleCharacterChange}
          />
 
-         <Content
-            character={selectedCharacter}
-            activeTab={activeTab}
-            currentRules={currentRules}
-            hideRules={currentTab.hideRules}
-         >
+         <Content character={selectedCharacter}>
             <CurrentTabComponent
                selectedCharacter={selectedCharacter}
                setCharacters={setCharacters}

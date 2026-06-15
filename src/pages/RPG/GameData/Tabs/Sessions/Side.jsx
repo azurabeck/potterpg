@@ -1,4 +1,5 @@
-import CustomSelect from "../../../../../components/CustomSelect";
+import CopyButton from "@/components/CopyButton";
+import CustomSelect from "@/components/CustomSelect";
 import { sortOptions } from "./constants";
 
 const Side = ({
@@ -12,7 +13,7 @@ const Side = ({
    setJsonValue,
    onRegisterSession,
    onOpenModel,
-   onCopyAllCampaigns
+   onCopyAllCampaigns,
 }) => {
    return (
       <aside className="space-y-6 text-xs">
@@ -60,13 +61,11 @@ const Side = ({
                   Ver Modelo
                </button>
 
-               <button
-                  type="button"
-                  onClick={onCopyAllCampaigns}
-                  className="bg-white/10 px-4 py-2 text-xs text-white/80 transition hover:bg-white/20 hover:text-yellow-400"
-               >
-                  Copiar
-               </button>
+               <CopyButton
+                  getText={onCopyAllCampaigns}
+                  title="Copiar campanhas"
+                  className="bg-white/10 px-4 py-2 hover:bg-white/20"
+               />
             </div>
          </div>
       </aside>

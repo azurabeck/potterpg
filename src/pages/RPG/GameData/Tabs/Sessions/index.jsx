@@ -167,7 +167,7 @@ const SessionsTab = ({ selectedCharacter, setCharacters }) => {
       }
    };
 
-   const handleCopyAllCampaigns = async () => {
+   const getAllCampaignsText = () => {
       const orderedCampaigns = [...campaigns].sort(
          (a, b) => Number(b.order || 0) - Number(a.order || 0)
       );
@@ -196,7 +196,7 @@ const SessionsTab = ({ selectedCharacter, setCharacters }) => {
          })
          .join("\n\n====================================\n\n");
 
-      await navigator.clipboard.writeText(text);
+      return text;
    };
 
    return (
@@ -225,7 +225,7 @@ const SessionsTab = ({ selectedCharacter, setCharacters }) => {
                setJsonValue={setJsonValue}
                onRegisterSession={handleRegisterSession}
                onOpenModel={() => setModal({ type: "model", title: "Modelo de JSON" })}
-               onCopyAllCampaigns={handleCopyAllCampaigns}
+               onCopyAllCampaigns={getAllCampaignsText}
             />
          </div>
       </div>

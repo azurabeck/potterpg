@@ -19,11 +19,11 @@ const Header = ({
                </p>
 
                <div className="mt-2 flex items-center gap-3">
-                  <h1 className="text-sm uppercase tracking-[0.16em]">
-                     Personagem: Campanha de {selectedCharacter.name}
+                  <h1 className="md:flex text-sm uppercase tracking-[0.16em]">
+                     {selectedCharacter.name}
                   </h1>
 
-                  {characters.length > 1 ? (
+                  {characters.character_type == 'player' ? characters.length > 1 ? (
                      <select
                         value={selectedCharacterId}
                         onChange={onCharacterChange}
@@ -38,7 +38,8 @@ const Header = ({
                      </select>
                   ) : (
                      <ChevronDownIcon className="h-4 w-4 text-purple-400" />
-                  )}
+                  ) : ""
+               }
                </div>
             </div>
 

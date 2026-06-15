@@ -7,7 +7,7 @@ import SessionsTab from "../Tabs/Sessions";
 import RelationsTab from "../Tabs/Relations";
 
 export const tabs = [
-   { key: "attributes", label: "Atributos", component: AttributesTab },
+   { key: "attributes", label: "Atributos", component: AttributesTab, hideRules: true  },
    { key: "spells", label: "Feitiços", component: SpellsTab, hideRules: true },
    { key: "potions", label: "Poções", component: PotionsTab, hideRules: true  },
    { key: "mysteries", label: "Mistérios", component: MysteriesTab, hideRules: true  },

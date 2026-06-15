@@ -1,5 +1,5 @@
-import { ClipboardDocumentIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
+import CopyButton from "@/components/CopyButton";
 
 const npcTemplate = `[
    {
@@ -48,21 +48,14 @@ const npcTemplate = `[
 const BulkNpcJsonModal = ({ onSubmit }) => {
    const [jsonText, setJsonText] = useState("");
 
-   const copyTemplate = async () => {
-      await navigator.clipboard.writeText(npcTemplate);
-   };
-
    return (
       <div className="space-y-4 text-xs">
          <div className="flex justify-end">
-            <button
-               type="button"
-               onClick={copyTemplate}
-               className="flex items-center gap-2 border border-yellow-400/40 bg-yellow-400/10 px-3 py-2 text-yellow-100 transition hover:bg-yellow-400/20"
-            >
-               <ClipboardDocumentIcon className="h-4 w-4" />
-               Copiar Modelo
-            </button>
+            <CopyButton
+               text={npcTemplate}
+               title="Copiar modelo"
+               className="border border-yellow-400/40 bg-yellow-400/10 px-3 py-2 text-yellow-100 hover:bg-yellow-400/20 hover:text-yellow-100"
+            />
          </div>
 
          <textarea
