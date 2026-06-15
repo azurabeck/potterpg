@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { Routes, Route, NavLink } from "react-router-dom";
 import { BoltIcon } from "@heroicons/react/24/solid";
 import {
@@ -9,19 +9,19 @@ import {
    UserCircleIcon,
 } from "@heroicons/react/24/outline";
 
-import { auth } from "./services/firebase";
-import AuthModal from "./components/AuthModal/index.jsx";
+import { auth } from "@/services/firebase";
+import AuthModal from "@/components/AuthModal/index.jsx";
 
-import Spells from "./pages/API/Spells";
-import Potions from "./pages/API/Potions";
-import Characters from "./pages/API/Characters";
-import Movies from "./pages/API/Movies";
-import Books from "./pages/API/Books";
-import Creatures from "./pages/API/Creatures";
+import Spells from "@/pages/API/Spells";
+import Potions from "@/pages/API/Potions";
+import Characters from "@/pages/API/Characters";
+import Movies from "@/pages/API/Movies";
+import Books from "@/pages/API/Books";
+import Creatures from "@/pages/API/Creatures";
 
-import RPG_SpellsRules from "./pages/RPG/SpellRules";
-import RPG_USER_PROFILE from "./pages/RPG/GameData/index.jsx";
-import RPG_RULES from "./pages/RPG/GameRules/index.jsx";
+import RPG_SpellsRules from "@/pages/RPG/SpellRules";
+import RPG_USER_PROFILE from "@/pages/RPG/GameData/index.jsx";
+import RPG_RULES from "@/pages/RPG/GameRules/index.jsx";
 
 const loggedMenuLinks = [
    { to: "/rpg/user-profile/attributes", label: "Atributos" },
@@ -32,6 +32,22 @@ const loggedMenuLinks = [
    { to: "/rpg/user-profile/sessions", label: "Sessões" },
    { to: "/rpg/user-profile/relations", label: "Relações" },
 ];
+
+const DropdownMenu = ({ title, children }) => (
+   <div className="group relative">
+      <button
+         type="button"
+         className="flex items-center gap-6 text-xs text-gray-300 hover:text-yellow-400 cursor-pointer"
+      >
+         {title}
+         <ChevronDownIcon className="h-4 w-4" />
+      </button>
+
+      <div className="invisible absolute right-0 top-full z-[9999] mt-3 min-w-[190px] rounded-xl border border-purple-200/10 bg-[#2b0038] py-2 opacity-0 shadow-xl transition-all group-hover:visible group-hover:opacity-100 text-left">
+         {children}
+      </div>
+   </div>
+);
 
 const App = () => {
    const [openAuth, setOpenAuth] = useState(true);
@@ -46,6 +62,17 @@ const App = () => {
 
    const closeMobileMenu = () => setMobileMenuOpen(false);
 
+   const handleLogout = async () => {
+      try {
+         await signOut(auth);
+         setUser(null);
+         setOpenAuth(false);
+         closeMobileMenu();
+      } catch (error) {
+         console.error("Erro ao sair:", error);
+      }
+   };
+
    useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
          setUser(currentUser);
@@ -59,21 +86,14 @@ const App = () => {
       return () => unsubscribe();
    }, []);
 
-   const DropdownMenu = ({ title, children }) => (
-      <div className="group relative">
-         <button
-            type="button"
-            className="flex items-center gap-1 text-sm text-gray-300 hover:text-yellow-400"
-         >
-            {title}
-            <ChevronDownIcon className="h-4 w-4" />
-         </button>
-
-         <div className="invisible absolute right-0 top-full z-[9999] mt-3 min-w-[210px] rounded-xl border border-purple-200/10 bg-[#2b0038] py-2 opacity-0 shadow-xl transition-all group-hover:visible group-hover:opacity-100">
-            {children}
-         </div>
-      </div>
-   );
+   const userInitials = user?.displayName
+      ? user.displayName
+           .split(" ")
+           .map((name) => name[0])
+           .slice(0, 2)
+           .join("")
+           .toUpperCase()
+      : "U";
 
    return (
       <div>
@@ -99,24 +119,37 @@ const App = () => {
                      <NavLink to="/rpg/rules" className={menuClass}>Regras</NavLink>
                   </DropdownMenu>
 
-                  {user && (
-                     <DropdownMenu title="Menu Logado">
+                  {user ? (
+                     <DropdownMenu
+                        title={
+                           <span className="flex items-center gap-4 border-l border-white/20 pl-[30px] text-xs text-gray-300 hover:text-yellow-400">
+                              {userInitials}
+                           </span>
+                        }
+                     >
                         {loggedMenuLinks.map((link) => (
                            <NavLink key={link.to} to={link.to} className={menuClass}>
                               {link.label}
                            </NavLink>
                         ))}
-                     </DropdownMenu>
-                  )}
 
-                  <button
-                     type="button"
-                     onClick={() => setOpenAuth(true)}
-                     title="Autenticação"
-                     className="text-gray-300 hover:text-yellow-400"
-                  >
-                     <UserCircleIcon className="h-6 w-6" />
-                  </button>
+                        <button
+                           type="button"
+                           onClick={handleLogout}
+                           className="block w-full border-t border-white/10 px-4 py-2 text-left text-sm text-red-300 transition hover:text-red-200"
+                        >
+                           Sair
+                        </button>
+                     </DropdownMenu>
+                  ) : (
+                     <button
+                        type="button"
+                        onClick={() => setOpenAuth(true)}
+                        className="flex items-center gap-4 border-l border-white/20 px-[30px] text-xs text-gray-300 hover:text-yellow-400"
+                     >
+                        Login
+                     </button>
+                  )}
                </nav>
 
                <button
@@ -159,6 +192,7 @@ const App = () => {
                         <p className="mb-2 text-xs uppercase tracking-widest text-yellow-400">
                            Menu Logado
                         </p>
+
                         {loggedMenuLinks.map((link) => (
                            <NavLink
                               key={link.to}
@@ -172,17 +206,27 @@ const App = () => {
                      </div>
                   )}
 
-                  <button
-                     type="button"
-                     onClick={() => {
-                        setOpenAuth(true);
-                        closeMobileMenu();
-                     }}
-                     className="flex items-center gap-2 px-4 py-2 text-sm text-gray-300 hover:text-yellow-400"
-                  >
-                     <UserCircleIcon className="h-5 w-5" />
-                     Login / Conta
-                  </button>
+                  {user ? (
+                     <button
+                        type="button"
+                        onClick={handleLogout}
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-red-300 hover:text-red-200"
+                     >
+                        Sair
+                     </button>
+                  ) : (
+                     <button
+                        type="button"
+                        onClick={() => {
+                           setOpenAuth(true);
+                           closeMobileMenu();
+                        }}
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-300 hover:text-yellow-400"
+                     >
+                        <UserCircleIcon className="h-5 w-5" />
+                        Login / Conta
+                     </button>
+                  )}
                </nav>
             )}
          </header>
