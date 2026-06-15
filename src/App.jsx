@@ -6,6 +6,7 @@ import {
    Bars3Icon,
    XMarkIcon,
    ChevronDownIcon,
+   ChevronRightIcon,
    UserCircleIcon,
 } from "@heroicons/react/24/outline";
 
@@ -23,6 +24,20 @@ import RPG_SpellsRules from "@/pages/RPG/SpellRules";
 import RPG_USER_PROFILE from "@/pages/RPG/GameData/index.jsx";
 import RPG_RULES from "@/pages/RPG/GameRules/index.jsx";
 
+const potterDbLinks = [
+   { to: "/", label: "Feitiços" },
+   { to: "/potions", label: "Poções" },
+   { to: "/characters", label: "Personagens" },
+   { to: "/creatures", label: "Criaturas" },
+   { to: "/movies", label: "Filmes" },
+   { to: "/books", label: "Livros" },
+];
+
+const rpgMenuLinks = [
+   { to: "/rpg/spells", label: "Feitiços RPG" },
+   { to: "/rpg/rules", label: "Regras" },
+];
+
 const loggedMenuLinks = [
    { to: "/rpg/user-profile/attributes", label: "Atributos" },
    { to: "/rpg/user-profile/spells", label: "Feitiços" },
@@ -37,16 +52,36 @@ const DropdownMenu = ({ title, children }) => (
    <div className="group relative">
       <button
          type="button"
-         className="flex items-center gap-6 text-xs text-gray-300 hover:text-yellow-400 cursor-pointer"
+         className="flex cursor-pointer items-center gap-6 text-xs text-gray-300 hover:text-yellow-400"
       >
          {title}
          <ChevronDownIcon className="h-4 w-4" />
       </button>
 
-      <div className="invisible absolute right-0 top-full z-[9999] mt-3 min-w-[190px] rounded-xl border border-purple-200/10 bg-[#2b0038] py-2 opacity-0 shadow-xl transition-all group-hover:visible group-hover:opacity-100 text-left">
+      <div className="invisible absolute right-0 top-full z-[9999] mt-3 min-w-[190px] rounded-xl border border-purple-200/10 bg-[#2b0038] py-2 text-left opacity-0 shadow-xl transition-all group-hover:visible group-hover:opacity-100">
          {children}
       </div>
    </div>
+);
+
+const MobileMenuSection = ({ title, isOpen, onToggle, children }) => (
+   <section className="border-b border-white/10 pb-3 text-left last:border-b-0">
+      <button
+         type="button"
+         onClick={onToggle}
+         className="flex w-full items-center justify-between py-2 text-left text-xs uppercase tracking-widest text-yellow-400"
+      >
+         <span>{title}</span>
+
+         {isOpen ? (
+            <ChevronDownIcon className="h-4 w-4" />
+         ) : (
+            <ChevronRightIcon className="h-4 w-4" />
+         )}
+      </button>
+
+      {isOpen && <div className="mt-1 flex flex-col items-start text-left">{children}</div>}
+   </section>
 );
 
 const App = () => {
@@ -54,13 +89,25 @@ const App = () => {
    const [user, setUser] = useState(null);
    const [, setAuthLoading] = useState(true);
    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+   const [mobileSectionsOpen, setMobileSectionsOpen] = useState({
+      potterdb: true,
+      rpg: false,
+      logged: false,
+   });
 
    const menuClass = ({ isActive }) =>
-      `block px-4 py-2 text-sm hover:text-yellow-400 ${
+      `block px-4 py-2 text-left text-sm hover:text-yellow-400 ${
          isActive ? "text-yellow-400" : "text-gray-300"
       }`;
 
    const closeMobileMenu = () => setMobileMenuOpen(false);
+
+   const toggleMobileSection = (sectionName) => {
+      setMobileSectionsOpen((current) => ({
+         ...current,
+         [sectionName]: !current[sectionName],
+      }));
+   };
 
    const handleLogout = async () => {
       try {
@@ -106,17 +153,19 @@ const App = () => {
 
                <nav className="hidden items-center gap-8 md:flex">
                   <DropdownMenu title="PotterDB">
-                     <NavLink to="/" className={menuClass}>Feitiços</NavLink>
-                     <NavLink to="/potions" className={menuClass}>Poções</NavLink>
-                     <NavLink to="/characters" className={menuClass}>Personagens</NavLink>
-                     <NavLink to="/creatures" className={menuClass}>Criaturas</NavLink>
-                     <NavLink to="/movies" className={menuClass}>Filmes</NavLink>
-                     <NavLink to="/books" className={menuClass}>Livros</NavLink>
+                     {potterDbLinks.map((link) => (
+                        <NavLink key={link.to} to={link.to} className={menuClass}>
+                           {link.label}
+                        </NavLink>
+                     ))}
                   </DropdownMenu>
 
                   <DropdownMenu title="Menu RPG">
-                     <NavLink to="/rpg/spells" className={menuClass}>Feitiços RPG</NavLink>
-                     <NavLink to="/rpg/rules" className={menuClass}>Regras</NavLink>
+                     {rpgMenuLinks.map((link) => (
+                        <NavLink key={link.to} to={link.to} className={menuClass}>
+                           {link.label}
+                        </NavLink>
+                     ))}
                   </DropdownMenu>
 
                   {user ? (
@@ -166,33 +215,47 @@ const App = () => {
             </div>
 
             {mobileMenuOpen && (
-               <nav className="space-y-4 border-t border-purple-200/10 bg-[#2b0038] px-4 py-4 md:hidden">
-                  <div>
-                     <p className="mb-2 text-xs uppercase tracking-widest text-yellow-400">
-                        PotterDB
-                     </p>
-                     <NavLink to="/" onClick={closeMobileMenu} className={menuClass}>Feitiços</NavLink>
-                     <NavLink to="/potions" onClick={closeMobileMenu} className={menuClass}>Poções</NavLink>
-                     <NavLink to="/characters" onClick={closeMobileMenu} className={menuClass}>Personagens</NavLink>
-                     <NavLink to="/creatures" onClick={closeMobileMenu} className={menuClass}>Criaturas</NavLink>
-                     <NavLink to="/movies" onClick={closeMobileMenu} className={menuClass}>Filmes</NavLink>
-                     <NavLink to="/books" onClick={closeMobileMenu} className={menuClass}>Livros</NavLink>
-                  </div>
+               <nav className="space-y-3 border-t border-purple-200/10 bg-[#2b0038] px-4 py-4 text-left md:hidden">
+                  <MobileMenuSection
+                     title="PotterDB"
+                     isOpen={mobileSectionsOpen.potterdb}
+                     onToggle={() => toggleMobileSection("potterdb")}
+                  >
+                     {potterDbLinks.map((link) => (
+                        <NavLink
+                           key={link.to}
+                           to={link.to}
+                           onClick={closeMobileMenu}
+                           className={menuClass}
+                        >
+                           {link.label}
+                        </NavLink>
+                     ))}
+                  </MobileMenuSection>
 
-                  <div>
-                     <p className="mb-2 text-xs uppercase tracking-widest text-yellow-400">
-                        Menu RPG
-                     </p>
-                     <NavLink to="/rpg/spells" onClick={closeMobileMenu} className={menuClass}>Feitiços RPG</NavLink>
-                     <NavLink to="/rpg/rules" onClick={closeMobileMenu} className={menuClass}>Regras</NavLink>
-                  </div>
+                  <MobileMenuSection
+                     title="Menu RPG"
+                     isOpen={mobileSectionsOpen.rpg}
+                     onToggle={() => toggleMobileSection("rpg")}
+                  >
+                     {rpgMenuLinks.map((link) => (
+                        <NavLink
+                           key={link.to}
+                           to={link.to}
+                           onClick={closeMobileMenu}
+                           className={menuClass}
+                        >
+                           {link.label}
+                        </NavLink>
+                     ))}
+                  </MobileMenuSection>
 
                   {user && (
-                     <div>
-                        <p className="mb-2 text-xs uppercase tracking-widest text-yellow-400">
-                           Menu Logado
-                        </p>
-
+                     <MobileMenuSection
+                        title="Menu Logado"
+                        isOpen={mobileSectionsOpen.logged}
+                        onToggle={() => toggleMobileSection("logged")}
+                     >
                         {loggedMenuLinks.map((link) => (
                            <NavLink
                               key={link.to}
@@ -203,30 +266,32 @@ const App = () => {
                               {link.label}
                            </NavLink>
                         ))}
-                     </div>
+                     </MobileMenuSection>
                   )}
 
-                  {user ? (
-                     <button
-                        type="button"
-                        onClick={handleLogout}
-                        className="flex items-center gap-2 px-4 py-2 text-sm text-red-300 hover:text-red-200"
-                     >
-                        Sair
-                     </button>
-                  ) : (
-                     <button
-                        type="button"
-                        onClick={() => {
-                           setOpenAuth(true);
-                           closeMobileMenu();
-                        }}
-                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-300 hover:text-yellow-400"
-                     >
-                        <UserCircleIcon className="h-5 w-5" />
-                        Login / Conta
-                     </button>
-                  )}
+                  <div className="pt-1 text-left">
+                     {user ? (
+                        <button
+                           type="button"
+                           onClick={handleLogout}
+                           className="flex items-center gap-2 px-4 py-2 text-left text-sm text-red-300 hover:text-red-200"
+                        >
+                           Sair
+                        </button>
+                     ) : (
+                        <button
+                           type="button"
+                           onClick={() => {
+                              setOpenAuth(true);
+                              closeMobileMenu();
+                           }}
+                           className="flex items-center gap-2 px-4 py-2 text-left text-sm text-gray-300 hover:text-yellow-400"
+                        >
+                           <UserCircleIcon className="h-5 w-5" />
+                           Login / Conta
+                        </button>
+                     )}
+                  </div>
                </nav>
             )}
          </header>
