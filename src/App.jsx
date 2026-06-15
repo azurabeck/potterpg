@@ -85,9 +85,9 @@ const MobileMenuSection = ({ title, isOpen, onToggle, children }) => (
 );
 
 const App = () => {
-   const [openAuth, setOpenAuth] = useState(true);
+   const [openAuth, setOpenAuth] = useState(false);
+   const [authLoading, setAuthLoading] = useState(true);
    const [user, setUser] = useState(null);
-   const [, setAuthLoading] = useState(true);
    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
    const [mobileSectionsOpen, setMobileSectionsOpen] = useState({
       potterdb: true,
@@ -124,10 +124,6 @@ const App = () => {
       const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
          setUser(currentUser);
          setAuthLoading(false);
-
-         if (currentUser) {
-            setOpenAuth(false);
-         }
       });
 
       return () => unsubscribe();
@@ -308,8 +304,11 @@ const App = () => {
             <Route path="/rpg/user-profile/*" element={<RPG_USER_PROFILE />} />
          </Routes>
 
-         {openAuth && (
-            <AuthModal open={openAuth} onClose={() => setOpenAuth(false)} />
+         {!authLoading && openAuth && (
+            <AuthModal
+               open={openAuth}
+               onClose={() => setOpenAuth(false)}
+            />
          )}
       </div>
    );
