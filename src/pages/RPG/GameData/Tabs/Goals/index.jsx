@@ -3,7 +3,7 @@ import {
    arrayUnion,
    collection,
    doc,
-   getDocs,
+   onSnapshot,
    query,
    serverTimestamp,
    setDoc,
@@ -29,14 +29,14 @@ const GoalsTab = ({ selectedCharacter }) => {
    const [modalOpen, setModalOpen] = useState(false);
    const [isSaving, setIsSaving] = useState(false);
 
-   const loadGoals = async () => {
-      const goalsQuery = query(collection(db, "goals"), where("year", "==", Number(selectedYear)));
-      const snapshot = await getDocs(goalsQuery);
-      setGoalDocuments(snapshot.docs.map(normalizeGoalDocument));
-   };
-
    useEffect(() => {
-      loadGoals();
+      const goalsQuery = query(collection(db, "goals"), where("year", "==", Number(selectedYear)));
+
+      const unsubscribe = onSnapshot(goalsQuery, (snapshot) => {
+         setGoalDocuments(snapshot.docs.map(normalizeGoalDocument));
+      });
+
+      return unsubscribe;
    }, [selectedYear]);
 
    const yearGoals = useMemo(() => {
@@ -111,7 +111,6 @@ const GoalsTab = ({ selectedCharacter }) => {
             );
          }
 
-         await loadGoals();
          setModalOpen(false);
       } catch (error) {
          console.error("Erro ao registrar meta:", error);
@@ -169,9 +168,10 @@ const GoalsTab = ({ selectedCharacter }) => {
 
    return (
       <div className="space-y-6 pb-4">
-         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between text-left">
+         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div>
-               <h2 className="text-xs uppercase tracking-[0.28em] text-yellow-400">Metas do {selectedYear}º ano</h2>
+               <p className="text-xs uppercase tracking-[0.28em] text-yellow-400">Meta atual</p>
+               <h2 className="mt-2 text-2xl font-semibold">Metas do {selectedYear}º ano</h2>
                <p className="mt-2 max-w-2xl text-sm leading-6 text-purple-100/70">
                   A tela lê as metas padrão da coleção <strong>goals</strong> e compara com a ficha atual do personagem.
                </p>

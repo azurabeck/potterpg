@@ -52,30 +52,60 @@ const findCatalogItem = (catalogItems = [], idOrName = "") => {
    });
 };
 
-const findSavedByKeyOrTitle = ({ savedItems = {}, sourceKey, title, catalogItems = [] }) => {
-   if (sourceKey && savedItems[sourceKey]) return savedItems[sourceKey];
-
-   const normalizedTitle = normalizeText(title);
-   if (!normalizedTitle) return null;
-
-   const matchedCatalogItem = findCatalogItem(catalogItems, sourceKey || title);
-
-   if (matchedCatalogItem?.id && savedItems[matchedCatalogItem.id]) {
-      return savedItems[matchedCatalogItem.id];
+const getSavedEntries = (savedItems = {}) => {
+   if (Array.isArray(savedItems)) {
+      return savedItems.map((item, index) => [item?.id || item?.source_key || item?.sourceKey || item?.key || index, item]);
    }
 
-   return Object.entries(savedItems).find(([key, item]) => {
-      const normalizedKey = normalizeText(key);
-      const normalizedName = normalizeText(getDisplayName(item));
+   return Object.entries(savedItems || {});
+};
 
-      return (
-         normalizedKey === normalizedTitle ||
-         normalizedKey.includes(normalizedTitle) ||
-         normalizedTitle.includes(normalizedKey) ||
-         normalizedName === normalizedTitle ||
-         normalizedName.includes(normalizedTitle) ||
-         normalizedTitle.includes(normalizedName)
-      );
+const findSavedByKeyOrTitle = ({ savedItems = {}, sourceKey, title, catalogItems = [] }) => {
+   const entries = getSavedEntries(savedItems);
+   const normalizedSourceKey = normalizeText(sourceKey);
+   const normalizedTitle = normalizeText(title);
+   const matchedCatalogItem = findCatalogItem(catalogItems, sourceKey || title);
+
+   const validSearchKeys = [
+      sourceKey,
+      matchedCatalogItem?.id,
+      matchedCatalogItem?.attributes?.slug,
+      matchedCatalogItem?.attributes?.incantation,
+      matchedCatalogItem?.attributes?.name_pt,
+      matchedCatalogItem?.attributes?.name,
+      getDisplayName(matchedCatalogItem),
+      title,
+   ]
+      .map((value) => normalizeText(String(value || "").split("(")[0]))
+      .filter(Boolean);
+
+   const uniqueSearchKeys = [...new Set(validSearchKeys)];
+
+   if (!uniqueSearchKeys.length) return null;
+
+   return entries.find(([key, item]) => {
+      const itemKeys = [
+         key,
+         item?.id,
+         item?.source_key,
+         item?.sourceKey,
+         item?.key,
+         item?.spell_id,
+         item?.potion_id,
+         item?.attributes?.slug,
+         item?.attributes?.incantation,
+         item?.attributes?.name_pt,
+         item?.attributes?.name,
+         item?.nome,
+         item?.name,
+         item?.titulo,
+         item?.title,
+         getDisplayName(item),
+      ]
+         .map((value) => normalizeText(String(value || "").split("(")[0]))
+         .filter(Boolean);
+
+      return itemKeys.some((itemKey) => uniqueSearchKeys.includes(itemKey));
    })?.[1] || null;
 };
 
