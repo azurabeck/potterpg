@@ -14,7 +14,7 @@ const Side = ({
    setYearFilter,
    onAddMystery,
    onOpenRules,
-   onCopyStatus,
+   onCopyMysteries,
 }) => {
    const yearOptions = [
       { value: "", label: "Todos os anos" },
@@ -49,19 +49,21 @@ const Side = ({
                Adicionar Mistério
             </button>
 
-            <button
-               type="button"
-               onClick={onOpenRules}
-               className="w-full bg-white/10 px-4 py-2 text-xs text-white/80 transition hover:bg-white/20 hover:text-yellow-400"
-            >
-               Ver Regras
-            </button>
+            <div className="flex gap-2">
+               <button
+                  type="button"
+                  onClick={onOpenRules}
+                  className="w-full bg-white/10 px-4 py-2 text-xs text-white/80 transition hover:bg-white/20 hover:text-yellow-400"
+               >
+                  Ver Regras
+               </button>
 
-            <CopyButton
-               getText={onCopyStatus}
-               title="Copiar status da aba"
-               className="w-full bg-white/10 px-4 py-2 hover:bg-white/20"
-            />
+               <CopyButton
+                  getText={onCopyMysteries}
+                  title="Copiar mistérios"
+                  className="bg-white/10 px-4 py-2 hover:bg-white/20 hover:text-yellow-400"
+               />
+            </div>
          </div>
       </aside>
    );

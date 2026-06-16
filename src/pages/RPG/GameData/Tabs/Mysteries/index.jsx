@@ -136,6 +136,23 @@ const MysteriesTab = ({ selectedCharacter, setCharacters }) => {
       }
    };
 
+
+   const getMysteriesText = () => {
+      if (!mysteries.length) return "";
+
+      return mysteries
+         .map((mystery) =>
+            [
+               `Mistério: ${mystery.title || mystery.name || ""}`,
+               `Ano: ${mystery.year || ""}`,
+               `Status: ${mystery.status || ""}`,
+               `Descrição: ${mystery.description || ""}`,
+               `Pistas: ${(mystery.clues || []).join(", ")}`,
+            ].join("\n")
+         )
+         .join("\n\n---\n\n");
+   };
+
    const handleDeleteMystery = async (mysteryId) => {
       if (!mysteryId) return;
 
@@ -150,27 +167,6 @@ const MysteriesTab = ({ selectedCharacter, setCharacters }) => {
       } finally {
          setIsSaving(false);
       }
-   };
-
-   const getMysteriesStatusText = () => {
-      const sourceMysteries = filteredMysteries.length ? filteredMysteries : mysteries;
-
-      return sourceMysteries
-         .map((mystery) => {
-            const timeline = Array.isArray(mystery.timeline)
-               ? mystery.timeline.map((item) => `- ${item.event || item.descricao || item.text || ""}`).join("\n")
-               : "";
-
-            return [
-               `Mistério: ${mystery.title || mystery.name || mystery.nome || ""}`,
-               `Ano: ${mystery.year || mystery.ano || "-"}`,
-               `Status: ${mystery.status || "-"}`,
-               `Progresso: ${mystery.progress ?? mystery.progresso ?? "-"}`,
-               `Descrição: ${mystery.description || mystery.descricao || ""}`,
-               timeline ? `Linha do tempo:\n${timeline}` : "",
-            ].filter(Boolean).join("\n");
-         })
-         .join("\n\n---\n\n");
    };
 
    return (
@@ -209,7 +205,7 @@ const MysteriesTab = ({ selectedCharacter, setCharacters }) => {
                setYearFilter={setYearFilter}
                onAddMystery={() => setModal({ type: "form", title: "Adicionar Mistério", mystery: null })}
                onOpenRules={() => setModal({ type: "rules", title: "Regras de Mistérios" })}
-               onCopyStatus={getMysteriesStatusText}
+               onCopyMysteries={getMysteriesText}
             />
          </MobileFilterDrawer>
 
@@ -226,7 +222,7 @@ const MysteriesTab = ({ selectedCharacter, setCharacters }) => {
                setYearFilter={setYearFilter}
                onAddMystery={() => setModal({ type: "form", title: "Adicionar Mistério", mystery: null })}
                onOpenRules={() => setModal({ type: "rules", title: "Regras de Mistérios" })}
-               onCopyStatus={getMysteriesStatusText}
+               onCopyMysteries={getMysteriesText}
             />
          </div>
       </div>

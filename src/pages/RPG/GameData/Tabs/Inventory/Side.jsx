@@ -15,7 +15,7 @@ const Header = ({
    onOpenRules,
    onSaveMoney,
    isSaving,
-   onCopyStatus,
+   onCopyInventory,
 }) => {
    const handleMoneyChange = (key, value) => {
       if (!/^\d*$/.test(value)) return;
@@ -66,9 +66,9 @@ const Header = ({
                </button>
 
                <CopyButton
-                  getText={onCopyStatus}
-                  title="Copiar status da aba"
-                  className="bg-white/10 px-4 py-2 hover:bg-white/20"
+                  getText={onCopyInventory}
+                  title="Copiar inventário"
+                  className="bg-white/10 px-4 py-2 hover:bg-white/20 hover:text-yellow-400"
                />
             </div>
          </div>

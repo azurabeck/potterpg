@@ -94,29 +94,25 @@ const InventoryTab = ({ selectedCharacter, setCharacters }) => {
       setModal({ type: "form", title: "Editar Item", item });
    };
 
-   const getInventoryStatusText = () => {
-      const lines = [
-         "Inventário",
-         `Galeões: ${inventory.goldens || 0}`,
-         `Sicles: ${inventory.sicles || 0}`,
+   const getInventoryText = () => {
+      const moneyText = [
          `Nuques: ${inventory.nuquens || 0}`,
-         "",
-         "Itens:",
-      ];
+         `Sicles: ${inventory.sicles || 0}`,
+         `Galeões: ${inventory.goldens || 0}`,
+      ].join("\n");
 
-      inventory.itens.forEach((item) => {
-         lines.push(
+      const itemsText = (inventory.itens || [])
+         .map((item) =>
             [
-               `Nome: ${item.nome || ""}`,
-               `Quantidade: ${item.quantidade ?? 1}`,
+               `Item: ${item.nome || ""}`,
                `Categoria: ${item.categoria || ""}`,
+               `Quantidade: ${item.quantidade ?? 1}`,
                `Descrição: ${item.descricao || ""}`,
             ].join("\n")
-         );
-         lines.push("---");
-      });
+         )
+         .join("\n\n---\n\n");
 
-      return lines.join("\n");
+      return [`Moedas`, moneyText, "", "Itens", itemsText || "Nenhum item cadastrado."].join("\n");
    };
 
    return (
@@ -147,7 +143,7 @@ const InventoryTab = ({ selectedCharacter, setCharacters }) => {
             onOpenRules={() => setModal({ type: "rules", title: "Regras do Inventário" })}
             onSaveMoney={handleSaveMoney}
             isSaving={isSaving}
-            onCopyStatus={getInventoryStatusText}
+            onCopyInventory={getInventoryText}
          />
       </MobileFilterDrawer>
 
@@ -164,7 +160,7 @@ const InventoryTab = ({ selectedCharacter, setCharacters }) => {
             onOpenRules={() => setModal({ type: "rules", title: "Regras do Inventário" })}
             onSaveMoney={handleSaveMoney}
             isSaving={isSaving}
-            onCopyStatus={getInventoryStatusText}
+            onCopyInventory={getInventoryText}
          />
       </div>
    </div>

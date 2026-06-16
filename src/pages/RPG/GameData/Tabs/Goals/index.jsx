@@ -1,58 +1,52 @@
 import { useEffect, useMemo, useState } from "react";
 import {
-   addDoc,
+   arrayUnion,
    collection,
+   doc,
    getDocs,
    query,
    serverTimestamp,
+   setDoc,
    where,
 } from "firebase/firestore";
 import { db } from "../../../../../services/firebase";
 import CopyButton from "@/components/CopyButton";
-import { defaultGoals } from "./defaultGoals";
 import GoalFormModal from "./GoalFormModal";
 import {
+   flattenGoalDocuments,
    getGoalProgress,
    getGoalTypeLabel,
    getYearProgress,
    isGoalCompleted,
-   normalizeGoal,
+   normalizeGoalDocument,
 } from "./helpers";
 
 const years = [1, 2, 3, 4, 5, 6, 7];
 
 const GoalsTab = ({ selectedCharacter }) => {
    const [selectedYear, setSelectedYear] = useState(1);
-   const [goals, setGoals] = useState([]);
+   const [goalDocuments, setGoalDocuments] = useState([]);
    const [modalOpen, setModalOpen] = useState(false);
    const [isSaving, setIsSaving] = useState(false);
 
+   const loadGoals = async () => {
+      const goalsQuery = query(collection(db, "goals"), where("year", "==", Number(selectedYear)));
+      const snapshot = await getDocs(goalsQuery);
+      setGoalDocuments(snapshot.docs.map(normalizeGoalDocument));
+   };
+
    useEffect(() => {
-      const loadGoals = async () => {
-         if (!selectedCharacter?.id) return;
-
-         const goalsQuery = query(
-            collection(db, "character_goals"),
-            where("character_id", "==", selectedCharacter.id)
-         );
-
-         const snapshot = await getDocs(goalsQuery);
-         setGoals(snapshot.docs.map(normalizeGoal));
-      };
-
       loadGoals();
-   }, [selectedCharacter?.id]);
+   }, [selectedYear]);
 
    const yearGoals = useMemo(() => {
-      const allGoals = [...defaultGoals, ...goals].filter((goal) => Number(goal.year) === Number(selectedYear));
-
-      return allGoals.map((goal) => {
+      return flattenGoalDocuments({ goalDocuments, selectedCharacter }).map((goal) => {
          const progress = getGoalProgress({ goal, selectedCharacter });
          const completed = isGoalCompleted(progress);
 
          return { ...goal, progress, completed };
       });
-   }, [goals, selectedCharacter, selectedYear]);
+   }, [goalDocuments, selectedCharacter]);
 
    const yearProgress = useMemo(() => getYearProgress(yearGoals), [yearGoals]);
 
@@ -64,21 +58,60 @@ const GoalsTab = ({ selectedCharacter }) => {
    }, [yearGoals]);
 
    const handleSaveGoal = async (form) => {
-      if (!selectedCharacter?.id) return;
-
       try {
          setIsSaving(true);
 
-         const payload = {
-            ...form,
-            user_id: selectedCharacter.user_id || "",
-            character_id: selectedCharacter.id,
-            created_at: serverTimestamp(),
+         const year = Number(form.year);
+         const yearDocRef = doc(db, "goals", `year-${year}`);
+
+         const basePayload = {
+            year,
             updated_at: serverTimestamp(),
          };
 
-         const docRef = await addDoc(collection(db, "character_goals"), payload);
-         setGoals((currentGoals) => [...currentGoals, { ...payload, id: docRef.id }]);
+         if (form.type === "spell") {
+            await setDoc(
+               yearDocRef,
+               {
+                  ...basePayload,
+                  spells: arrayUnion({
+                     id: form.source_key || form.title,
+                     mastery: Number(form.target),
+                  }),
+               },
+               { merge: true }
+            );
+         }
+
+         if (form.type === "potion") {
+            await setDoc(
+               yearDocRef,
+               {
+                  ...basePayload,
+                  potions: arrayUnion({
+                     id: form.source_key || form.title,
+                     mastery: Number(form.target),
+                  }),
+               },
+               { merge: true }
+            );
+         }
+
+         if (form.type === "attribute") {
+            await setDoc(
+               yearDocRef,
+               {
+                  ...basePayload,
+                  attributes: arrayUnion({
+                     casa: form.house || "",
+                     [form.source_key || form.title]: Number(form.target),
+                  }),
+               },
+               { merge: true }
+            );
+         }
+
+         await loadGoals();
          setModalOpen(false);
       } catch (error) {
          console.error("Erro ao registrar meta:", error);
@@ -88,27 +121,21 @@ const GoalsTab = ({ selectedCharacter }) => {
    };
 
 
-   const getGoalsStatusText = () => {
-      const lines = [
-         `Metas do ${selectedYear}º ano`,
-         `Progressão do ano: ${yearProgress}%`,
-         `${yearGoals.filter((goal) => goal.completed).length} de ${yearGoals.length} metas concluídas`,
-         "",
-      ];
+   const getGoalsText = () => {
+      if (!yearGoals.length) return "";
 
-      yearGoals.forEach((goal) => {
-         lines.push(
+      return yearGoals
+         .map((goal) =>
             [
-               `${goal.completed ? "[Concluída]" : "[Pendente]"} ${goal.title}`,
+               `Meta: ${goal.title || ""}`,
                `Tipo: ${getGoalTypeLabel(goal.type)}`,
+               `Ano: ${goal.year || selectedYear}`,
                `Progresso: ${goal.progress.current} / ${goal.progress.target}`,
-               goal.description ? `Descrição: ${goal.description}` : "",
-            ].filter(Boolean).join("\n")
-         );
-         lines.push("---");
-      });
-
-      return lines.join("\n");
+               `Status: ${goal.completed ? "Concluída" : "Pendente"}`,
+               `Descrição: ${goal.description || ""}`,
+            ].join("\n")
+         )
+         .join("\n\n---\n\n");
    };
 
    const renderGoal = (goal) => {
@@ -142,15 +169,21 @@ const GoalsTab = ({ selectedCharacter }) => {
 
    return (
       <div className="space-y-6 pb-4">
-         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-            <div className="text-left">
+         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between text-left">
+            <div>
                <h2 className="text-xs uppercase tracking-[0.28em] text-yellow-400">Metas do {selectedYear}º ano</h2>
                <p className="mt-2 max-w-2xl text-sm leading-6 text-purple-100/70">
-                  Acompanhe as metas obrigatórias do ano letivo e veja o que já foi concluído pela ficha atual.
+                  A tela lê as metas padrão da coleção <strong>goals</strong> e compara com a ficha atual do personagem.
                </p>
             </div>
 
             <div className="flex gap-2">
+               <CopyButton
+                  getText={getGoalsText}
+                  title="Copiar metas"
+                  className="h-10 bg-white/10 px-4 text-white/70 hover:bg-white/20 hover:text-yellow-400"
+               />
+
                <button
                   type="button"
                   onClick={() => setModalOpen(true)}
@@ -158,12 +191,6 @@ const GoalsTab = ({ selectedCharacter }) => {
                >
                   Registrar nova meta
                </button>
-
-               <CopyButton
-                  getText={getGoalsStatusText}
-                  title="Copiar status da aba"
-                  className="h-10 bg-white/10 px-4 hover:bg-white/20"
-               />
             </div>
          </div>
 

@@ -3,7 +3,7 @@ import { getSpells } from "../Spells/helpers";
 import { getPotionsList } from "../Potions/helpers";
 import { goalTypes } from "./defaultGoals";
 
-export const normalizeGoal = (document) => ({ id: document.id, ...document.data() });
+export const normalizeGoalDocument = (document) => ({ id: document.id, ...document.data() });
 
 export const getGoalTypeLabel = (type) => {
    return goalTypes.find((item) => item.value === type)?.label || "Meta";
@@ -35,13 +35,10 @@ const getDisplayName = (item) => {
    return String(rawName).split("(")[0].trim();
 };
 
-const findSavedByKeyOrTitle = ({ savedItems = {}, sourceKey, title, catalogItems = [] }) => {
-   if (sourceKey && savedItems[sourceKey]) return savedItems[sourceKey];
+const findCatalogItem = (catalogItems = [], idOrName = "") => {
+   const normalizedValue = normalizeText(String(idOrName).split("(")[0]);
 
-   const normalizedTitle = normalizeText(title);
-   if (!normalizedTitle) return null;
-
-   const matchedCatalogItem = catalogItems.find((item) => {
+   return catalogItems.find((item) => {
       const names = [
          item.id,
          item.attributes?.slug,
@@ -51,11 +48,17 @@ const findSavedByKeyOrTitle = ({ savedItems = {}, sourceKey, title, catalogItems
          getDisplayName(item),
       ];
 
-      return names.some((name) => {
-         const normalizedName = normalizeText(String(name || "").split("(")[0]);
-         return normalizedName === normalizedTitle || normalizedName.includes(normalizedTitle) || normalizedTitle.includes(normalizedName);
-      });
+      return names.some((name) => normalizeText(name) === normalizedValue);
    });
+};
+
+const findSavedByKeyOrTitle = ({ savedItems = {}, sourceKey, title, catalogItems = [] }) => {
+   if (sourceKey && savedItems[sourceKey]) return savedItems[sourceKey];
+
+   const normalizedTitle = normalizeText(title);
+   if (!normalizedTitle) return null;
+
+   const matchedCatalogItem = findCatalogItem(catalogItems, sourceKey || title);
 
    if (matchedCatalogItem?.id && savedItems[matchedCatalogItem.id]) {
       return savedItems[matchedCatalogItem.id];
@@ -103,6 +106,91 @@ const getSavedMastery = (savedItem) => {
    return getMasteryByXpValue(savedItem.nivel || savedItem.level, savedItem.xp);
 };
 
+const formatAttributeName = (key) => {
+   return String(key || "")
+      .replace(/_/g, " ")
+      .split(" ")
+      .filter(Boolean)
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(" ");
+};
+
+const getAttributeValue = (attributes = {}, attributeName = "") => {
+   const normalizedName = normalizeText(attributeName);
+
+   const matchedKey = Object.keys(attributes).find((key) => normalizeText(key) === normalizedName);
+   return getNumber(attributes[matchedKey || attributeName]);
+};
+
+const isAttributeForCharacterHouse = ({ attributeGoal, selectedCharacter }) => {
+   if (!attributeGoal?.casa) return true;
+   return normalizeText(attributeGoal.casa) === normalizeText(selectedCharacter?.casa);
+};
+
+export const flattenGoalDocuments = ({ goalDocuments = [], selectedCharacter }) => {
+   const spellCatalog = getSpells();
+   const potionCatalog = getPotionsList();
+
+   return goalDocuments.flatMap((goalDocument) => {
+      const year = getNumber(goalDocument.year || goalDocument.ano);
+      const documentId = goalDocument.id || `year-${year}`;
+
+      const spellGoals = (goalDocument.spells || goalDocument.feiticos || []).map((spell, index) => {
+         const sourceKey = spell.id || spell.source_key || spell.sourceKey || spell.key || spell.name || spell.title;
+         const catalogItem = findCatalogItem(spellCatalog, sourceKey);
+         const title = spell.title || spell.name || getDisplayName(catalogItem) || sourceKey;
+
+         return {
+            id: `${documentId}-spell-${sourceKey || index}`,
+            year,
+            type: "spell",
+            title,
+            description: spell.description || spell.descricao || "Meta padrão de feitiço.",
+            target: getNumber(spell.mastery ?? spell.maestria ?? spell.target),
+            source_key: sourceKey,
+         };
+      });
+
+      const potionGoals = (goalDocument.potions || goalDocument.pocoes || []).map((potion, index) => {
+         const sourceKey = potion.id || potion.source_key || potion.sourceKey || potion.key || potion.name || potion.title;
+         const catalogItem = findCatalogItem(potionCatalog, sourceKey);
+         const title = potion.title || potion.name || getDisplayName(catalogItem) || sourceKey;
+
+         return {
+            id: `${documentId}-potion-${sourceKey || index}`,
+            year,
+            type: "potion",
+            title,
+            description: potion.description || potion.descricao || "Meta padrão de poção.",
+            target: getNumber(potion.mastery ?? potion.maestria ?? potion.target),
+            source_key: sourceKey,
+         };
+      });
+
+      const attributeGoals = (goalDocument.attributes || goalDocument.atributos || [])
+         .filter((attributeGoal) => isAttributeForCharacterHouse({ attributeGoal, selectedCharacter }))
+         .flatMap((attributeGoal, index) => {
+            return Object.entries(attributeGoal)
+               .filter(([key]) => !["id", "casa", "house", "description", "descricao"].includes(key))
+               .map(([key, value]) => {
+                  const title = formatAttributeName(key);
+
+                  return {
+                     id: `${documentId}-attribute-${attributeGoal.casa || "global"}-${key}-${index}`,
+                     year,
+                     type: "attribute",
+                     title,
+                     description: attributeGoal.description || attributeGoal.descricao || (attributeGoal.casa ? `Meta de atributo para ${attributeGoal.casa}.` : "Meta padrão de atributo."),
+                     target: getNumber(value),
+                     source_key: title,
+                  };
+               });
+         });
+
+      return [...spellGoals, ...potionGoals, ...attributeGoals];
+   });
+};
+
 export const getGoalProgress = ({ goal, selectedCharacter, mysteries = [] }) => {
    const target = getNumber(goal.target);
 
@@ -129,7 +217,7 @@ export const getGoalProgress = ({ goal, selectedCharacter, mysteries = [] }) => 
    }
 
    if (goal.type === "attribute") {
-      return { current: getNumber(selectedCharacter?.atributos?.[goal.source_key || goal.title]), target };
+      return { current: getAttributeValue(selectedCharacter?.atributos || {}, goal.source_key || goal.title), target };
    }
 
    if (goal.type === "mystery") {

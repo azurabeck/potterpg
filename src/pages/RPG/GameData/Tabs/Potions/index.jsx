@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { deleteField, doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { db } from "../../../../../services/firebase";
+import { getMasteryByXp } from "../../../../../helpers/mastery";
 import RulesPanel from "../../Shared/RulesPanel";
 import Header from "./Header";
 import Table from "./Table";
 import potionRules from "./json-files/potionRules.json";
-import { getMasteryByXp } from "../../../../../helpers/mastery";
 import {
    filterAvailablePotions,
    getCharacterPotions,
@@ -99,24 +99,22 @@ const PotionsTab = ({ selectedCharacter, setCharacters }) => {
       return sortConfig.direction === "asc" ? "↑" : "↓";
    };
 
-   const getPotionsStatusText = () => {
-      const sourceRows = filteredAndSortedPotions.length ? filteredAndSortedPotions : characterPotions;
 
-      return sourceRows
-         .map((item) => {
-            const level = item.savedData?.nivel || item.potion.attributes?.nivel || "-";
-            const xp = item.savedData?.xp ?? 0;
-            const mastery = getMasteryByXp(level, xp);
+   const getAllPotionsText = () => {
+      if (!characterPotions.length) return "";
+
+      return characterPotions
+         .map((row) => {
+            const mastery = getMasteryByXp(row.level, row.xp);
 
             return [
-               `Poção: ${getPotionDisplayName(item.potion)}`,
-               `Ano: ${item.year || "-"}`,
-               `Nível: ${level}`,
-               `XP: ${xp}`,
-               `Maestria: ${mastery.maestria}`,
-               `Dado: ${mastery.dado}`,
-               `Local ingredientes: ${item.savedData?.local_ingredientes || "-"}`,
-               `Info ingredientes: ${item.savedData?.ingredientes_info || "-"}`,
+               `Poção: ${row.name}`,
+               `Ano: ${row.year || ""}`,
+               `Nível: ${row.level || ""}`,
+               `XP: ${row.xp ?? 0}`,
+               `Maestria: ${mastery?.maestria ?? 0}`,
+               `Dado: ${mastery?.dado || ""}`,
+               `Local dos ingredientes: ${row.ingredientLocation || ""}`,
             ].join("\n");
          })
          .join("\n\n---\n\n");
@@ -284,7 +282,7 @@ const PotionsTab = ({ selectedCharacter, setCharacters }) => {
             handleSearchChange={handleSearchChange}
             handleSelectPotion={handleSelectPotion}
             handleAddPotion={handleAddPotion}
-            onCopyStatus={getPotionsStatusText}
+            onCopyAllPotions={getAllPotionsText}
          />
 
          {showRules ? <RulesPanel activeTab="potions" currentRules={potionRules} /> : null}

@@ -1,7 +1,7 @@
 import { PlusIcon } from "@heroicons/react/24/outline";
 import CustomSelect from "../../../../../components/CustomSelect";
-import MobileFilterDrawer from "../../Shared/MobileFilterDrawer";
 import CopyButton from "@/components/CopyButton";
+import MobileFilterDrawer from "../../Shared/MobileFilterDrawer";
 import { levelOptions } from "./constants";
 import { getPotionDisplayName } from "./helpers";
 
@@ -27,7 +27,7 @@ const Header = ({
    handleSearchChange,
    handleSelectPotion,
    handleAddPotion,
-   onCopyStatus,
+   onCopyAllPotions,
 }) => {
    const yearOptions = [
       { value: "", label: "Ano" },
@@ -103,9 +103,9 @@ const Header = ({
                </button>
 
                <CopyButton
-                  getText={onCopyStatus}
-                  title="Copiar status da aba"
-                  className="h-10 bg-white/10 px-4 hover:bg-white/20"
+                  getText={onCopyAllPotions}
+                  title="Copiar poções"
+                  className="h-10 bg-white/10 px-4 text-white/70 hover:bg-white/20 hover:text-yellow-400"
                />
             </div>
          </div>

@@ -310,23 +310,21 @@ const SpellsTab = ({ selectedCharacter, setCharacters }) => {
       return sort.direction === "asc" ? "↑" : "↓";
    };
 
-   const getSpellsStatusText = () => {
-      const sourceRows = filteredAndSortedSpells.length ? filteredAndSortedSpells : rows;
+   const getAllSpellsText = () => {
+      if (!rows.length) return "";
 
-      return sourceRows
-         .map((item) => {
-            const level = item.savedData?.nivel || item.spell.attributes?.nivel || "-";
-            const xp = item.savedData?.xp ?? 0;
-            const mastery = getMasteryByXp(level, xp);
+      return rows
+         .map((row) => {
+            const mastery = getMasteryByXp(row.level, row.xp);
 
             return [
-               `Feitiço: ${item.name}`,
-               `Ano: ${item.year || "-"}`,
-               `Nível: ${level}`,
-               `XP: ${xp}`,
-               `Maestria: ${mastery.maestria}`,
-               `Dado: ${mastery.dado}`,
-               `Atributo: ${item.savedData?.atributo || "-"}`,
+               `Feitiço: ${row.name}`,
+               `Ano: ${row.year || ""}`,
+               `Nível: ${row.level || ""}`,
+               `XP: ${row.xp ?? 0}`,
+               `Maestria: ${mastery?.maestria ?? 0}`,
+               `Dado: ${mastery?.dado || ""}`,
+               `Atributo: ${row.attribute || ""}`,
             ].join("\n");
          })
          .join("\n\n---\n\n");
@@ -356,7 +354,7 @@ const SpellsTab = ({ selectedCharacter, setCharacters }) => {
             handleSearchChange={handleSearchChange}
             handleSelectSpell={handleSelectSpell}
             handleAddSpell={handleAddSpell}
-            onCopyStatus={getSpellsStatusText}
+            onCopyAllSpells={getAllSpellsText}
          />
 
          <>
