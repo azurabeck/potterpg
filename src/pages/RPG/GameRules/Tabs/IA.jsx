@@ -17,6 +17,7 @@ const narrationRules = [
    "Não inventar fatos importantes sem base na campanha, na ficha ou na cena atual.",
    "Quando houver dúvida, narrar como possibilidade, pista ou percepção incompleta.",
    "Cenas importantes devem gerar escolha, consequência ou informação útil.",
+   "Quando algo que a IA não saiba a regra acontecer, a IA deve pedir para que forneça as regras. Exemplo Duelo Bruxo",
 ];
 
 const narrationChecklist = [
