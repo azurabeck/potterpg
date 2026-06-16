@@ -51,6 +51,7 @@ const loggedMenuLinks = [
    { to: "/rpg/user-profile/inventory", label: "Inventário" },
    { to: "/rpg/user-profile/sessions", label: "Sessões" },
    { to: "/rpg/user-profile/relations", label: "Relações" },
+   { to: "/rpg/user-profile/goals", label: "Metas" },
 ];
 
 const DropdownMenu = ({ title, children }) => (

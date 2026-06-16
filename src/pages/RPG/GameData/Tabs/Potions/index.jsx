@@ -5,6 +5,7 @@ import RulesPanel from "../../Shared/RulesPanel";
 import Header from "./Header";
 import Table from "./Table";
 import potionRules from "./json-files/potionRules.json";
+import { getMasteryByXp } from "../../../../../helpers/mastery";
 import {
    filterAvailablePotions,
    getCharacterPotions,
@@ -96,6 +97,29 @@ const PotionsTab = ({ selectedCharacter, setCharacters }) => {
    const renderSortIcon = (key) => {
       if (sortConfig.key !== key) return "↕";
       return sortConfig.direction === "asc" ? "↑" : "↓";
+   };
+
+   const getPotionsStatusText = () => {
+      const sourceRows = filteredAndSortedPotions.length ? filteredAndSortedPotions : characterPotions;
+
+      return sourceRows
+         .map((item) => {
+            const level = item.savedData?.nivel || item.potion.attributes?.nivel || "-";
+            const xp = item.savedData?.xp ?? 0;
+            const mastery = getMasteryByXp(level, xp);
+
+            return [
+               `Poção: ${getPotionDisplayName(item.potion)}`,
+               `Ano: ${item.year || "-"}`,
+               `Nível: ${level}`,
+               `XP: ${xp}`,
+               `Maestria: ${mastery.maestria}`,
+               `Dado: ${mastery.dado}`,
+               `Local ingredientes: ${item.savedData?.local_ingredientes || "-"}`,
+               `Info ingredientes: ${item.savedData?.ingredientes_info || "-"}`,
+            ].join("\n");
+         })
+         .join("\n\n---\n\n");
    };
 
    const handleSearchChange = (event) => {
@@ -260,6 +284,7 @@ const PotionsTab = ({ selectedCharacter, setCharacters }) => {
             handleSearchChange={handleSearchChange}
             handleSelectPotion={handleSelectPotion}
             handleAddPotion={handleAddPotion}
+            onCopyStatus={getPotionsStatusText}
          />
 
          {showRules ? <RulesPanel activeTab="potions" currentRules={potionRules} /> : null}

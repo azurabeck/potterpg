@@ -94,6 +94,31 @@ const InventoryTab = ({ selectedCharacter, setCharacters }) => {
       setModal({ type: "form", title: "Editar Item", item });
    };
 
+   const getInventoryStatusText = () => {
+      const lines = [
+         "Inventário",
+         `Galeões: ${inventory.goldens || 0}`,
+         `Sicles: ${inventory.sicles || 0}`,
+         `Nuques: ${inventory.nuquens || 0}`,
+         "",
+         "Itens:",
+      ];
+
+      inventory.itens.forEach((item) => {
+         lines.push(
+            [
+               `Nome: ${item.nome || ""}`,
+               `Quantidade: ${item.quantidade ?? 1}`,
+               `Categoria: ${item.categoria || ""}`,
+               `Descrição: ${item.descricao || ""}`,
+            ].join("\n")
+         );
+         lines.push("---");
+      });
+
+      return lines.join("\n");
+   };
+
    return (
    <div className="grid grid-cols-1 gap-8 pb-2 lg:grid-cols-[1.3fr_1fr] lg:gap-12">
       <Modal isOpen={!!modal} title={modal?.title} onClose={() => setModal(null)}>
@@ -122,6 +147,7 @@ const InventoryTab = ({ selectedCharacter, setCharacters }) => {
             onOpenRules={() => setModal({ type: "rules", title: "Regras do Inventário" })}
             onSaveMoney={handleSaveMoney}
             isSaving={isSaving}
+            onCopyStatus={getInventoryStatusText}
          />
       </MobileFilterDrawer>
 
@@ -138,6 +164,7 @@ const InventoryTab = ({ selectedCharacter, setCharacters }) => {
             onOpenRules={() => setModal({ type: "rules", title: "Regras do Inventário" })}
             onSaveMoney={handleSaveMoney}
             isSaving={isSaving}
+            onCopyStatus={getInventoryStatusText}
          />
       </div>
    </div>

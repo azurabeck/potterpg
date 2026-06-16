@@ -1,6 +1,7 @@
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { categoryOptions } from "./constants";
 import CustomSelect from "../../../../../components/CustomSelect";
+import CopyButton from "@/components/CopyButton";
 
 const Header = ({
    search,
@@ -14,6 +15,7 @@ const Header = ({
    onOpenRules,
    onSaveMoney,
    isSaving,
+   onCopyStatus,
 }) => {
    const handleMoneyChange = (key, value) => {
       if (!/^\d*$/.test(value)) return;
@@ -62,6 +64,12 @@ const Header = ({
                >
                   Ver Regras
                </button>
+
+               <CopyButton
+                  getText={onCopyStatus}
+                  title="Copiar status da aba"
+                  className="bg-white/10 px-4 py-2 hover:bg-white/20"
+               />
             </div>
          </div>
 

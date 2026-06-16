@@ -152,6 +152,27 @@ const MysteriesTab = ({ selectedCharacter, setCharacters }) => {
       }
    };
 
+   const getMysteriesStatusText = () => {
+      const sourceMysteries = filteredMysteries.length ? filteredMysteries : mysteries;
+
+      return sourceMysteries
+         .map((mystery) => {
+            const timeline = Array.isArray(mystery.timeline)
+               ? mystery.timeline.map((item) => `- ${item.event || item.descricao || item.text || ""}`).join("\n")
+               : "";
+
+            return [
+               `Mistério: ${mystery.title || mystery.name || mystery.nome || ""}`,
+               `Ano: ${mystery.year || mystery.ano || "-"}`,
+               `Status: ${mystery.status || "-"}`,
+               `Progresso: ${mystery.progress ?? mystery.progresso ?? "-"}`,
+               `Descrição: ${mystery.description || mystery.descricao || ""}`,
+               timeline ? `Linha do tempo:\n${timeline}` : "",
+            ].filter(Boolean).join("\n");
+         })
+         .join("\n\n---\n\n");
+   };
+
    return (
       <div className="grid grid-cols-1 gap-8 pb-2 lg:grid-cols-2 lg:gap-12">
          <Modal isOpen={!!modal} title={modal?.title} onClose={() => setModal(null)}>
@@ -188,6 +209,7 @@ const MysteriesTab = ({ selectedCharacter, setCharacters }) => {
                setYearFilter={setYearFilter}
                onAddMystery={() => setModal({ type: "form", title: "Adicionar Mistério", mystery: null })}
                onOpenRules={() => setModal({ type: "rules", title: "Regras de Mistérios" })}
+               onCopyStatus={getMysteriesStatusText}
             />
          </MobileFilterDrawer>
 
@@ -204,6 +226,7 @@ const MysteriesTab = ({ selectedCharacter, setCharacters }) => {
                setYearFilter={setYearFilter}
                onAddMystery={() => setModal({ type: "form", title: "Adicionar Mistério", mystery: null })}
                onOpenRules={() => setModal({ type: "rules", title: "Regras de Mistérios" })}
+               onCopyStatus={getMysteriesStatusText}
             />
          </div>
       </div>

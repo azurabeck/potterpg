@@ -5,6 +5,7 @@ import MysteriesTab from "../Tabs/Mysteries";
 import InventoryTab from "../Tabs/Inventory";
 import SessionsTab from "../Tabs/Sessions";
 import RelationsTab from "../Tabs/Relations";
+import GoalsTab from "../Tabs/Goals";
 
 export const tabs = [
    { key: "attributes", label: "Atributos", component: AttributesTab, hideRules: true  },
@@ -14,6 +15,7 @@ export const tabs = [
    { key: "inventory", label: "Inventário", component: InventoryTab, hideRules: true },
    { key: "sessions", label: "Sessões", component: SessionsTab, hideRules: true },
    { key: "relations", label: "Relações", component: RelationsTab, hideRules: true },
+   { key: "goals", label: "Meta atual", component: GoalsTab, hideRules: true },
 ];
 
 export const regrasPorAba = {
@@ -75,6 +77,16 @@ export const regrasPorAba = {
       highlight: "Resumo",
       description:
          "Aqui entrarão os resumos, NPCs, XP ganho, pistas e mudanças de ficha.",
+   },
+   goals: {
+      title: "REGRAS DE META ATUAL.",
+      text: [
+         "Metas registram objetivos obrigatórios do ano letivo e podem ser conferidas automaticamente pela ficha.",
+      ],
+      subtitle: "ANO LETIVO",
+      highlight: "Progresso",
+      description:
+         "Use esta aba para acompanhar o que falta concluir e cadastrar novas metas separadas do personagem.",
    },
    relations: {
       title: "REGRAS DE RELAÇÕES.",

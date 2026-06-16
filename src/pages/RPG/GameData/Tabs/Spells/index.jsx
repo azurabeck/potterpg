@@ -13,6 +13,7 @@ import Table from "./Table";
 import spellRules from "./json-files/spellRules.json";
 import Modal from "../../../../../components/Modal";
 import { filterSpells, getSpellName, getSpells, normalize, sortSpells } from "./helpers";
+import { getMasteryByXp } from "../../../../../helpers/mastery";
 
 const SpellsTab = ({ selectedCharacter, setCharacters }) => {
    const dropdownRef = useRef(null);
@@ -309,6 +310,28 @@ const SpellsTab = ({ selectedCharacter, setCharacters }) => {
       return sort.direction === "asc" ? "↑" : "↓";
    };
 
+   const getSpellsStatusText = () => {
+      const sourceRows = filteredAndSortedSpells.length ? filteredAndSortedSpells : rows;
+
+      return sourceRows
+         .map((item) => {
+            const level = item.savedData?.nivel || item.spell.attributes?.nivel || "-";
+            const xp = item.savedData?.xp ?? 0;
+            const mastery = getMasteryByXp(level, xp);
+
+            return [
+               `Feitiço: ${item.name}`,
+               `Ano: ${item.year || "-"}`,
+               `Nível: ${level}`,
+               `XP: ${xp}`,
+               `Maestria: ${mastery.maestria}`,
+               `Dado: ${mastery.dado}`,
+               `Atributo: ${item.savedData?.atributo || "-"}`,
+            ].join("\n");
+         })
+         .join("\n\n---\n\n");
+   };
+
    return (
       <div className="space-y-6 pb-2">
          <Header
@@ -333,6 +356,7 @@ const SpellsTab = ({ selectedCharacter, setCharacters }) => {
             handleSearchChange={handleSearchChange}
             handleSelectSpell={handleSelectSpell}
             handleAddSpell={handleAddSpell}
+            onCopyStatus={getSpellsStatusText}
          />
 
          <>

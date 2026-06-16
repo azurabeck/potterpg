@@ -1,4 +1,5 @@
 import CustomSelect from "../../../../../components/CustomSelect";
+import CopyButton from "@/components/CopyButton";
 import { sortOptions, statusOptions } from "./constants";
 
 const Side = ({
@@ -13,6 +14,7 @@ const Side = ({
    setYearFilter,
    onAddMystery,
    onOpenRules,
+   onCopyStatus,
 }) => {
    const yearOptions = [
       { value: "", label: "Todos os anos" },
@@ -54,6 +56,12 @@ const Side = ({
             >
                Ver Regras
             </button>
+
+            <CopyButton
+               getText={onCopyStatus}
+               title="Copiar status da aba"
+               className="w-full bg-white/10 px-4 py-2 hover:bg-white/20"
+            />
          </div>
       </aside>
    );

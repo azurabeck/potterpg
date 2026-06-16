@@ -1,6 +1,7 @@
 import { PlusIcon } from "@heroicons/react/24/outline";
 import CustomSelect from "../../../../../components/CustomSelect";
 import MobileFilterDrawer from "../../Shared/MobileFilterDrawer";
+import CopyButton from "@/components/CopyButton";
 import { attributeOptions, levelOptions } from "./json-files/constants";
 import { getSpellName } from "./helpers";
 
@@ -26,6 +27,7 @@ const Header = ({
    handleSearchChange,
    handleSelectSpell,
    handleAddSpell,
+   onCopyStatus,
 }) => {
    const yearOptions = [
       { value: "", label: "Ano" },
@@ -93,13 +95,21 @@ const Header = ({
                </button>
             </div>
 
-            <button
-               type="button"
-               onClick={() => setShowRules((currentValue) => !currentValue)}
-               className="h-10 whitespace-nowrap bg-white/10 px-4 text-xs uppercase text-white/70 transition hover:bg-white/20 hover:text-white"
-            >
-               {showRules ? "Esconder regras" : "Ver regras"}
-            </button>
+            <div className="flex gap-2">
+               <button
+                  type="button"
+                  onClick={() => setShowRules((currentValue) => !currentValue)}
+                  className="h-10 whitespace-nowrap bg-white/10 px-4 text-xs uppercase text-white/70 transition hover:bg-white/20 hover:text-white"
+               >
+                  {showRules ? "Esconder regras" : "Ver regras"}
+               </button>
+
+               <CopyButton
+                  getText={onCopyStatus}
+                  title="Copiar status da aba"
+                  className="h-10 bg-white/10 px-4 hover:bg-white/20"
+               />
+            </div>
          </div>
 
          <MobileFilterDrawer title="Filtros de Feitiços">
