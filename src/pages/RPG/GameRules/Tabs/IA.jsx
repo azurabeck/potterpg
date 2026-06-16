@@ -3,7 +3,7 @@ import { RulePage, RuleSection, RuleTable, SimpleList } from "../Shared/RulePage
 
 const mainGoals = [
    "Manter continuidade com a linha do tempo, a ficha e os registros já cadastrados.",
-   "Dar espaço para o jogador decidir as ações, falas e intenções de Tomas.",
+   "Leia sempre as duas ultimas sessões do jogo por inteiro, e use lógica para narrar a próxima. Exemplo: Se eu comprei um livro novo não deve ter um anotação nele",
    "Narrar consequências claras para escolhas, testes, falhas e sucessos.",
    "Evitar repetir mistérios ou prolongar cenas sem avanço real.",
    "Equilibrar vida escolar, relações, aulas, cotidiano, descobertas e perigo.",
