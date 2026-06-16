@@ -67,14 +67,11 @@ const YearCards = ({ spellsByYear, selectedYear, onSelectYear }) => {
 
                         {isActive && (
                            <>
-                              <div className="mb-6 grid grid-cols-[1fr_70px_90px] gap-3 text-xs text-red-400">
-                                 <span>nome</span>
-                                 <span className="text-center">maestria</span>
-                                 <span>aula</span>
-                              </div>
 
-                              <h3 className="mb-5 text-center text-base font-semibold text-purple-100">
-                                 {getYearLabel(yearData.year)}
+                              <h3 className="mb-5 gap-4 text-center text-sm font-semibold text-purple-100">
+                                 <span className="flex border-t border-dashed w-[100%] border-white/30"></span>
+                                 <span className="flex item-center justify-center w-[100%] py-2 text-white/50">{getYearLabel(yearData.year)}</span>
+                                 <span className="flex border-t border-dashed w-[100%] border-white/30"></span>
                               </h3>
 
                               <div className="space-y-4">
@@ -82,13 +79,15 @@ const YearCards = ({ spellsByYear, selectedYear, onSelectYear }) => {
                                     yearData.required.map((spell) => (
                                        <div
                                           key={spell.id}
-                                          className="grid grid-cols-[1fr_60px_90px] items-center gap-3 text-sm"
+                                          className="flex items-center justify-between gap-3 text-xs"
                                        >
-                                          <span>{getSpellDisplayName(spell)}</span>
 
-                                          <span className="mx-auto flex h-10 w-10 items-center justify-center rounded-full border border-purple-300">
-                                             {spell.attributes.maestria_required}
-                                          </span>
+                                          <div className="flex gap-3 items-center">
+                                             <span className="flex h-8 w-8 text-xs items-center justify-center rounded-full border border-purple-300">
+                                                {spell.attributes.maestria_required}
+                                             </span>
+                                             <span>{getSpellDisplayName(spell)}</span>
+                                          </div>
 
                                           <span className="text-purple-200">
                                              {spell.attributes.aula || "-"}
@@ -103,7 +102,7 @@ const YearCards = ({ spellsByYear, selectedYear, onSelectYear }) => {
                               </div>
 
                               <p className="mt-8 text-right text-xs text-yellow-300">
-                                 Outros feitiços do ano: {yearData.spells.length}
+                                total por ano: {yearData.spells.length}
                               </p>
                            </>
                         )}

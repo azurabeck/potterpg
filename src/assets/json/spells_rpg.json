@@ -4246,8 +4246,8 @@
         "M10": 100
       },
       "xp_total": 100,
-      "required": 0,
-      "maestria_required": 0,
+      "required": 1,
+      "maestria_required": 5,
       "aula": "Feitiços",
       "penalidade_crime_magico": 0
     },
@@ -7362,8 +7362,8 @@
         "M10": 100
       },
       "xp_total": 100,
-      "required": 0,
-      "maestria_required": 0,
+      "required": 1,
+      "maestria_required": 5,
       "aula": "DCAT",
       "penalidade_crime_magico": 0
     },
@@ -7742,8 +7742,8 @@
         "M10": 50
       },
       "xp_total": 50,
-      "required": 0,
-      "maestria_required": 0,
+      "required": 1,
+      "maestria_required": 5,
       "aula": "Feitiços",
       "penalidade_crime_magico": 0
     },
@@ -12340,8 +12340,8 @@
         "M10": 50
       },
       "xp_total": 50,
-      "required": 0,
-      "maestria_required": 0,
+      "required": 1,
+      "maestria_required": 10,
       "aula": "Feitiços",
       "penalidade_crime_magico": 0
     },
@@ -12584,7 +12584,7 @@
       "slug": "verdimillious-charm",
       "category": "Feitiço (Encantamento)",
       "creator": null,
-      "effect": "Causa dano aos oponentes, Revela coisas escondidas",
+      "effect": "Causa dano aos oponentes, Revela coisas escondidas, solta faiscas verdes da ponta da varinha",
       "hand": "Corte para a frente",
       "image": "https://static.wikia.nocookie.net/harrypotter/images/0/0c/Verdimillious_Charm_PSG_PS1.png",
       "incantation": "Verdimillious(vur-duh-MILL-ee-us)",
@@ -12834,8 +12834,8 @@
         "M10": 50
       },
       "xp_total": 50,
-      "required": 0,
-      "maestria_required": 0,
+      "required": 1,
+      "maestria_required": 10,
       "aula": "Feitiços",
       "penalidade_crime_magico": 0
     },
