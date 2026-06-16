@@ -1,3 +1,11 @@
+export const categoryOptions = ["mistérios", "pendencias narrador", "proxima sessão"];
+
+export const categoryLabels = {
+   "mistérios": "Mistérios",
+   "pendencias narrador": "Pendências do Narrador",
+   "proxima sessão": "Próxima Sessão",
+};
+
 export const statusOptions = ["em andamento", "resolvido", "cancelado"];
 
 export const clueStatusOptions = ["em aberto", "resolvido", "cancelado"];
@@ -19,9 +27,15 @@ export const emptyClue = {
 };
 
 export const emptyMystery = {
+   category: "mistérios",
    name: "",
    year: "1",
    last_appearance: "",
    status: "em andamento",
    clues: [],
+   details: "",
+   next_session: false,
+   awaited_event: "",
+   current_situation: "",
+   responder: "",
 };

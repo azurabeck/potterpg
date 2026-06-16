@@ -34,14 +34,15 @@ const MysteriesTab = ({ selectedCharacter, setCharacters }) => {
    const [sort, setSort] = useState("name-asc");
    const [statusFilter, setStatusFilter] = useState("");
    const [yearFilter, setYearFilter] = useState("");
+   const [categoryFilter, setCategoryFilter] = useState("");
    const [modal, setModal] = useState(null);
    const [isSaving, setIsSaving] = useState(false);
 
    const years = useMemo(() => getYears(mysteries), [mysteries]);
 
    const filteredMysteries = useMemo(() => {
-      return getFilteredAndSortedMysteries({ mysteries, search, sort, statusFilter, yearFilter });
-   }, [mysteries, search, sort, statusFilter, yearFilter]);
+      return getFilteredAndSortedMysteries({ mysteries, search, sort, statusFilter, yearFilter, categoryFilter });
+   }, [mysteries, search, sort, statusFilter, yearFilter, categoryFilter]);
 
    useEffect(() => {
       const loadMysteries = async () => {
@@ -141,15 +142,36 @@ const MysteriesTab = ({ selectedCharacter, setCharacters }) => {
       if (!mysteries.length) return "";
 
       return mysteries
-         .map((mystery) =>
-            [
+         .map((mystery) => {
+            if (mystery.category === "proxima sessão") {
+               return [
+                  `Categoria: Próxima Sessão`,
+                  `Nome: ${mystery.name || ""}`,
+                  `Ano: ${mystery.year || ""}`,
+                  `Detalhes: ${mystery.details || ""}`,
+                  `Próxima sessão: ${mystery.next_session ? "Sim" : "Não"}`,
+               ].join("\n");
+            }
+
+            if (mystery.category === "pendencias narrador") {
+               return [
+                  `Categoria: Pendências do Narrador`,
+                  `Evento aguardado: ${mystery.awaited_event || mystery.name || ""}`,
+                  `Ano: ${mystery.year || ""}`,
+                  `Situação atual: ${mystery.current_situation || ""}`,
+                  `Quem pode responder ao Tomas: ${mystery.responder || ""}`,
+               ].join("\n");
+            }
+
+            return [
+               `Categoria: Mistérios`,
                `Mistério: ${mystery.title || mystery.name || ""}`,
                `Ano: ${mystery.year || ""}`,
                `Status: ${mystery.status || ""}`,
-               `Descrição: ${mystery.description || ""}`,
-               `Pistas: ${(mystery.clues || []).join(", ")}`,
-            ].join("\n")
-         )
+               `Última aparição: ${mystery.last_appearance || ""}`,
+               `Pistas: ${(mystery.clues || []).map((clue) => clue.name || clue.details || "").filter(Boolean).join(", ")}`,
+            ].join("\n");
+         })
          .join("\n\n---\n\n");
    };
 
@@ -188,7 +210,7 @@ const MysteriesTab = ({ selectedCharacter, setCharacters }) => {
             mysteries={filteredMysteries}
             expandedMysteryId={expandedMysteryId}
             setExpandedMysteryId={setExpandedMysteryId}
-            onEditMystery={(mystery) => setModal({ type: "form", title: "Editar Mistério", mystery })}
+            onEditMystery={(mystery) => setModal({ type: "form", title: "Editar Registro", mystery })}
             onDeleteMystery={handleDeleteMystery}
          />
 
@@ -198,12 +220,14 @@ const MysteriesTab = ({ selectedCharacter, setCharacters }) => {
                sort={sort}
                statusFilter={statusFilter}
                yearFilter={yearFilter}
+               categoryFilter={categoryFilter}
                years={years}
                setSearch={setSearch}
                setSort={setSort}
                setStatusFilter={setStatusFilter}
                setYearFilter={setYearFilter}
-               onAddMystery={() => setModal({ type: "form", title: "Adicionar Mistério", mystery: null })}
+               setCategoryFilter={setCategoryFilter}
+               onAddMystery={() => setModal({ type: "form", title: "Adicionar Registro", mystery: null })}
                onOpenRules={() => setModal({ type: "rules", title: "Regras de Mistérios" })}
                onCopyMysteries={getMysteriesText}
             />
@@ -215,12 +239,14 @@ const MysteriesTab = ({ selectedCharacter, setCharacters }) => {
                sort={sort}
                statusFilter={statusFilter}
                yearFilter={yearFilter}
+               categoryFilter={categoryFilter}
                years={years}
                setSearch={setSearch}
                setSort={setSort}
                setStatusFilter={setStatusFilter}
                setYearFilter={setYearFilter}
-               onAddMystery={() => setModal({ type: "form", title: "Adicionar Mistério", mystery: null })}
+               setCategoryFilter={setCategoryFilter}
+               onAddMystery={() => setModal({ type: "form", title: "Adicionar Registro", mystery: null })}
                onOpenRules={() => setModal({ type: "rules", title: "Regras de Mistérios" })}
                onCopyMysteries={getMysteriesText}
             />
