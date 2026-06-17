@@ -170,8 +170,7 @@ const GoalsTab = ({ selectedCharacter }) => {
       <div className="space-y-6 pb-4">
          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div>
-               <p className="text-xs uppercase tracking-[0.28em] text-yellow-400">Meta atual</p>
-               <h2 className="mt-2 text-2xl font-semibold">Metas do {selectedYear}º ano</h2>
+               <h2 className="text-xs uppercase tracking-[0.28em] text-yellow-400">Metas do {selectedYear}º ano</h2>
                <p className="mt-2 max-w-2xl text-sm leading-6 text-purple-100/70">
                   A tela lê as metas padrão da coleção <strong>goals</strong> e compara com a ficha atual do personagem.
                </p>

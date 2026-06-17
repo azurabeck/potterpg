@@ -2,6 +2,12 @@ import { ruleTables } from "../Shared/rules_content";
 import { RulePage, RuleSection, RuleTable, SimpleList } from "../Shared/RulePage";
 
 const mainGoals = [
+   "Ler a última sessão.",
+   "Identificar o último evento.",
+   "Conferir NPCs presentes.",
+   "Conferir pendências.",
+   "Conferir mistérios.",
+   "Só então narrar.",
    "Manter continuidade com a linha do tempo, a ficha e os registros já cadastrados.",
    "Leia sempre as duas ultimas sessões do jogo por inteiro, e use lógica para narrar a próxima. Exemplo: Se eu comprei um livro novo não deve ter um anotação nele",
    "Narrar consequências claras para escolhas, testes, falhas e sucessos.",
