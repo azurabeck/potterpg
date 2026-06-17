@@ -168,7 +168,7 @@ const GoalsTab = ({ selectedCharacter }) => {
 
    return (
       <div className="space-y-6 pb-4">
-         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+         <div className="flex flex-col gap-4 lg:flex-row text-left lg:items-end lg:justify-between">
             <div>
                <h2 className="text-xs uppercase tracking-[0.28em] text-yellow-400">Metas do {selectedYear}º ano</h2>
                <p className="mt-2 max-w-2xl text-sm leading-6 text-purple-100/70">
