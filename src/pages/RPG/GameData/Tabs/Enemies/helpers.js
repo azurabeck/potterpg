@@ -1,4 +1,4 @@
-import { defaultDamage, distanceLabelMap, emptyAttack, emptyDefense } from "./constants";
+import { defaultBattleDice, distanceLabelMap, emptyAttack, emptyDefense } from "./constants";
 
 export const normalizeText = (text = "") =>
    String(text ?? "")
@@ -6,44 +6,6 @@ export const normalizeText = (text = "") =>
       .replace(/[\u0300-\u036f]/g, "")
       .toLowerCase()
       .trim();
-
-const legacyDamageKeyMap = {
-   sucesso_parcial: "partial",
-   partial_success: "partial",
-   parcial: "partial",
-   partial: "partial",
-
-   sucesso_normal: "normal",
-   normal_success: "normal",
-   normal: "normal",
-
-   sucesso_forte: "strong",
-   strong_success: "strong",
-   forte: "strong",
-   strong: "strong",
-
-   sucesso_critico: "critical",
-   sucesso_crítico: "critical",
-   critical_success: "critical",
-   critico: "critical",
-   crítico: "critical",
-   critical: "critical",
-};
-
-export const normalizeDamage = (damage = {}) => {
-   if (!damage) return null;
-
-   const normalizedDamage = { ...defaultDamage };
-
-   Object.entries(damage || {}).forEach(([key, value]) => {
-      const normalizedKey = legacyDamageKeyMap[key] || key;
-      if (["partial", "normal", "strong", "critical"].includes(normalizedKey)) {
-         normalizedDamage[normalizedKey] = value;
-      }
-   });
-
-   return normalizedDamage;
-};
 
 const normalizeDistance = (distance = "medium") => {
    const normalized = normalizeText(distance).replace(" ", "_");
@@ -61,36 +23,46 @@ export const getDistanceLabel = (distance) => distanceLabelMap[distance] || dist
 
 export const normalizeAttack = (attack = {}, fallbackAttribute = "Ataque", fallbackName = "") => {
    if (attack === null) return null;
+   const safeAttack = attack || {};
 
    return {
       ...emptyAttack,
-      name: attack?.name || attack?.nome || fallbackName,
-      attribute: attack?.attribute || attack?.atribute || fallbackAttribute,
-      attribute_value: Number(attack?.attribute_value ?? attack?.atribute_value ?? 0),
-      distance: normalizeDistance(attack?.distance || "medium"),
-      effect: attack?.effect || attack?.efeito || "",
-      damage: normalizeDamage(attack?.damage),
+      name: safeAttack.name || safeAttack.nome || fallbackName,
+      attribute: safeAttack.attribute || safeAttack.atribute || fallbackAttribute,
+      attribute_value: Number(safeAttack.attribute_value ?? safeAttack.atribute_value ?? 0),
+      distance: normalizeDistance(safeAttack.distance || "medium"),
+      effect: safeAttack.effect || safeAttack.efeito || "",
    };
 };
 
-export const normalizeDefense = (defense = {}) => ({
-   ...emptyDefense,
-   attribute: defense?.attribute || defense?.atribute || "Agilidade",
-   attribute_value: Number(defense?.attribute_value ?? defense?.atribute_value ?? 0),
-});
+export const normalizeDefense = (defense = {}) => {
+   const safeDefense = defense || {};
 
-export const normalizeEnemy = (enemy = {}) => ({
-   name: enemy.name || enemy.nome || "",
-   type: enemy.type || enemy.tipo || "Criatura Mágica",
-   hp: Number(enemy.hp || 0),
-   difficulty: enemy.difficulty || enemy.dificuldade || "Médio",
-   image_url: enemy.image_url || enemy.image || "",
-   local: enemy.local || enemy.location || enemy.locais || "",
-   caracteristicas: enemy.caracteristicas || enemy.characteristics || "",
-   main_attack: normalizeAttack(enemy.main_attack, "Ataque", "Ataque Principal"),
-   secondary_attack: normalizeAttack(enemy.secondary_attack, "Controle", "Ataque Secundário"),
-   defense: normalizeDefense(enemy.defense),
-});
+   return {
+      ...emptyDefense,
+      attribute: safeDefense.attribute || safeDefense.atribute || "Agilidade",
+      attribute_value: Number(safeDefense.attribute_value ?? safeDefense.atribute_value ?? 0),
+   };
+};
+
+export const normalizeEnemy = (enemy = {}) => {
+   const safeEnemy = enemy || {};
+
+   return {
+   name: safeEnemy.name || safeEnemy.nome || "",
+   type: safeEnemy.type || safeEnemy.tipo || "Criatura Mágica",
+   hp: Number(safeEnemy.hp || 0),
+   difficulty: safeEnemy.difficulty || safeEnemy.dificuldade || "Médio",
+   recommended_year: Number(safeEnemy.recommended_year ?? safeEnemy.year ?? safeEnemy.ano_recomendado ?? defaultBattleDice.recommended_year),
+   impact_die: safeEnemy.impact_die || safeEnemy.dado_impacto || defaultBattleDice.impact_die,
+   image_url: safeEnemy.image_url || safeEnemy.image || "",
+   local: safeEnemy.local || safeEnemy.location || safeEnemy.locais || "",
+   caracteristicas: safeEnemy.caracteristicas || safeEnemy.characteristics || "",
+   main_attack: normalizeAttack(safeEnemy.main_attack, "Ataque", "Ataque Principal"),
+   secondary_attack: normalizeAttack(safeEnemy.secondary_attack, "Controle", "Ataque Secundário"),
+   defense: normalizeDefense(safeEnemy.defense),
+   };
+};
 
 export const getFilteredAndSortedEnemies = ({ enemies, search, typeFilter, difficultyFilter, sort }) => {
    const normalizedSearch = normalizeText(search);
@@ -100,6 +72,8 @@ export const getFilteredAndSortedEnemies = ({ enemies, search, typeFilter, diffi
          enemy.name,
          enemy.type,
          enemy.difficulty,
+         enemy.recommended_year,
+         enemy.impact_die,
          enemy.local,
          enemy.caracteristicas,
          enemy.main_attack?.name,
@@ -122,16 +96,4 @@ export const getFilteredAndSortedEnemies = ({ enemies, search, typeFilter, diffi
       const direction = sort === "name-desc" ? -1 : 1;
       return String(a.name || "").localeCompare(String(b.name || "")) * direction;
    });
-};
-
-export const formatDamage = (damage = {}) => {
-   const normalizedDamage = normalizeDamage(damage);
-   if (!normalizedDamage) return "Sem dano direto";
-
-   return [
-      `Parcial: ${normalizedDamage.partial || "-"}`,
-      `Normal: ${normalizedDamage.normal || "-"}`,
-      `Forte: ${normalizedDamage.strong || "-"}`,
-      `Crítico: ${normalizedDamage.critical || "-"}`,
-   ].join(" | ");
 };

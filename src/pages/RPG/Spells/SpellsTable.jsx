@@ -1,7 +1,9 @@
+import { PencilSquareIcon } from "@heroicons/react/24/outline";
+
 import { getYearLabel } from "./constants";
 import { getSpellDisplayName } from "./helpers";
 
-const SpellsTable = ({ spells, selectedYear }) => {
+const SpellsTable = ({ spells, selectedYear, onEditSpell }) => {
    return (
       <section className="overflow-hidden rounded-xl border border-purple-900 bg-[#190020]">
          <div className="border-b border-purple-900 bg-[#21002b] p-4">
@@ -15,17 +17,18 @@ const SpellsTable = ({ spells, selectedYear }) => {
          </div>
 
          <div className="overflow-x-auto">
-            <table className="w-full min-w-[1100px] text-left text-sm">
+            <table className="w-full min-w-[1180px] text-left text-sm">
                <thead className="bg-purple-950 text-xs uppercase text-purple-300">
                   <tr>
                      <th className="px-4 py-3">Ano</th>
                      <th className="px-4 py-3">Nome</th>
+                     <th className="px-4 py-3">Categoria</th>
                      <th className="px-4 py-3">Aula</th>
                      <th className="px-4 py-3">Nível</th>
-                     <th className="px-4 py-3">Required</th>
-                     <th className="px-4 py-3">Maestria Req.</th>
+                     <th className="px-4 py-3">Dice</th>
                      <th className="px-4 py-3">XP Total</th>
                      <th className="px-4 py-3">Efeito</th>
+                     <th className="px-4 py-3 text-right">Ações</th>
                   </tr>
                </thead>
 
@@ -41,6 +44,10 @@ const SpellsTable = ({ spells, selectedYear }) => {
                         </td>
 
                         <td className="px-4 py-3">
+                           {spell.attributes.category || "-"}
+                        </td>
+
+                        <td className="px-4 py-3">
                            {spell.attributes.aula || "-"}
                         </td>
 
@@ -49,19 +56,27 @@ const SpellsTable = ({ spells, selectedYear }) => {
                         </td>
 
                         <td className="px-4 py-3">
-                           {spell.attributes.required || 0}
-                        </td>
-
-                        <td className="px-4 py-3">
-                           {spell.attributes.maestria_required || 0}
+                           {spell.attributes.effect_dice || "-"}
                         </td>
 
                         <td className="px-4 py-3">
                            {spell.attributes.xp_total || "-"}
                         </td>
 
-                        <td className="px-4 py-3 text-purple-200">
+                        <td className="max-w-[360px] truncate px-4 py-3 text-purple-200">
                            {spell.attributes.effect || "-"}
+                        </td>
+
+                        <td className="px-4 py-3">
+                           <div className="flex justify-end">
+                              <button
+                                 type="button"
+                                 onClick={() => onEditSpell(spell)}
+                                 className="flex h-8 w-8 items-center justify-center rounded bg-white/10 text-white/60 transition hover:bg-yellow-400 hover:text-[#2b0038]"
+                              >
+                                 <PencilSquareIcon className="h-4 w-4" />
+                              </button>
+                           </div>
                         </td>
                      </tr>
                   ))}
@@ -69,7 +84,7 @@ const SpellsTable = ({ spells, selectedYear }) => {
                   {!spells.length && (
                      <tr>
                         <td
-                           colSpan={8}
+                           colSpan={9}
                            className="px-4 py-10 text-center text-sm text-purple-300"
                         >
                            Nenhum feitiço encontrado para este filtro.

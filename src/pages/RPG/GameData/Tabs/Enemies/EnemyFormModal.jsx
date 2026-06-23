@@ -1,34 +1,70 @@
 import { useState } from "react";
+import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import CustomSelect from "@/components/CustomSelect";
-import { attributeOptions, difficultyOptions, distanceOptions, enemyTypeOptions } from "./constants";
+import { attributeOptions, diceOptions, difficultyOptions, distanceOptions, enemyTypeOptions, getBalanceByYear, yearOptions } from "./constants";
 import { normalizeEnemy } from "./helpers";
 
 const inputClass = "w-full border border-white/10 bg-white/10 px-3 py-2 text-xs text-white outline-none placeholder:text-white/30 focus:border-yellow-400/60 focus:ring-1 focus:ring-yellow-400/40";
 const labelClass = "mb-2 block text-xs text-purple-100/70";
 const cardClass = "space-y-3 border border-white/10 bg-white/5 p-4";
 
-const DamageFields = ({ damage, onChange }) => {
-   const handleDamageChange = (key, value) => {
-      onChange({
-         ...(damage || {}),
-         [key]: value,
-      });
-   };
+const clampAttributeValue = (value) => Math.max(0, Number(value || 0));
 
-   return (
-      <div>
-         <p className="mb-2 text-[11px] uppercase tracking-[0.18em] text-purple-100/45">Dano contra Tomas</p>
-         <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-            <input value={damage?.partial || ""} onChange={(event) => handleDamageChange("partial", event.target.value)} placeholder="Parcial" className={inputClass} />
-            <input value={damage?.normal || ""} onChange={(event) => handleDamageChange("normal", event.target.value)} placeholder="Normal" className={inputClass} />
-            <input value={damage?.strong || ""} onChange={(event) => handleDamageChange("strong", event.target.value)} placeholder="Forte" className={inputClass} />
-            <input value={damage?.critical || ""} onChange={(event) => handleDamageChange("critical", event.target.value)} placeholder="Crítico" className={inputClass} />
-         </div>
-      </div>
-   );
+const getSecondaryValue = (balance) => Math.max(balance.attribute_min, balance.attribute_max - 2);
+
+const getAutofilledByYear = (currentForm, year) => {
+   const balance = getBalanceByYear(year);
+
+   return {
+      ...currentForm,
+      recommended_year: Number(year),
+      hp: balance.hp_default,
+      difficulty: balance.difficulty,
+      impact_die: balance.impact_die,
+      main_attack: {
+         ...(currentForm.main_attack || {}),
+         attribute_value: balance.attribute_max,
+      },
+      secondary_attack: currentForm.secondary_attack === null
+         ? null
+         : {
+              ...(currentForm.secondary_attack || {}),
+              attribute_value: getSecondaryValue(balance),
+           },
+      defense: {
+         ...(currentForm.defense || {}),
+         attribute_value: getSecondaryValue(balance),
+      },
+   };
 };
 
-const AttackFields = ({ title, attack, onChange, allowDisable = false }) => {
+const InfoHint = ({ text }) => (
+   <span className="group relative inline-flex align-middle">
+      <InformationCircleIcon className="h-4 w-4 cursor-help text-yellow-400/70 transition group-hover:text-yellow-300" />
+      <span className="pointer-events-none absolute bottom-full left-1/2 z-[70] mb-2 hidden w-64 -translate-x-1/2 border border-yellow-400/30 bg-[#21002b] p-3 text-[11px] leading-5 text-purple-100 shadow-2xl group-hover:block">
+         {text}
+      </span>
+   </span>
+);
+
+const LabelWithInfo = ({ children, info }) => (
+   <label className={`${labelClass} flex items-center gap-1`}>
+      <span>{children}</span>
+      {info ? <InfoHint text={info} /> : null}
+   </label>
+);
+
+const BalanceSummary = ({ balance }) => (
+   <div className="border border-yellow-400/20 bg-yellow-400/10 p-3 text-[11px] leading-5 text-purple-100/75">
+      <p className="font-semibold text-yellow-300">Referência de equilíbrio — {balance.label}</p>
+      <p>Ataque e defesa: entre {balance.attribute_min} e {balance.attribute_max} pontos.</p>
+      <p>HP sugerido: entre {balance.hp_min} e {balance.hp_max}. Padrão: {balance.hp_default}.</p>
+      <p>Dado de impacto sugerido: {balance.impact_die}.</p>
+      <p className="mt-1 text-purple-100/50">{balance.note}</p>
+   </div>
+);
+
+const AttackFields = ({ title, attack, onChange, allowDisable = false, balance }) => {
    const isDisabled = attack === null;
 
    if (isDisabled) {
@@ -39,7 +75,7 @@ const AttackFields = ({ title, attack, onChange, allowDisable = false }) => {
                {allowDisable ? (
                   <button
                      type="button"
-                     onClick={() => onChange(normalizeEnemy({}).secondary_attack)}
+                     onClick={() => onChange({ ...normalizeEnemy({}).secondary_attack, attribute_value: getSecondaryValue(balance) })}
                      className="text-[11px] text-yellow-400 transition hover:text-yellow-300"
                   >
                      Adicionar ataque
@@ -67,7 +103,7 @@ const AttackFields = ({ title, attack, onChange, allowDisable = false }) => {
          </div>
 
          <div>
-            <label className={labelClass}>Nome do ataque</label>
+            <LabelWithInfo info="Nome narrativo da habilidade. Ex: Presas e Patas, Teia, Sopro de Fogo, Investida.">Nome do ataque</LabelWithInfo>
             <input
                value={attack.name || ""}
                onChange={(event) => onChange({ ...attack, name: event.target.value })}
@@ -78,7 +114,7 @@ const AttackFields = ({ title, attack, onChange, allowDisable = false }) => {
 
          <div className="grid gap-3 md:grid-cols-3">
             <div>
-               <label className={labelClass}>Atributo</label>
+               <LabelWithInfo info="Atributo usado na rolagem do ataque. Para criaturas físicas use Força, Agilidade, Ataque ou Precisão. Para efeitos mentais use Controle, Magia ou Inteligência.">Atributo</LabelWithInfo>
                <CustomSelect
                   value={attack.attribute}
                   options={attributeOptions}
@@ -87,17 +123,17 @@ const AttackFields = ({ title, attack, onChange, allowDisable = false }) => {
             </div>
 
             <div>
-               <label className={labelClass}>Valor</label>
+               <LabelWithInfo info={`Para ${balance?.label || "este ano"}, use entre ${balance?.attribute_min ?? 0} e ${balance?.attribute_max ?? 0}. Ataque principal pode ficar no máximo; ataque secundário geralmente fica 1 a 2 pontos abaixo.`}>Valor</LabelWithInfo>
                <input
                   type="number"
                   value={attack.attribute_value}
-                  onChange={(event) => onChange({ ...attack, attribute_value: Number(event.target.value || 0) })}
+                  onChange={(event) => onChange({ ...attack, attribute_value: clampAttributeValue(event.target.value) })}
                   className={inputClass}
                />
             </div>
 
             <div>
-               <label className={labelClass}>Distância</label>
+               <LabelWithInfo info="Distância de uso da habilidade. Use Longa para teias, sopros, projéteis e cantos; Curta para mordidas, garras e investidas.">Distância</LabelWithInfo>
                <CustomSelect
                   value={attack.distance}
                   options={distanceOptions}
@@ -114,14 +150,25 @@ const AttackFields = ({ title, attack, onChange, allowDisable = false }) => {
             className={`${inputClass} resize-none`}
          />
 
-         <DamageFields damage={attack.damage} onChange={(damage) => onChange({ ...attack, damage })} />
       </div>
    );
 };
 
 const EnemyFormModal = ({ enemy, onSubmit }) => {
    const [imageError, setImageError] = useState(false);
-   const [form, setForm] = useState(() => normalizeEnemy(enemy));
+   const [form, setForm] = useState(() => {
+      const normalizedEnemy = normalizeEnemy(enemy);
+      return enemy?.id ? normalizedEnemy : getAutofilledByYear(normalizedEnemy, normalizedEnemy.recommended_year);
+   });
+   const balance = getBalanceByYear(form.recommended_year);
+
+   const applyBalanceForYear = (year) => {
+      setForm((current) => getAutofilledByYear(current, year));
+   };
+
+   const handleYearChange = (year) => {
+      applyBalanceForYear(Number(year));
+   };
 
    const handleChange = (key, value) => {
       if (key === "image_url") setImageError(false);
@@ -177,22 +224,29 @@ const EnemyFormModal = ({ enemy, onSubmit }) => {
                </div>
 
                <div>
-                  <label className={labelClass}>HP</label>
+                  <LabelWithInfo info={`Para ${balance.label}, use entre ${balance.hp_min} e ${balance.hp_max} de HP. O padrão automático é ${balance.hp_default}. Treinos e brinquedos podem ter menos.`}>HP</LabelWithInfo>
                   <input type="number" value={form.hp} onChange={(event) => handleChange("hp", Number(event.target.value || 0))} className={inputClass} />
                </div>
 
                <div>
+                  <LabelWithInfo info="Ao trocar o ano, o formulário preenche automaticamente HP, dificuldade, dados e valores de ataque/defesa usando a curva balanceada.">Ano recomendado</LabelWithInfo>
+                  <CustomSelect value={form.recommended_year} options={yearOptions} onChange={handleYearChange} />
+               </div>
+
+               <div className="md:col-span-2">
                   <label className={labelClass}>Local</label>
                   <input value={form.local} onChange={(event) => handleChange("local", event.target.value)} className={inputClass} />
                </div>
             </div>
          </div>
 
+         <BalanceSummary balance={balance} />
+
          <div className={cardClass}>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-yellow-500">Defesa</p>
+            <div className="flex items-center justify-between gap-3"><p className="text-[11px] uppercase tracking-[0.22em] text-yellow-500">Defesa</p><button type="button" onClick={() => applyBalanceForYear(form.recommended_year)} className="text-[11px] text-yellow-400 transition hover:text-yellow-300">Preencher pelo ano</button></div>
             <div className="grid gap-3 md:grid-cols-2">
                <div>
-                  <label className={labelClass}>Atributo de defesa</label>
+                  <LabelWithInfo info="Atributo usado para resistir, esquivar, bloquear ou evitar ataques. Agilidade e Resistência são os mais comuns.">Atributo de defesa</LabelWithInfo>
                   <CustomSelect
                      value={form.defense.attribute}
                      options={attributeOptions}
@@ -201,24 +255,34 @@ const EnemyFormModal = ({ enemy, onSubmit }) => {
                </div>
 
                <div>
-                  <label className={labelClass}>Valor da defesa</label>
+                  <LabelWithInfo info={`Para ${balance.label}, use entre ${balance.attribute_min} e ${balance.attribute_max}. Defesa costuma ficar perto do ataque secundário.`}>Valor da defesa</LabelWithInfo>
                   <input
                      type="number"
                      value={form.defense.attribute_value}
-                     onChange={(event) => handleChange("defense", { ...form.defense, attribute_value: Number(event.target.value || 0) })}
+                     onChange={(event) => handleChange("defense", { ...form.defense, attribute_value: clampAttributeValue(event.target.value) })}
                      className={inputClass}
                   />
                </div>
             </div>
          </div>
 
+         <div className={cardClass}>
+            <p className="text-[11px] uppercase tracking-[0.22em] text-yellow-500">Dano de impacto</p>
+            <p className="text-xs leading-5 text-purple-100/45">Usado no dano final quando o ataque vence a defesa: diferença + dado de impacto.</p>
+
+            <div>
+               <LabelWithInfo info={`Sugestão para ${balance.label}: ${balance.impact_die}. Treinos podem usar 1D4; criaturas perigosas usam 1D10 ou mais.`}>Dado de impacto</LabelWithInfo>
+               <CustomSelect value={form.impact_die} options={diceOptions} onChange={(value) => handleChange("impact_die", value)} />
+            </div>
+         </div>
+
          <div className="grid gap-4 xl:grid-cols-2">
-            <AttackFields title="Ataque principal" attack={form.main_attack} onChange={(value) => handleChange("main_attack", value)} />
-            <AttackFields title="Ataque secundário" attack={form.secondary_attack} onChange={(value) => handleChange("secondary_attack", value)} allowDisable />
+            <AttackFields title="Ataque principal" attack={form.main_attack} onChange={(value) => handleChange("main_attack", value)} balance={balance} />
+            <AttackFields title="Ataque secundário" attack={form.secondary_attack} onChange={(value) => handleChange("secondary_attack", value)} allowDisable balance={balance} />
          </div>
 
          <div>
-            <label className={labelClass}>Características</label>
+            <LabelWithInfo info="Descrição narrativa da criatura. Inclua fraquezas, estilo de combate, ambiente e condições especiais.">Características</LabelWithInfo>
             <textarea
                value={form.caracteristicas}
                onChange={(event) => handleChange("caracteristicas", event.target.value)}

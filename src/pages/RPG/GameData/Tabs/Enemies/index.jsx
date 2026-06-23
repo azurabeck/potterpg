@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { addDoc, collection, deleteDoc, doc, getDocs, serverTimestamp, updateDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, deleteField, doc, getDocs, serverTimestamp, updateDoc } from "firebase/firestore";
 import { db } from "../../../../../services/firebase";
 import Modal from "../../../../../components/Modal";
 import MobileFilterDrawer from "../../Shared/MobileFilterDrawer";
@@ -8,7 +8,7 @@ import Table from "./Table";
 import EnemiesFilters from "./EnemiesFilters";
 import EnemyFormModal from "./EnemyFormModal";
 import BulkEnemyJsonModal from "./BulkEnemyJsonModal";
-import { getFilteredAndSortedEnemies, normalizeEnemy } from "./helpers";
+import { getFilteredAndSortedEnemies, normalizeEnemy, normalizeText } from "./helpers";
 
 const EnemiesTab = () => {
    const [enemies, setEnemies] = useState([]);
@@ -120,10 +120,38 @@ const EnemiesTab = () => {
       }
    };
 
+   const getEnemiesFromJson = (jsonText) => {
+      const parsed = JSON.parse(jsonText);
+      const parsedEnemies = Array.isArray(parsed) ? parsed : parsed.enemies || [];
+
+      if (!Array.isArray(parsedEnemies)) return [];
+
+      return parsedEnemies;
+   };
+
+   const mergeEnemyForUpdate = (currentEnemy, jsonEnemy) => ({
+      ...currentEnemy,
+      ...jsonEnemy,
+      main_attack: jsonEnemy.main_attack
+         ? {
+              ...(currentEnemy.main_attack || {}),
+              ...jsonEnemy.main_attack,
+           }
+         : currentEnemy.main_attack,
+      secondary_attack: jsonEnemy.secondary_attack === null
+         ? null
+         : jsonEnemy.secondary_attack
+           ? {
+                ...(currentEnemy.secondary_attack || {}),
+                ...jsonEnemy.secondary_attack,
+             }
+           : currentEnemy.secondary_attack,
+      defense: jsonEnemy.defense ? { ...(currentEnemy.defense || {}), ...jsonEnemy.defense } : currentEnemy.defense,
+   });
+
    const handleCreateEnemiesFromJson = async (jsonText) => {
       try {
-         const parsed = JSON.parse(jsonText);
-         const parsedEnemies = Array.isArray(parsed) ? parsed : parsed.enemies || [];
+         const parsedEnemies = getEnemiesFromJson(jsonText);
          const createdEnemies = [];
 
          for (const enemy of parsedEnemies) {
@@ -139,9 +167,135 @@ const EnemiesTab = () => {
 
          setEnemies((current) => [...current, ...createdEnemies]);
          setModal(null);
+         alert(`${createdEnemies.length} adversário(s) cadastrado(s).`);
       } catch (error) {
          console.error("Erro ao cadastrar adversários em bloco:", error);
          alert("JSON inválido ou erro ao cadastrar adversários.");
+      }
+   };
+
+
+   const removeAttackDamage = (attack) => {
+      if (!attack) return attack;
+      const {  ...cleanAttack } = attack;
+      return cleanAttack;
+   };
+
+   const handleCleanObsoleteFields = async () => {
+      const confirmed = window.confirm(
+         [
+            "Remover campos obsoletos de todos os adversários?",
+            "",
+            "Campos removidos:",
+            "- instinct_die",
+            "- natural_attack_die",
+            "- natural_defense_die",
+            "- main_attack.damage",
+            "- secondary_attack.damage",
+         ].join("\n")
+      );
+
+      if (!confirmed) return;
+
+      try {
+         const snapshot = await getDocs(collection(db, "enemies"));
+         let cleanedCount = 0;
+
+         for (const document of snapshot.docs) {
+            const data = document.data();
+            const hasObsoleteFields =
+               Object.prototype.hasOwnProperty.call(data, "instinct_die") ||
+               Object.prototype.hasOwnProperty.call(data, "natural_attack_die") ||
+               Object.prototype.hasOwnProperty.call(data, "natural_defense_die") ||
+               Object.prototype.hasOwnProperty.call(data?.main_attack || {}, "damage") ||
+               Object.prototype.hasOwnProperty.call(data?.secondary_attack || {}, "damage");
+
+            if (!hasObsoleteFields) continue;
+
+            const updatePayload = {
+               updated_at: serverTimestamp(),
+            };
+
+            if (Object.prototype.hasOwnProperty.call(data, "instinct_die")) {
+               updatePayload.instinct_die = deleteField();
+            }
+
+            if (Object.prototype.hasOwnProperty.call(data, "natural_attack_die")) {
+               updatePayload.natural_attack_die = deleteField();
+            }
+
+            if (Object.prototype.hasOwnProperty.call(data, "natural_defense_die")) {
+               updatePayload.natural_defense_die = deleteField();
+            }
+
+            if (Object.prototype.hasOwnProperty.call(data?.main_attack || {}, "damage")) {
+               updatePayload["main_attack.damage"] = deleteField();
+            }
+
+            if (Object.prototype.hasOwnProperty.call(data?.secondary_attack || {}, "damage")) {
+               updatePayload["secondary_attack.damage"] = deleteField();
+            }
+
+            await updateDoc(doc(db, "enemies", document.id), updatePayload);
+
+            cleanedCount += 1;
+         }
+
+         setEnemies((current) =>
+            current.map(({ ...enemy }) => ({
+               ...enemy,
+               main_attack: removeAttackDamage(enemy.main_attack),
+               secondary_attack: removeAttackDamage(enemy.secondary_attack),
+            }))
+         );
+
+         alert(`${cleanedCount} adversário(s) limpo(s).`);
+      } catch (error) {
+         console.error("Erro ao limpar campos obsoletos:", error);
+         alert("Erro ao limpar campos obsoletos.");
+      }
+   };
+
+   const handleUpdateEnemiesFromJson = async (jsonText) => {
+      try {
+         const parsedEnemies = getEnemiesFromJson(jsonText);
+         const enemiesById = new Map(enemies.map((enemy) => [enemy.id, enemy]));
+         const enemiesByName = new Map(enemies.map((enemy) => [normalizeText(enemy.name), enemy]));
+         const updatedEnemies = [];
+         const notFoundEnemies = [];
+
+         for (const enemy of parsedEnemies) {
+            const existingEnemy = enemy.id ? enemiesById.get(enemy.id) : enemiesByName.get(normalizeText(enemy.name));
+
+            if (!existingEnemy?.id) {
+               notFoundEnemies.push(enemy.name || enemy.id || "Adversário sem nome");
+               continue;
+            }
+
+            const normalizedEnemy = normalizeEnemy(mergeEnemyForUpdate(existingEnemy, enemy));
+
+            await updateDoc(doc(db, "enemies", existingEnemy.id), {
+               ...normalizedEnemy,
+               updated_at: serverTimestamp(),
+            });
+
+            updatedEnemies.push({ id: existingEnemy.id, ...normalizedEnemy });
+         }
+
+         setEnemies((current) =>
+            current.map((currentEnemy) => {
+               const updatedEnemy = updatedEnemies.find((enemy) => enemy.id === currentEnemy.id);
+               return updatedEnemy || currentEnemy;
+            })
+         );
+
+         setModal(null);
+
+         const notFoundMessage = notFoundEnemies.length ? `\nNão encontrados: ${notFoundEnemies.join(", ")}` : "";
+         alert(`${updatedEnemies.length} adversário(s) atualizado(s).${notFoundMessage}`);
+      } catch (error) {
+         console.error("Erro ao atualizar adversários em bloco:", error);
+         alert("JSON inválido ou erro ao atualizar adversários.");
       }
    };
 
@@ -153,7 +307,7 @@ const EnemiesTab = () => {
             ) : null}
 
             {modal?.type === "bulk-json" ? (
-               <BulkEnemyJsonModal onSubmit={handleCreateEnemiesFromJson} />
+               <BulkEnemyJsonModal onCreate={handleCreateEnemiesFromJson} onUpdate={handleUpdateEnemiesFromJson} />
             ) : null}
          </Modal>
 
@@ -169,7 +323,8 @@ const EnemiesTab = () => {
                setSort={setSort}
                enemies={enemies}
                onOpenFormModal={handleOpenCreateModal}
-               onOpenBulkJsonModal={() => setModal({ type: "bulk-json", title: "Cadastrar adversários por JSON" })}
+               onOpenBulkJsonModal={() => setModal({ type: "bulk-json", title: "Importar adversários por JSON" })}
+               onCleanObsoleteFields={handleCleanObsoleteFields}
             />
          </MobileFilterDrawer>
 
@@ -180,7 +335,8 @@ const EnemiesTab = () => {
             onEditEnemy={handleEditEnemy}
             onDeleteEnemy={handleDeleteEnemy}
             onOpenFormModal={handleOpenCreateModal}
-            onOpenBulkJsonModal={() => setModal({ type: "bulk-json", title: "Cadastrar adversários por JSON" })}
+            onOpenBulkJsonModal={() => setModal({ type: "bulk-json", title: "Importar adversários por JSON" })}
+            onCleanObsoleteFields={handleCleanObsoleteFields}
             search={search}
             typeFilter={typeFilter}
             difficultyFilter={difficultyFilter}

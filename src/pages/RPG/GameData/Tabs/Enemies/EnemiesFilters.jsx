@@ -1,8 +1,7 @@
-import { CodeBracketSquareIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { CodeBracketSquareIcon, PlusIcon, SparklesIcon } from "@heroicons/react/24/outline";
 import CopyButton from "@/components/CopyButton";
 import CustomSelect from "@/components/CustomSelect";
 import { difficultyOptions, enemyTypeOptions, sortOptions } from "./constants";
-import { formatDamage } from "./helpers";
 
 const EnemiesFilters = ({
    search,
@@ -16,6 +15,7 @@ const EnemiesFilters = ({
    enemies = [],
    onOpenFormModal,
    onOpenBulkJsonModal,
+   onCleanObsoleteFields,
 }) => {
    const getAllEnemiesText = () => {
       if (!enemies.length) return "";
@@ -29,7 +29,6 @@ const EnemiesFilters = ({
                `Dificuldade: ${enemy.difficulty || ""}`,
                `Local: ${enemy.local || ""}`,
                `Ataque principal: ${enemy.main_attack?.attribute || ""} +${enemy.main_attack?.attribute_value ?? 0}`,
-               `Dano ataque principal: ${formatDamage(enemy.main_attack?.damage)}`,
                `Ataque secundário: ${enemy.secondary_attack?.attribute || ""} +${enemy.secondary_attack?.attribute_value ?? 0}`,
                `Defesa: ${enemy.defense?.attribute || ""} +${enemy.defense?.attribute_value ?? 0}`,
                `Características: ${enemy.caracteristicas || ""}`,
@@ -46,7 +45,7 @@ const EnemiesFilters = ({
             <CustomSelect value={sort} options={sortOptions} onChange={setSort} placeholder="A-B" />
          </div>
 
-         <div className="grid grid-cols-[1fr_auto_auto_auto] gap-3">
+         <div className="grid grid-cols-[1fr_auto_auto_auto_auto] gap-3">
             <input
                type="text"
                value={search}
@@ -61,6 +60,16 @@ const EnemiesFilters = ({
                title="Copiar adversários"
                className="border border-yellow-400/40 bg-yellow-400/10 px-3 py-2 text-yellow-100 hover:bg-yellow-400/20 hover:text-yellow-100"
             />
+
+
+            <button
+               type="button"
+               onClick={onCleanObsoleteFields}
+               className="border border-red-300/35 bg-red-400/10 p-2 text-red-100 transition hover:bg-red-400/20"
+               title="Limpar campos obsoletos"
+            >
+               <SparklesIcon className="h-4 w-4" />
+            </button>
 
             <button
                type="button"

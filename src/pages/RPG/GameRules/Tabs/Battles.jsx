@@ -5,54 +5,58 @@ const battleRules = [
    "Adversários possuem 2 atributos principais: um atributo de ataque e um atributo de defesa.",
    "O atributo de ataque é usado quando o adversário tenta atingir Tomas.",
    "O atributo de defesa é usado quando o adversário tenta resistir, esquivar, bloquear ou evitar um ataque de Tomas.",
-   "Quando Tomas ataca, o dano causado é calculado pela diferença entre o ataque total de Tomas e a defesa total do adversário.",
-   "Quando o adversário ataca, o dano contra Tomas depende do grau de sucesso do ataque.",
+   "Ataques e defesas usam atributo + rolagem. O dano final usa a diferença entre ataque e defesa + dado de impacto.",
    "Condições como petrificado, preso, caído, queimado, desarmado ou atordoado podem ser mais importantes que dano direto.",
    "Soluções criativas podem encerrar uma batalha sem zerar HP.",
+   "Se uma cena ultrapassar consistentemente 20 rodadas, o HP ou a defesa do adversário provavelmente estão altos demais.",
 ];
 
 const tomasAttackRules = [
-   "Tomas rola o ataque usando: dado do feitiço + dado de maestria + atributo compatível.",
-   "O adversário rola defesa usando: 1D20 + atributo defensivo.",
-   "Dano causado por Tomas = ataque total de Tomas - defesa total do adversário.",
-   "Se a defesa do adversário for igual ou maior que o ataque de Tomas, o dano é 0.",
-   "O narrador pode aplicar dano extra ou condição se Tomas usar o ambiente de forma criativa.",
+   "Tomas rola ataque usando: atributo compatível + dado de maestria + dado do feitiço.",
+   "O adversário rola defesa usando: atributo defensivo + 1D20.",
+   "Se o ataque de Tomas vencer a defesa, o dano causado é: diferença + dado de impacto do feitiço.",
+   "Se a defesa for igual ou maior que o ataque, o dano é 0.",
+   "Feitiços mais poderosos possuem dados de impacto maiores.",
 ];
 
 const tomasAttackExample = [
    ["Situação", "Valor"],
-   ["Ataque total de Tomas", "30"],
-   ["Defesa total da Acromântula", "10"],
-   ["Cálculo", "30 - 10"],
-   ["Dano causado", "20"],
+   ["Atributo de Tomas", "20"],
+   ["Dado de maestria", "1D6 = 4"],
+   ["Dado do feitiço", "1D20 = 12"],
+   ["Ataque total", "36"],
+   ["Defesa da Acromântula", "18 + 1D20 = 27"],
+   ["Diferença", "9"],
+   ["Impacto do feitiço", "1D10 = 6"],
+   ["Dano causado", "15"],
 ];
 
 const adversaryAttackRules = [
-   "O adversário rola ataque usando: 1D20 + atributo de ataque.",
-   "Tomas responde com esquiva, Protego, resistência ou outro teste coerente.",
-   "Compare o ataque total do adversário com a defesa total de Tomas.",
-   "Se o adversário vencer, a diferença define o grau de sucesso.",
-   "O grau de sucesso define qual dado de dano será rolado contra Tomas.",
-   "Se houver empate, Tomas não sofre dano. A próxima ação fica com quem tiver maior Agilidade.",
+   "Criaturas e construtos rolam ataque usando: atributo de ataque + 1D20.",
+   "Tomas responde com atributo defensivo + dado de maestria + dado defensivo escolhido.",
+   "Se o adversário vencer a defesa, o dano causado é: diferença + dado de impacto da criatura.",
+   "Se a defesa de Tomas for igual ou maior que o ataque, o dano é 0.",
+   "Ataques secundários usam a mesma regra, mas podem causar efeitos narrativos em vez de dano direto.",
 ];
 
 const adversaryAttackExample = [
    ["Situação", "Valor"],
-   ["Ataque total da Acromântula", "34"],
-   ["Defesa total de Tomas", "30"],
-   ["Diferença", "4"],
-   ["Resultado", "Sucesso parcial"],
-   ["Dano rolado contra Tomas", "1D4"],
+   ["Ataque da Acromântula", "20 + 1D20 = 32"],
+   ["Defesa de Tomas", "18 + 1D6 + 1D20 = 29"],
+   ["Diferença", "3"],
+   ["Impacto da criatura", "1D4 = 2"],
+   ["Dano em Tomas", "5"],
 ];
 
-const adversaryDamageBySuccess = [
-   ["Resultado", "Diferença", "Dano contra Tomas", "Efeito"],
-   ["Falha", "Ataque menor que defesa", "0", "Tomas evita, bloqueia ou resiste."],
-   ["Empate / raspão", "Ataque igual à defesa", "0", "Sem dano. Próxima ação vai para quem tiver maior Agilidade."],
-   ["Sucesso parcial", "1 a 5", "1D4", "Impacto leve."],
-   ["Sucesso normal", "6 a 11", "1D6", "Golpe limpo."],
-   ["Sucesso forte", "12 a 17", "1D8", "Golpe perigoso."],
-   ["Sucesso crítico", "18+", "1D10", "Golpe pesado ou condição adicional."],
+const impactDamageRules = [
+   ["Tipo", "Dano"],
+   ["Falha ou empate", "0"],
+   ["Ataque bem-sucedido", "Diferença + dado de impacto"],
+   ["Feitiço leve / criatura fraca", "Diferença + 1D4 ou 1D6"],
+   ["Feitiço padrão / criatura comum", "Diferença + 1D10"],
+   ["Feitiço avançado / criatura forte", "Diferença + 2D10"],
+   ["Feitiço lendário / criatura lendária", "Diferença + 3D10"],
+   ["Criatura mítica", "Diferença + 4D10"],
 ];
 
 const tomasRules = [
@@ -87,16 +91,39 @@ const attributeLimitByYear = [
    ["Adulto Treinado", "80+", "Bruxos profissionais ou combatentes experientes"],
 ];
 
+const adversaryScaleRules = [
+   "Ataque e defesa devem acompanhar o nível real do personagem.",
+   "Criaturas comuns do ano devem ficar abaixo ou próximas do teto do jogador.",
+   "Criaturas difíceis e chefes podem igualar ou ultrapassar levemente o teto do ano.",
+   "O principal ajuste de balanceamento ocorre em 4 campos: HP, ataque, defesa e dado de impacto.",
+   "Chefes lendários devem durar aproximadamente entre 8 e 15 rodadas.",
+   "Criaturas de treino ou brinquedos mágicos podem ser desequilibradas de propósito, pois não existem para vencer.",
+];
+
 const adversaryExamples = [
-   ["Nível", "Exemplo", "HP", "Ataque", "Defesa", "Dano", "Observação"],
-   ["Muito Fácil", "Rato encantado", "20", "+1", "+2", "1D4", "Pouco risco"],
-   ["Fácil", "Doxy isolada", "35", "+3", "+5", "1D4 / 1D6", "Perigoso se ignorado"],
-   ["Médio", "Armadura de treino", "75", "+5", "+6", "1D6 / 1D8", "Exige estratégia"],
-   ["Difícil", "Acromântula", "80", "+6", "+7", "1D6 / 1D8", "Combate perigoso"],
-   ["Difícil", "Acromântula Matriarca", "130", "+8", "+10", "1D8 / 1D10", "Chefe de criatura"],
-   ["Muito Difícil", "Troll pequeno", "180", "+12", "+10", "1D10 / 1D12", "Não enfrentar sem plano"],
-   ["Profissional", "Bruxo adulto treinado", "220", "+14", "+12", "2D8", "Acima do nível escolar"],
-   ["Lendário", "Dragão adulto", "400+", "+18", "+18", "3D10", "Não vencer em combate direto"],
+   ["Nível", "Exemplo", "HP", "Ataque", "Defesa", "Impacto", "Observação"],
+   ["Muito Fácil", "Rato encantado", "10 a 30", "+1 a +8", "+1 a +8", "1D4", "Risco baixo"],
+   ["Fácil", "Doxy isolada", "35 a 60", "+10 a +18", "+10 a +16", "1D4 / 1D6", "Pequena ameaça"],
+   ["Médio", "Acromântula Filhote", "60 a 90", "+18 a +30", "+18 a +28", "1D6 / 1D8", "Desafio escolar inicial"],
+   ["Difícil escolar", "Kelpie ou Kappa", "95 a 140", "+34 a +40", "+34 a +38", "1D10", "Exige estratégia"],
+   ["Chefe escolar", "Acromântula Matriarca", "150 a 190", "+46 a +52", "+46 a +50", "1D10 / 2D10", "Chefe de arco"],
+   ["Muito Difícil", "Troll adulto", "190 a 250", "+56 a +62", "+54 a +58", "2D10", "Força bruta"],
+   ["Profissional", "Centauro hostil", "220 a 300", "+68 a +75", "+66 a +72", "2D10", "Auror, duelista ou criatura equivalente"],
+   ["Lendário", "Dragão adulto", "220 a 310", "+80 a +90", "+80 a +88", "3D10", "Meta de 8 a 15 rodadas"],
+   ["Mítico", "Nundu ou Basilisco ancestral", "300 a 450", "+95 a +110", "+95 a +105", "4D10", "Sobrevivência e solução criativa"],
+];
+
+const creationGuide = [
+   ["Ano recomendado", "Ataque sugerido", "Defesa sugerida", "HP sugerido", "Impacto sugerido"],
+   ["1º Ano", "8 a 14", "8 a 12", "10 a 50", "1D4 / 1D6"],
+   ["2º Ano", "18 a 22", "16 a 20", "70 a 100", "1D6 / 1D8"],
+   ["3º Ano", "26 a 30", "24 a 28", "75 a 120", "1D8 / 1D10"],
+   ["4º Ano", "36 a 40", "34 a 38", "100 a 140", "1D10"],
+   ["5º Ano", "46 a 52", "44 a 50", "150 a 190", "1D10 / 2D10"],
+   ["6º Ano", "56 a 62", "54 a 58", "190 a 250", "2D10"],
+   ["7º Ano", "68 a 75", "66 a 72", "220 a 300", "2D10 / 3D10"],
+   ["8º Ano / Adulto", "80 a 90", "80 a 88", "220 a 310", "3D10"],
+   ["Mítico", "95 a 110", "95 a 105", "300 a 450", "4D10"],
 ];
 
 const Battles = () => {
@@ -119,8 +146,8 @@ const Battles = () => {
             <RuleTable rows={adversaryAttackExample} compact />
          </RuleSection>
 
-         <RuleSection title="4. Dano causado em Tomas">
-            <RuleTable rows={adversaryDamageBySuccess} compact />
+         <RuleSection title="4. Dano e dado de impacto">
+            <RuleTable rows={impactDamageRules} compact />
          </RuleSection>
 
          <RuleSection title="5. Resistência de Tomas">
@@ -136,7 +163,12 @@ const Battles = () => {
          </RuleSection>
 
          <RuleSection title="8. Base de adversários">
+            <SimpleList items={adversaryScaleRules} />
             <RuleTable rows={adversaryExamples} compact />
+         </RuleSection>
+
+         <RuleSection title="9. Guia rápido para criar adversários">
+            <RuleTable rows={creationGuide} compact />
          </RuleSection>
       </RulePage>
    );

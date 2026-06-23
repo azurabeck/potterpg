@@ -1,78 +1,78 @@
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
-import EnemiesFilters from "./EnemiesFilters";
+import LocationsFilters from "./LocationsFilters";
 
 const Table = ({
-   enemies,
-   selectedEnemyId,
-   onSelectEnemy,
-   onEditEnemy,
-   onDeleteEnemy,
+   locations,
+   selectedLocationId,
+   onSelectLocation,
+   onEditLocation,
+   onDeleteLocation,
    search,
    typeFilter,
-   difficultyFilter,
+   accessFilter,
    sort,
    setSearch,
    setTypeFilter,
-   setDifficultyFilter,
+   setAccessFilter,
    setSort,
-   allEnemies,
-   onOpenFormModal,
+   allLocations,
+   characters,
+   onOpenCreateModal,
    onOpenBulkJsonModal,
-   onCleanObsoleteFields,
 }) => {
    return (
       <div className="relative min-h-[310px] text-xs lg:border-e lg:border-dashed lg:border-white/25 lg:pr-10">
          <div className="sticky top-0 hidden self-start lg:block">
-            <EnemiesFilters
+            <LocationsFilters
                search={search}
                typeFilter={typeFilter}
-               difficultyFilter={difficultyFilter}
+               accessFilter={accessFilter}
                sort={sort}
                setSearch={setSearch}
                setTypeFilter={setTypeFilter}
-               setDifficultyFilter={setDifficultyFilter}
+               setAccessFilter={setAccessFilter}
                setSort={setSort}
-               enemies={allEnemies}
-               onOpenFormModal={onOpenFormModal}
+               locations={allLocations}
+               characters={characters}
+               onOpenCreateModal={onOpenCreateModal}
                onOpenBulkJsonModal={onOpenBulkJsonModal}
-               onCleanObsoleteFields={onCleanObsoleteFields}
             />
          </div>
 
-         {enemies.length ? (
+         {locations.length ? (
             <div className="space-y-4">
-               {enemies.map((enemy) => {
-                  const isSelected = selectedEnemyId === enemy.id;
+               {locations.map((location) => {
+                  const isSelected = selectedLocationId === location.id;
 
                   return (
-                     <section key={enemy.id}>
+                     <section key={location.id}>
                         <div className="grid grid-cols-[minmax(160px,1fr)_28px_28px] items-center gap-2">
                            <button
                               type="button"
-                              onClick={() => onSelectEnemy(enemy)}
+                              onClick={() => onSelectLocation(location)}
                               className={`flex items-center text-left transition ${
                                  isSelected ? "text-yellow-400" : "text-[#9d564c] hover:text-yellow-400"
                               }`}
                            >
-                              <span className="line-clamp-1">{enemy.name || "Adversário sem nome"}</span>
+                              <span className="line-clamp-1">{location.name || "Local sem nome"}</span>
                               <span className="mx-3 flex-1 border-t border-dashed border-purple-100/20" />
-                              <span className="text-[11px] text-purple-100/45">{enemy.recommended_year ? `${enemy.recommended_year}º ano · ` : ""}{enemy.hp || 0} HP</span>
+                              <span className="text-[11px] text-[#736868]">{location.type || "-"}</span>
                            </button>
 
                            <button
                               type="button"
-                              onClick={() => onEditEnemy(enemy)}
+                              onClick={() => onEditLocation(location)}
                               className="text-yellow-400/70 transition hover:text-yellow-400"
-                              title="Editar adversário"
+                              title="Editar local"
                            >
                               <PencilSquareIcon className="h-4 w-4" />
                            </button>
 
                            <button
                               type="button"
-                              onClick={() => onDeleteEnemy(enemy)}
+                              onClick={() => onDeleteLocation(location)}
                               className="text-red-300/70 transition hover:text-red-300"
-                              title="Excluir adversário"
+                              title="Excluir local"
                            >
                               <TrashIcon className="h-4 w-4" />
                            </button>
@@ -83,7 +83,7 @@ const Table = ({
             </div>
          ) : (
             <div className="flex min-h-[220px] items-center justify-center text-center text-sm text-purple-200/70">
-               Nenhum adversário encontrado.
+               Nenhum local encontrado.
             </div>
          )}
       </div>

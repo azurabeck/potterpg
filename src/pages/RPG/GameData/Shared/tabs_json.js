@@ -7,6 +7,7 @@ import SessionsTab from "../Tabs/Sessions";
 import RelationsTab from "../Tabs/Relations";
 import GoalsTab from "../Tabs/Goals";
 import EnemiesTab from "../Tabs/Enemies";
+import LocationsTab from "../Tabs/Locations";
 
 export const tabs = [
    { key: "attributes", label: "Atributos", component: AttributesTab, hideRules: true  },
@@ -17,6 +18,7 @@ export const tabs = [
    { key: "sessions", label: "Sessões", component: SessionsTab, hideRules: true },
    { key: "relations", label: "Relações", component: RelationsTab, hideRules: true },
    { key: "enemies", label: "Adversários", component: EnemiesTab, hideRules: true },
+   { key: "locations", label: "Locais", component: LocationsTab, hideRules: true },
    { key: "goals", label: "Meta atual", component: GoalsTab, hideRules: true },
 ];
 
@@ -110,5 +112,16 @@ export const regrasPorAba = {
       highlight: "Inimigos",
       description:
          "Use esta aba para registrar criaturas, construtos, bruxos inimigos e obstáculos perigosos.",
+   },
+   locations: {
+      title: "REGRAS DE LOCAIS.",
+      text: [
+         "Locais registram lugares importantes da campanha, incluindo acesso, características e importância narrativa.",
+         "Cada local fica salvo na coleção locations do Firestore.",
+      ],
+      subtitle: "CENÁRIO",
+      highlight: "Locais",
+      description:
+         "Use esta aba para registrar casas, salas secretas, florestas, cidades, lojas e outros pontos importantes da campanha.",
    },
 };

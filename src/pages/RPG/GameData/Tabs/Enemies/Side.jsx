@@ -1,4 +1,4 @@
-import { formatDamage, getDistanceLabel } from "./helpers";
+import { getDistanceLabel } from "./helpers";
 
 const InfoLine = ({ label, value }) => {
    if (value === undefined || value === null || value === "") return null;
@@ -30,7 +30,6 @@ const AttackCard = ({ title, attack }) => {
          <div className="grid gap-2 text-[#736868] md:grid-cols-3">
             <StatPill label="Atributo" value={`${attack.attribute || "-"} +${attack.attribute_value ?? 0}`} />
             <StatPill label="Distância" value={getDistanceLabel(attack.distance)} />
-            <StatPill label="Dano" value={formatDamage(attack.damage)} />
          </div>
 
          {attack.effect ? (
@@ -79,6 +78,7 @@ const Side = ({ selectedEnemy }) => {
                   <StatPill label="Tipo" value={selectedEnemy.type || "-"} />
                   <StatPill label="Dificuldade" value={selectedEnemy.difficulty || "-"} />
                   <StatPill label="HP" value={selectedEnemy.hp || 0} />
+                  <StatPill label="Ano" value={selectedEnemy.recommended_year ? `${selectedEnemy.recommended_year}º` : "-"} />
                   <StatPill
                      label="Defesa"
                      value={`${selectedEnemy.defense?.attribute || "-"} +${selectedEnemy.defense?.attribute_value ?? 0}`}
@@ -87,6 +87,10 @@ const Side = ({ selectedEnemy }) => {
 
                <div className="mt-4 space-y-1 leading-5 text-[#736868]">
                   <InfoLine label="Local" value={selectedEnemy.local} />
+               </div>
+
+               <div className="mt-4 grid grid-cols-2 gap-2 md:grid-cols-4">
+                  <StatPill label="Impacto" value={selectedEnemy.impact_die || "-"} />
                </div>
             </div>
 
