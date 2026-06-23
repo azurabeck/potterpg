@@ -6,6 +6,7 @@ import InventoryTab from "../Tabs/Inventory";
 import SessionsTab from "../Tabs/Sessions";
 import RelationsTab from "../Tabs/Relations";
 import GoalsTab from "../Tabs/Goals";
+import EnemiesTab from "../Tabs/Enemies";
 
 export const tabs = [
    { key: "attributes", label: "Atributos", component: AttributesTab, hideRules: true  },
@@ -15,6 +16,7 @@ export const tabs = [
    { key: "inventory", label: "Inventário", component: InventoryTab, hideRules: true },
    { key: "sessions", label: "Sessões", component: SessionsTab, hideRules: true },
    { key: "relations", label: "Relações", component: RelationsTab, hideRules: true },
+   { key: "enemies", label: "Adversários", component: EnemiesTab, hideRules: true },
    { key: "goals", label: "Meta atual", component: GoalsTab, hideRules: true },
 ];
 
@@ -97,5 +99,16 @@ export const regrasPorAba = {
       highlight: "Relação",
       description:
          "A relação muda conforme as escolhas, diálogos e acontecimentos da campanha.",
+   },
+   enemies: {
+      title: "REGRAS DE ADVERSÁRIOS.",
+      text: [
+         "Adversários são globais e ficam salvos na coleção enemies do Firestore.",
+         "Cada adversário possui HP, ataque principal, ataque secundário e defesa.",
+      ],
+      subtitle: "COMBATE",
+      highlight: "Inimigos",
+      description:
+         "Use esta aba para registrar criaturas, construtos, bruxos inimigos e obstáculos perigosos.",
    },
 };
