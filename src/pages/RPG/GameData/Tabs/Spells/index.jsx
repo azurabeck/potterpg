@@ -10,6 +10,7 @@ import { db } from "../../../../../services/firebase";
 import RulesPanel from "../../Shared/RulesPanel";
 import Header from "./Header";
 import Table from "./Table";
+import SpellDetailsModal from "./SpellDetailsModal";
 import spellRules from "./json-files/spellRules.json";
 import Modal from "../../../../../components/Modal";
 import { filterSpells, getSpellName, getSpells, normalize, sortSpells } from "./helpers";
@@ -23,6 +24,7 @@ const SpellsTab = ({ selectedCharacter, setCharacters }) => {
    const [spellSearch, setSpellSearch] = useState("");
    const [selectedSpell, setSelectedSpell] = useState(null);
    const [showRules, setShowRules] = useState(false);
+   const [detailsModal, setDetailsModal] = useState(null);
    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
    const [savingSpellId, setSavingSpellId] = useState("");
 
@@ -71,6 +73,7 @@ const SpellsTab = ({ selectedCharacter, setCharacters }) => {
                xp: savedData?.xp ?? 0,
                level: savedData?.nivel || spell.attributes?.nivel || "",
                attribute: savedData?.atributo || "",
+               dice: spell.attributes?.effect_dice || "",
             };
          })
          .filter(Boolean);
@@ -324,6 +327,7 @@ const SpellsTab = ({ selectedCharacter, setCharacters }) => {
                `XP: ${row.xp ?? 0}`,
                `Maestria: ${mastery?.maestria ?? 0}`,
                `Dado: ${mastery?.dado || ""}`,
+               `Dice: ${row.dice || ""}`,
                `Atributo: ${row.attribute || ""}`,
             ].join("\n");
          })
@@ -365,6 +369,20 @@ const SpellsTab = ({ selectedCharacter, setCharacters }) => {
             >
                <RulesPanel activeTab="spells" currentRules={spellRules} />
             </Modal>
+
+            <Modal
+               isOpen={Boolean(detailsModal)}
+               title="Detalhes do Feitiço"
+               onClose={() => setDetailsModal(null)}
+            >
+               {detailsModal ? (
+                  <SpellDetailsModal
+                     spell={detailsModal.spell}
+                     savedData={detailsModal.savedData}
+                     mastery={detailsModal.mastery}
+                  />
+               ) : null}
+            </Modal>
          </>
 
          <Table
@@ -405,6 +423,9 @@ const SpellsTab = ({ selectedCharacter, setCharacters }) => {
             }}
             handleSaveSpell={handleSaveSpell}
             handleDeleteSpell={handleDeleteSpell}
+            handleOpenDetails={(spell, savedData, mastery) =>
+               setDetailsModal({ spell, savedData, mastery })
+            }
          />
 
          <div className="border-t border-white/20 pt-3 text-xs text-[#736868]">

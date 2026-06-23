@@ -1,5 +1,6 @@
 import {
    CheckIcon,
+   EyeIcon,
    InformationCircleIcon,
    PlusIcon,
    TrashIcon,
@@ -28,12 +29,14 @@ const Table = ({
    handleSelectLevel,
    handleSaveSpell,
    handleDeleteSpell,
+   handleOpenDetails,
 }) => {
    return (
-      <div className="overflow-x-auto md:overflow-visible">
-         <div
-            className={`grid ${tableColumns} gap-5 border-b border-white/10 pb-3 text-xs text-purple-100/90`}
-         >
+      <div className="overflow-x-auto">
+         <div className="min-w-[1090px]">
+            <div
+               className={`grid ${tableColumns} gap-3 border-b border-white/10 pb-3 text-xs text-purple-100/90`}
+            >
             <button type="button" onClick={() => handleSort("year")} className="text-left">
                Ano {renderSortIcon("year")}
             </button>
@@ -47,13 +50,16 @@ const Table = ({
                XP {renderSortIcon("xp")}
             </button>
             <span className="text-left">Maestria → Dado</span>
+            <button type="button" onClick={() => handleSort("dice")} className="text-left">
+               Dice {renderSortIcon("dice")}
+            </button>
             <button type="button" onClick={() => handleSort("attribute")} className="text-left">
                Atributo {renderSortIcon("attribute")}
             </button>
-            <span />
-         </div>
+            <span className="text-right">Ações</span>
+            </div>
 
-         <div className="space-y-1 pt-3">
+            <div className="space-y-1 pt-3">
             {filteredAndSortedSpells.length ? (
                filteredAndSortedSpells.map((item, index) => {
                   const { spell, savedData } = item;
@@ -82,7 +88,7 @@ const Table = ({
                   return (
                      <div
                         key={spell.id}
-                        className={`grid ${tableColumns} min-h-12 items-center gap-5 text-xs text-[#736868] transition hover:bg-white/5`}
+                        className={`grid ${tableColumns} min-h-12 items-center gap-3 text-left text-xs text-[#736868] transition hover:bg-white/5`}
                      >
                         <span>
                            {spell.attributes?.ano_letivo || "-"}{" "}
@@ -145,11 +151,15 @@ const Table = ({
                            onChange={(event) =>
                               handleXpChange(spell.id, event.target.value)
                            }
-                           className="w-full bg-[#9d564c] px-3 py-1 text-center text-xs text-white outline-none ring-1 ring-transparent focus:ring-yellow-400"
+                           className="w-full bg-[#9d564c] px-3 py-1 text-left text-xs text-white outline-none ring-1 ring-transparent focus:ring-yellow-400"
                         />
 
-                        <span>
+                        <span className="leading-4">
                            {mastery.maestria} → {mastery.dado}
+                        </span>
+
+                        <span className="text-left">
+                           {spell.attributes?.effect_dice || "-"}
                         </span>
 
                         <div
@@ -202,7 +212,15 @@ const Table = ({
                            ) : null}
                         </div>
 
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center justify-end gap-2">
+                           <button
+                              type="button"
+                              onClick={() => handleOpenDetails(spell, savedData, mastery)}
+                              className="flex h-7 w-7 items-center justify-center rounded bg-white/10 text-white/60 transition hover:bg-white/20 hover:text-white"
+                           >
+                              <EyeIcon className="h-4 w-4" />
+                           </button>
+
                            <button
                               type="button"
                               disabled={!hasChanged || savingSpellId === spell.id}
@@ -235,6 +253,7 @@ const Table = ({
                   Nenhum feitiço encontrado.
                </div>
             )}
+            </div>
          </div>
       </div>
    );

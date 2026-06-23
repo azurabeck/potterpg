@@ -25,5 +25,4 @@ export const levelOptions = masteryRules.maestria.map(
    (item) => item.aprendizado
 );
 
-export const tableColumns =
-   "grid-cols-[52px_minmax(180px,1.4fr)_110px_90px_150px_minmax(150px,1fr)_82px]";
+export const tableColumns = "grid-cols-[60px_1.4fr_120px_55px_240px_80px_170px_140px]";;
