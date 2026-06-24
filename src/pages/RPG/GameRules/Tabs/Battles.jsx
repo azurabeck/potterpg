@@ -6,7 +6,8 @@ const battleRules = [
    "O atributo de ataque é usado quando o adversário tenta atingir Tomas.",
    "O atributo de defesa é usado quando o adversário tenta resistir, esquivar, bloquear ou evitar um ataque de Tomas.",
    "Ataques e defesas usam atributo + rolagem. O dano final usa a diferença entre ataque e defesa + dado de impacto.",
-   "Condições como petrificado, preso, caído, queimado, desarmado ou atordoado podem ser mais importantes que dano direto.",
+   "O dado de impacto de Tomas vem do feitiço usado. O dado de impacto da criatura vem da ficha do adversário.",
+   "Condições como petrificado, preso, caído, queimado, envenenado, desarmado ou atordoado podem ser mais importantes que dano direto.",
    "Soluções criativas podem encerrar uma batalha sem zerar HP.",
    "Se uma cena ultrapassar consistentemente 20 rodadas, o HP ou a defesa do adversário provavelmente estão altos demais.",
 ];
@@ -17,6 +18,7 @@ const tomasAttackRules = [
    "Se o ataque de Tomas vencer a defesa, o dano causado é: diferença + dado de impacto do feitiço.",
    "Se a defesa for igual ou maior que o ataque, o dano é 0.",
    "Feitiços mais poderosos possuem dados de impacto maiores.",
+   "Feitiços de controle podem causar pouco ou nenhum dano, mas aplicar condições importantes.",
 ];
 
 const tomasAttackExample = [
@@ -52,11 +54,49 @@ const impactDamageRules = [
    ["Tipo", "Dano"],
    ["Falha ou empate", "0"],
    ["Ataque bem-sucedido", "Diferença + dado de impacto"],
-   ["Feitiço leve / criatura fraca", "Diferença + 1D4 ou 1D6"],
-   ["Feitiço padrão / criatura comum", "Diferença + 1D10"],
-   ["Feitiço avançado / criatura forte", "Diferença + 2D10"],
-   ["Feitiço lendário / criatura lendária", "Diferença + 3D10"],
+   ["Feitiço leve", "Diferença + 1D4"],
+   ["Feitiço comum", "Diferença + 1D6"],
+   ["Feitiço forte", "Diferença + 1D8"],
+   ["Feitiço explosivo", "Diferença + 1D10"],
+   ["Feitiço avançado", "Diferença + 2D10"],
+   ["Feitiço lendário", "Diferença + 3D10"],
+   ["Criatura fraca", "Diferença + 1D4 / 1D6"],
+   ["Criatura comum", "Diferença + 1D8 / 1D10"],
+   ["Criatura forte", "Diferença + 2D10"],
+   ["Criatura lendária", "Diferença + 3D10"],
    ["Criatura mítica", "Diferença + 4D10"],
+];
+
+const spellImpactExamples = [
+   ["Feitiço", "Impacto", "Observação"],
+   ["Expelliarmus", "1D4", "Mais útil para desarmar do que ferir."],
+   ["Flipendo", "1D6", "Empurra, derruba e pode usar o ambiente."],
+   ["Incendio", "1D6", "Pode causar queimadura por rodadas."],
+   ["Reducto", "1D8", "Destrutivo contra objetos, teias e estruturas."],
+   ["Bombarda", "1D10", "Explosão direta."],
+   ["Confringo", "2D10", "Explosão avançada e perigosa."],
+];
+
+const conditionRules = [
+   "Estados como imobilização, queimadura e veneno só são aplicados quando o ataque ou efeito vence a defesa do alvo.",
+   "Estados podem ser mais importantes que dano direto, principalmente quando limitam movimento, ações ou defesa.",
+   "No final da própria rodada, o alvo pode tentar se livrar de um estado usando feitiço apropriado, poção, ajuda de aliados ou solução criativa.",
+   "O narrador decide se a solução remove automaticamente o estado ou se exige teste.",
+];
+
+const conditionDurationRules = [
+   ["Estado", "Duração", "Dano / efeito", "Quando aplica"],
+   ["Imobilização", "1D4: 1-2 = 1 rodada | 3-4 = 2 rodadas", "Limita movimento, ações ou defesa", "Enquanto durar o estado"],
+   ["Queimadura", "1D4: 1-2 = 1 rodada | 3-4 = 2 rodadas", "1D4 de dano por rodada", "No início do turno da vítima"],
+   ["Veneno", "1D4: 1-2 = 1 rodada | 3-4 = 2 rodadas", "1D4 de dano por rodada", "No final do turno da vítima"],
+];
+
+const conditionRemovalExamples = [
+   ["Estado", "Possíveis soluções"],
+   ["Teia / prisão física", "Reducto, Diffindo, força bruta ou ajuda externa"],
+   ["Petrificação / paralisia", "Finite Incantatem ou contrafeitiço apropriado"],
+   ["Queimadura", "Aguamenti, rolar no chão, água, terra ou magia de contenção"],
+   ["Veneno", "Antídoto, poção curativa, magia de purificação ou tratamento rápido"],
 ];
 
 const tomasRules = [
@@ -150,24 +190,34 @@ const Battles = () => {
             <RuleTable rows={impactDamageRules} compact />
          </RuleSection>
 
-         <RuleSection title="5. Resistência de Tomas">
+         <RuleSection title="5. Impacto dos feitiços">
+            <RuleTable rows={spellImpactExamples} compact />
+         </RuleSection>
+
+         <RuleSection title="6. Estados e efeitos contínuos">
+            <SimpleList items={conditionRules} />
+            <RuleTable rows={conditionDurationRules} compact />
+            <RuleTable rows={conditionRemovalExamples} compact />
+         </RuleSection>
+
+         <RuleSection title="7. Resistência de Tomas">
             <SimpleList items={tomasRules} />
          </RuleSection>
 
-         <RuleSection title="6. HP por ano letivo">
+         <RuleSection title="8. HP por ano letivo">
             <RuleTable rows={hpByYear} compact />
          </RuleSection>
 
-         <RuleSection title="7. Limite de atributos por ano">
+         <RuleSection title="9. Limite de atributos por ano">
             <RuleTable rows={attributeLimitByYear} compact />
          </RuleSection>
 
-         <RuleSection title="8. Base de adversários">
+         <RuleSection title="10. Base de adversários">
             <SimpleList items={adversaryScaleRules} />
             <RuleTable rows={adversaryExamples} compact />
          </RuleSection>
 
-         <RuleSection title="9. Guia rápido para criar adversários">
+         <RuleSection title="11. Guia rápido para criar adversários">
             <RuleTable rows={creationGuide} compact />
          </RuleSection>
       </RulePage>
