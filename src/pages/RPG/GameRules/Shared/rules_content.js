@@ -998,10 +998,10 @@ export const ruleTables = {
     ],
     [
       "D-20",
-      "Neuto",
+      "Neutro",
       46271,
       "D-20 + D6",
-      "Neuto",
+      "Neutro",
       "10-14",
       null,
       null
