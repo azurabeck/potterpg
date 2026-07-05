@@ -17,13 +17,20 @@ const Header = ({
    yearFilter,
    levelFilter,
    attributeFilter,
+   categoryFilter,
+   statusFilter,
    years,
+   categories,
+   viewMode,
    setIsDropdownOpen,
    setShowRules,
    setTableSearch,
    setYearFilter,
    setLevelFilter,
    setAttributeFilter,
+   setCategoryFilter,
+   setStatusFilter,
+   setViewMode,
    handleSearchChange,
    handleSelectSpell,
    handleAddSpell,
@@ -42,6 +49,17 @@ const Header = ({
    const attributeSelectOptions = [
       { value: "", label: "Atributo" },
       ...attributeOptions.map((attribute) => ({ value: attribute, label: attribute })),
+   ];
+
+   const categorySelectOptions = [
+      { value: "", label: "Categoria" },
+      ...categories.map((category) => ({ value: category, label: category })),
+   ];
+
+   const statusSelectOptions = [
+      { value: "", label: "Status" },
+      { value: "unlocked", label: "Desbloqueados" },
+      { value: "locked", label: "Não desbloqueados" },
    ];
 
    return (
@@ -87,7 +105,7 @@ const Header = ({
                <button
                   type="button"
                   disabled={!selectedSpell || savingSpellId === selectedSpell?.id}
-                  onClick={handleAddSpell}
+                  onClick={() => handleAddSpell()}
                   className="flex h-10 w-10 items-center justify-center bg-white/10 text-white/70 transition hover:bg-yellow-400 hover:text-[#2b0038] disabled:cursor-not-allowed disabled:opacity-40"
                   title="Adicionar feitiço"
                >
@@ -96,6 +114,18 @@ const Header = ({
             </div>
 
             <div className="flex gap-2">
+               <button
+                  type="button"
+                  onClick={() =>
+                     setViewMode((currentValue) =>
+                        currentValue === "album" ? "table" : "album"
+                     )
+                  }
+                  className="h-10 whitespace-nowrap bg-yellow-400 px-4 text-xs uppercase font-semibold text-[#2b0038] transition hover:bg-yellow-300"
+               >
+                  {viewMode === "album" ? "Tabela" : "Álbum"}
+               </button>
+
                <button
                   type="button"
                   onClick={() => setShowRules((currentValue) => !currentValue)}
@@ -142,10 +172,24 @@ const Header = ({
                   onChange={setAttributeFilter}
                   placeholder="Atributo"
                />
+
+               <CustomSelect
+                  value={categoryFilter}
+                  options={categorySelectOptions}
+                  onChange={setCategoryFilter}
+                  placeholder="Categoria"
+               />
+
+               <CustomSelect
+                  value={statusFilter}
+                  options={statusSelectOptions}
+                  onChange={setStatusFilter}
+                  placeholder="Status"
+               />
             </div>
          </MobileFilterDrawer>
 
-         <div className="hidden grid-cols-[1fr_120px_120px_120px] gap-3 md:grid">
+         <div className="hidden grid-cols-[1fr_120px_120px_120px_140px_170px] gap-3 md:grid">
             <input
                type="text"
                value={tableSearch}
@@ -173,6 +217,20 @@ const Header = ({
                options={attributeSelectOptions}
                onChange={setAttributeFilter}
                placeholder="Atributo"
+            />
+
+            <CustomSelect
+               value={categoryFilter}
+               options={categorySelectOptions}
+               onChange={setCategoryFilter}
+               placeholder="Categoria"
+            />
+
+            <CustomSelect
+               value={statusFilter}
+               options={statusSelectOptions}
+               onChange={setStatusFilter}
+               placeholder="Status"
             />
          </div>
       </div>

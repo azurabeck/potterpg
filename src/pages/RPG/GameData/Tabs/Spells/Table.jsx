@@ -5,9 +5,8 @@ import {
    PlusIcon,
    TrashIcon,
 } from "@heroicons/react/24/outline";
-import { getMasteryByXp } from "../../../../../helpers/mastery";
-import { attributeOptions, levelOptions, tableColumns } from "./json-files/constants";
-import { getSpellName } from "./helpers";
+import { tableColumns } from "./json-files/constants";
+import { getSpellMasteryByXp, getSpellMasteryEffects, getSpellName } from "./helpers";
 
 const Table = ({
    selectedCharacter,
@@ -67,23 +66,16 @@ const Table = ({
                   const xpAtual = savedData?.xp ?? 0;
                   const draftXp = xpDrafts[spell.id] ?? String(xpAtual);
 
-                  const currentAttribute = savedData?.atributo || "";
-                  const draftAttribute =
-                     attributeDrafts[spell.id] ?? currentAttribute;
-
-                  const currentLevel =
-                     savedData?.nivel || spell.attributes?.nivel || "";
-                  const draftLevel = levelDrafts[spell.id] ?? currentLevel;
-
                   const xpChanged = Number(draftXp) !== Number(xpAtual);
-                  const attributeChanged = draftAttribute !== currentAttribute;
-                  const levelChanged = draftLevel !== currentLevel;
+                  const hasChanged = xpChanged;
 
-                  const hasChanged = xpChanged || attributeChanged || levelChanged;
-
-                  const mastery = getMasteryByXp(draftLevel, draftXp);
-
-                  const dropdownDirection = index < 3 ? "top-8" : "bottom-8";
+                  const mastery = getSpellMasteryByXp(spell, draftXp);
+                  const masteryLevel = Number(String(mastery?.maestria || "M0").replace("M", ""));
+                  const currentMasteryEffect = getSpellMasteryEffects(spell).find(
+                     (effect) =>
+                        masteryLevel >= Number(effect.from || 0) &&
+                        masteryLevel <= Number(effect.to || effect.from || 0)
+                  );
 
                   return (
                      <div
@@ -111,39 +103,7 @@ const Table = ({
                            ) : null}
                         </span>
 
-                        <div
-                           className="relative"
-                           ref={
-                              editingLevelSpellId === spell.id
-                                 ? levelDropdownRef
-                                 : null
-                           }
-                        >
-                           <button
-                              type="button"
-                              onClick={() => handleOpenLevelDropdown(spell.id)}
-                              className="text-left text-[#736868] transition hover:text-white"
-                           >
-                              {draftLevel || "+"}
-                           </button>
-
-                           {editingLevelSpellId === spell.id ? (
-                              <div
-                                 className={`absolute left-0 z-40 max-h-56 w-52 overflow-y-auto border border-white/10 bg-[#21002b] shadow-2xl ${dropdownDirection}`}
-                              >
-                                 {levelOptions.map((level) => (
-                                    <button
-                                       key={level}
-                                       type="button"
-                                       onClick={() => handleSelectLevel(spell.id, level)}
-                                       className="flex w-full border-b border-white/5 px-3 py-2 text-left text-xs text-white transition hover:bg-white/10"
-                                    >
-                                       {level}
-                                    </button>
-                                 ))}
-                              </div>
-                           ) : null}
-                        </div>
+                        <span>{spell.attributes?.nivel || "-"}</span>
 
                         <input
                            type="text"
@@ -155,62 +115,26 @@ const Table = ({
                         />
 
                         <span className="leading-4">
-                           {mastery.maestria} → {mastery.dado}
+                           {mastery.maestria} → {currentMasteryEffect?.value || mastery.dado || "-"}
+                           {currentMasteryEffect?.description ? (
+                              <span className="block text-[10px] text-purple-100/45">
+                                 {currentMasteryEffect.description}
+                              </span>
+                           ) : null}
                         </span>
 
                         <span className="text-left">
-                           {spell.attributes?.effect_dice || "-"}
+                           {spell.attributes?.effect_value || spell.attributes?.effect_dice || "-"}
                         </span>
 
-                        <div
-                           className="relative"
-                           ref={
-                              editingAttributeSpellId === spell.id
-                                 ? attributeDropdownRef
-                                 : null
-                           }
-                        >
-                           {draftAttribute ? (
-                              <button
-                                 type="button"
-                                 onClick={() => handleOpenAttributeDropdown(spell.id)}
-                                 className="text-left text-[#736868] transition hover:text-white"
-                              >
-                                 {draftAttribute} (
-                                 {selectedCharacter?.atributos?.[draftAttribute] ?? 0}
-                                 )
-                              </button>
-                           ) : (
-                              <button
-                                 type="button"
-                                 onClick={() => handleOpenAttributeDropdown(spell.id)}
-                                 className="flex h-7 w-7 items-center justify-center bg-white/10 text-white transition hover:bg-yellow-400 hover:text-[#2b0038]"
-                              >
-                                 <PlusIcon className="h-4 w-4" />
-                              </button>
-                           )}
-
-                           {editingAttributeSpellId === spell.id ? (
-                              <div
-                                 className={`absolute left-0 z-40 max-h-56 w-52 overflow-y-auto border border-white/10 bg-[#21002b] shadow-2xl ${dropdownDirection}`}
-                              >
-                                 {attributeOptions.map((attribute) => (
-                                    <button
-                                       key={attribute}
-                                       type="button"
-                                       onClick={() =>
-                                          handleSelectAttribute(spell.id, attribute)
-                                       }
-                                       className="flex w-full border-b border-white/5 px-3 py-2 text-left text-xs text-white transition hover:bg-white/10"
-                                    >
-                                       {attribute} (
-                                       {selectedCharacter?.atributos?.[attribute] ?? 0}
-                                       )
-                                    </button>
-                                 ))}
-                              </div>
+                        <span className="text-left">
+                           {spell.attributes?.attribute || "-"}
+                           {spell.attributes?.attribute ? (
+                              <span className="text-purple-100/45">
+                                 {" "}({selectedCharacter?.atributos?.[spell.attributes.attribute] ?? 0})
+                              </span>
                            ) : null}
-                        </div>
+                        </span>
 
                         <div className="flex items-center justify-end gap-2">
                            <button
