@@ -31,7 +31,9 @@ const progressionTable = [
 const notesRules = [
    "Os pontos recebidos são distribuídos livremente entre os atributos do personagem.",
    "Os pontos são distribuídos apenas no início do próximo ano letivo.",
-   "Os limites máximos de atributos continuam respeitando o limite do novo ano.",
+   "Os limites máximos de atributos respeitam o teto do novo ano: 1º=5, 2º=7, 3º=9, 4º=11, 5º=12, 6º=13, 7º=14 e adulto=15.",
+   "O novo teto não concede pontos automaticamente; ele apenas permite que a evolução conquistada seja distribuída até esse limite.",
+   "A passagem de ano também amplia o repertório de feitiços disponíveis para aprendizado.",
    "Os exames recompensam dedicação, mas não impedem a progressão da campanha.",
 ];
 

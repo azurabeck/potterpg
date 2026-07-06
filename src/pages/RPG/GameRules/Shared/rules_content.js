@@ -69,7 +69,7 @@ export const ruleTables = {
       null
     ],
     [
-      "13. Usar como base a aba de Habilidades para entender ponto de maestria de cada feitiço",
+      "13. Para feitiços, consultar a collection spells como fonte das regras da carta e a ficha do personagem apenas para o XP atual conquistado naquele feitiço",
       null
     ],
     [
@@ -190,7 +190,7 @@ export const ruleTables = {
     ],
     [
       null,
-      "Dados de Maestria somam ao resultado final. A soma fica Dado Principal + Dado Mestria + Atributos. Ver dados de Maestira em Regra Maestria"
+      "Em combate, a maestria não soma dado ao acerto. O teste usa 1D20 + atributo indicado na ficha do feitiço; a maestria atual seleciona o efeito correspondente em mastery_effects."
     ],
     [
       "Sistema de Aulas",
