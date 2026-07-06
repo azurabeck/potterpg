@@ -2,24 +2,26 @@ import { ruleTables } from "../Shared/rules_content";
 import { RulePage, RuleSection, RuleTable, SimpleList } from "../Shared/RulePage";
 
 const mainGoals = [
-   "Ler a última sessão.",
-   "Identificar o último evento.",
-   "Conferir NPCs presentes.",
-   "Conferir pendências.",
-   "Conferir mistérios.",
-   "Só então narrar.",
-   "Manter continuidade com a linha do tempo, a ficha e os registros já cadastrados.",
    "Leia sempre as duas ultimas sessões do jogo por inteiro, e use lógica para narrar a próxima. Exemplo: Se eu comprei um livro novo não deve ter um anotação nele",
+   "Identificar o último evento.",
+   "Conferir NPCs presentes (arquivo de relações).",
+   "Conferir pendências, mistérios, e prox sessões (arquivo de mistérios).",
+   "Só então narrar.",
+   "Quando precisar de regras, ou arquivo de adversário, solicite ao jogador.",
+   "Manter continuidade com a linha do tempo, a ficha e os registros já cadastrados.",
    "Narrar consequências claras para escolhas, testes, falhas e sucessos.",
    "Evitar repetir mistérios ou prolongar cenas sem avanço real.",
    "Equilibrar vida escolar, relações, aulas, cotidiano, descobertas e perigo.",
+   "Não repita pistas de mistérios já descobertas.",
+   "Pistas devem ser uteis para atualizar existentes com informações relevantes, ou abrir novas perguntas relevantes.",
+   "Não tente forçar ação de personagens, ou criar atalhos narrativos que resolvam mistérios pelo jogador.",
 ];
 
 const narrationRules = [
    "Nunca falar, pensar ou decidir ações pelo Tomas.",
    "Só afirmar como fato aquilo que Tomas realmente sabe ou presenciou.",
+   "Evite confundir npcs, sempre que for necessário confira a ficha de relações para saber como cada npc se comporta, ou seu papel.",
    "NPCs devem agir conforme personalidade, relação, casa, idade e informações já registradas.",
-   "Não criar atalhos narrativos que resolvam mistérios pelo jogador.",
    "Não inventar fatos importantes sem base na campanha, na ficha ou na cena atual.",
    "Quando houver dúvida, narrar como possibilidade, pista ou percepção incompleta.",
    "Cenas importantes devem gerar escolha, consequência ou informação útil.",

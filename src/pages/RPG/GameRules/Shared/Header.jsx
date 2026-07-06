@@ -11,7 +11,7 @@ const Header = ({ tabs, activeTab }) => {
       }`;
 
    return (
-      <header className="space-y-5">
+      <header className="space-y-4">
          <div className="flex items-start justify-between gap-6">
             <div>
                <p className="text-left uppercase tracking-[0.35em] text-yellow-400">

@@ -10,7 +10,7 @@ const Container = () => {
    const currentTab = rulesTabs.find((tab) => tab.key === activeTab) || rulesTabs[0];
 
    return (
-      <section className="flex h-[calc(100vh-65px)] w-full flex-col bg-[#30003f] px-4 pb-7 pt-6 text-white shadow-2xl md:px-8">
+      <section className="flex h-[calc(100vh-65px)] w-full flex-col bg-[#30003f] px-5 pb-7 pt-6 text-white md:px-8 lg:px-10 xl:px-14">
          <Header tabs={rulesTabs} activeTab={currentTab.key} />
 
          <Content>
