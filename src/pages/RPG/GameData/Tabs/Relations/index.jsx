@@ -8,6 +8,7 @@ import RelationsFilters from "./RelationsFilters";
 import MobileFilterDrawer from "../../Shared/MobileFilterDrawer";
 import RelationFormModal from "./RelationFormModal";
 import BulkNpcJsonModal from "./BulkNpcJsonModal";
+import CopyRelationsModal from "./CopyRelationsModal";
 import { getCharacterUserId, getFilteredAndSortedRelations, getRelatedCharacters } from "./helpers";
 
 const RelationsTab = ({ selectedCharacter }) => {
@@ -16,6 +17,8 @@ const RelationsTab = ({ selectedCharacter }) => {
    const [search, setSearch] = useState("");
    const [typeFilter, setTypeFilter] = useState("Todos");
    const [relationFilter, setRelationFilter] = useState("Todos");
+   const [yearFilter, setYearFilter] = useState("Todos");
+   const [studentYearFilter, setStudentYearFilter] = useState("Todos");
    const [sort, setSort] = useState("name-asc");
    const [modal, setModal] = useState(null);
    const [isLoading, setIsLoading] = useState(false);
@@ -32,9 +35,11 @@ const RelationsTab = ({ selectedCharacter }) => {
          search,
          typeFilter,
          relationFilter,
+         yearFilter,
+         studentYearFilter,
          sort,
       });
-   }, [relatedCharacters, search, typeFilter, relationFilter, sort]);
+   }, [relatedCharacters, search, typeFilter, relationFilter, yearFilter, studentYearFilter, sort]);
 
    const selectedRelation = useMemo(() => {
       return filteredRelations.find((relation) => relation.id === selectedRelationId) || filteredRelations[0] || null;
@@ -109,11 +114,15 @@ const RelationsTab = ({ selectedCharacter }) => {
             image_url: relation.image_url || "",
             tipo: relation.tipo || "",
             relacao: relation.relacao || "Conhecido",
+            ano: Number(relation.ano || relation.year || 1),
+            year: Number(relation.year || relation.ano || 1),
+            student_year: relation.student_year === "" ? "" : Number(relation.student_year || 0),
             confianca: Number(relation.confianca || 0),
             amizade: Number(relation.amizade || 0),
             caracteristicas: relation.caracteristicas || "",
             personalidade: relation.personalidade || "",
             detalhes: relation.detalhes || "",
+            atributos: relation.atributos || {},
             updated_at: serverTimestamp(),
          });
 
@@ -167,7 +176,9 @@ const RelationsTab = ({ selectedCharacter }) => {
                relacionado: selectedCharacter.id,
                user_id: userId,
 
-               ano: Number(npc.ano || 1),
+               ano: Number(npc.ano || npc.year || 1),
+               year: Number(npc.year || npc.ano || 1),
+               student_year: npc.student_year === "" ? "" : Number(npc.student_year || npc.studentYear || 0),
                casa: npc.casa || npc.house || "",
                image_url: npc.image_url || npc.image || "",
 
@@ -212,15 +223,13 @@ const RelationsTab = ({ selectedCharacter }) => {
             {modal?.type === "form" ? (
                <RelationFormModal key={modal.relation?.id} relation={modal.relation} onSubmit={handleSaveRelation} />
             ) : null}
-         </Modal>
-
-         <Modal isOpen={!!modal} title={modal?.title} onClose={() => setModal(null)}>
-            {modal?.type === "form" ? (
-               <RelationFormModal key={modal.relation?.id} relation={modal.relation} onSubmit={handleSaveRelation} />
-            ) : null}
 
             {modal?.type === "bulk-json" ? (
                <BulkNpcJsonModal onSubmit={handleCreateRelationsFromJson} />
+            ) : null}
+
+            {modal?.type === "copy" ? (
+               <CopyRelationsModal relations={relatedCharacters} />
             ) : null}
          </Modal>
 
@@ -230,13 +239,18 @@ const RelationsTab = ({ selectedCharacter }) => {
                search={search}
                typeFilter={typeFilter}
                relationFilter={relationFilter}
+               yearFilter={yearFilter}
+               studentYearFilter={studentYearFilter}
                sort={sort}
                setSearch={setSearch}
                setTypeFilter={setTypeFilter}
                setRelationFilter={setRelationFilter}
+               setYearFilter={setYearFilter}
+               setStudentYearFilter={setStudentYearFilter}
                setSort={setSort}
                relations={relatedCharacters}
                onOpenBulkJsonModal={() => setModal({ type: "bulk-json", title: "Cadastrar NPCs por JSON" })}
+               onOpenCopyModal={() => setModal({ type: "copy", title: "Copiar NPCs por ano de campanha" })}
             />
          </MobileFilterDrawer>
 
@@ -247,13 +261,18 @@ const RelationsTab = ({ selectedCharacter }) => {
             onEditRelation={handleEditRelation}
             onDeleteRelation={handleDeleteRelation}
             onOpenBulkJsonModal={() => setModal({ type: "bulk-json", title: "Cadastrar NPCs por JSON" })}
+            onOpenCopyModal={() => setModal({ type: "copy", title: "Copiar NPCs por ano de campanha" })}
             search={search}
             typeFilter={typeFilter}
             relationFilter={relationFilter}
+            yearFilter={yearFilter}
+            studentYearFilter={studentYearFilter}
             sort={sort}
             setSearch={setSearch}
             setTypeFilter={setTypeFilter}
             setRelationFilter={setRelationFilter}
+            setYearFilter={setYearFilter}
+            setStudentYearFilter={setStudentYearFilter}
             setSort={setSort}
             allRelations={relatedCharacters}
          />

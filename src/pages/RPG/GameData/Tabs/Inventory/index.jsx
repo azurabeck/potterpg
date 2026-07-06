@@ -108,6 +108,7 @@ const InventoryTab = ({ selectedCharacter, setCharacters }) => {
                `Categoria: ${item.categoria || ""}`,
                `Quantidade: ${item.quantidade ?? 1}`,
                `Descrição: ${item.descricao || ""}`,
+               `Detalhes: ${item.detalhes || ""}`,
             ].join("\n")
          )
          .join("\n\n---\n\n");

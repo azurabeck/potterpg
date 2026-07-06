@@ -1,50 +1,38 @@
-import { CodeBracketSquareIcon } from "@heroicons/react/24/outline";
-import CopyButton from "@/components/CopyButton";
+import { ArrowDownIcon, ArrowUpIcon, ClipboardIcon, CodeBracketSquareIcon } from "@heroicons/react/24/outline";
 import CustomSelect from "@/components/CustomSelect";
-import { relationOptions, sortOptions, typeOptions } from "./constants";
+import { relationOptions, typeOptions } from "./constants";
+import { getNpcStudentYear, getNpcYear, getYearOptions } from "./helpers";
 
 const RelationsFilters = ({
    search,
    typeFilter,
    relationFilter,
+   yearFilter,
+   studentYearFilter,
    sort,
    setSearch,
    setTypeFilter,
    setRelationFilter,
+   setYearFilter,
+   setStudentYearFilter,
    setSort,
    relations = [],
    onOpenBulkJsonModal,
+   onOpenCopyModal,
 }) => {
-   const getAllNpcsText = () => {
-      if (!relations.length) return "";
-
-      return relations
-         .map((npc) =>
-            [
-               `Nome: ${npc.name || ""}`,
-               `Tipo: ${npc.tipo || ""}`,
-               `Casa: ${npc.house || npc.casa || ""}`,
-               `Ano: ${npc.ano ?? ""}`,
-               `Relação: ${npc.relacao || ""}`,
-               `Confiança: ${npc.confianca ?? ""}`,
-               `Amizade: ${npc.amizade ?? ""}`,
-               `Características físicas: ${npc.caracteristicas || ""}`,
-               `Personalidade: ${npc.personalidade || ""}`,
-               `Detalhes: ${npc.detalhes || ""}`,
-            ].join("\n")
-         )
-         .join("\n\n---\n\n");
-   };
+   const yearOptions = getYearOptions(relations, getNpcYear);
+   const studentYearOptions = getYearOptions(relations, getNpcStudentYear);
 
    return (
       <div className="mb-8 space-y-3 text-xs">
-         <div className="grid grid-cols-3 gap-3">
+         <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
             <CustomSelect value={typeFilter} options={typeOptions} onChange={setTypeFilter} placeholder="Tipo" />
             <CustomSelect value={relationFilter} options={relationOptions} onChange={setRelationFilter} placeholder="Relação" />
-            <CustomSelect value={sort} options={sortOptions} onChange={setSort} placeholder="A-B" />
+            <CustomSelect value={yearFilter} options={yearOptions} onChange={setYearFilter} placeholder="Ano" />
+            <CustomSelect value={studentYearFilter} options={studentYearOptions} onChange={setStudentYearFilter} placeholder="Ano campanha" />
          </div>
 
-         <div className="grid grid-cols-[1fr_auto_auto] gap-3">
+         <div className="grid grid-cols-[1fr_auto_auto_auto] gap-3">
             <input
                type="text"
                value={search}
@@ -53,12 +41,25 @@ const RelationsFilters = ({
                className="w-full bg-white/10 px-3 py-2 text-xs text-white outline-none placeholder:text-white/40 focus:ring-1 focus:ring-yellow-400"
             />
 
-            <CopyButton
-               getText={getAllNpcsText}
+            <button
+               type="button"
+               onClick={() => setSort(sort === "name-asc" ? "name-desc" : "name-asc")}
+               className="border border-yellow-400/40 bg-yellow-400/10 p-2 text-yellow-100 transition hover:bg-yellow-400/20"
+               title={sort === "name-asc" ? "Ordenar Z-A" : "Ordenar A-Z"}
+               aria-label={sort === "name-asc" ? "Ordenar Z-A" : "Ordenar A-Z"}
+            >
+               {sort === "name-asc" ? <ArrowUpIcon className="h-4 w-4" /> : <ArrowDownIcon className="h-4 w-4" />}
+            </button>
+
+            <button
+               type="button"
+               onClick={onOpenCopyModal}
                disabled={!relations.length}
                title="Copiar NPCs"
-               className="border border-yellow-400/40 bg-yellow-400/10 px-3 py-2 text-yellow-100 hover:bg-yellow-400/20 hover:text-yellow-100"
-            />
+               className="inline-flex items-center justify-center border border-yellow-400/40 bg-yellow-400/10 px-3 py-2 text-yellow-100 transition hover:bg-yellow-400/20 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+               <ClipboardIcon className="h-4 w-4" />
+            </button>
 
             <button
                type="button"

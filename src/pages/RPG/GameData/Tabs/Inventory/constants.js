@@ -28,6 +28,7 @@ export const emptyItem = {
    atributo: "",
    valor_atributo: "",
    onde_encontrou: "",
+   detalhes: "",
 };
 
 export const emptyInventory = {

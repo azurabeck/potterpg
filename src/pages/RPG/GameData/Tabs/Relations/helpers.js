@@ -18,6 +18,38 @@ export const getRelatedCharacters = ({ characters, selectedCharacter }) => {
    });
 };
 
+export const getNpcYear = (character) => character?.year ?? character?.ano ?? "";
+
+export const getNpcStudentYear = (character) => character?.student_year ?? character?.studentYear ?? "";
+
+export const getYearOptions = (characters, getYearValue) => {
+   const years = characters
+      .map((character) => getYearValue(character))
+      .filter((year) => year !== undefined && year !== null && year !== "")
+      .map((year) => Number(year))
+      .filter((year) => !Number.isNaN(year));
+
+   return ["Todos", ...Array.from(new Set(years)).sort((a, b) => a - b).map(String)];
+};
+
+
+export const formatNpcForCopy = (npc) =>
+   [
+      `Nome: ${npc.name || ""}`,
+      `Tipo: ${npc.tipo || ""}`,
+      `Casa: ${npc.house || npc.casa || ""}`,
+      `Ano do personagem: ${getNpcYear(npc) || ""}`,
+      `Ano da campanha: ${getNpcStudentYear(npc) || ""}`,
+      `Relação: ${npc.relacao || ""}`,
+      `Confiança: ${npc.confianca ?? ""}`,
+      `Amizade: ${npc.amizade ?? ""}`,
+      `Características físicas: ${npc.caracteristicas || ""}`,
+      `Personalidade: ${npc.personalidade || ""}`,
+      `Detalhes: ${npc.detalhes || ""}`,
+   ].join("\n");
+
+export const getNpcsCopyText = (npcs = []) => npcs.map(formatNpcForCopy).join("\n\n---\n\n");
+
 export const getMainAttributes = (attributes = {}) => {
    return Object.entries(attributes)
       .filter(([, value]) => Number(value) > 0)
@@ -27,7 +59,15 @@ export const getMainAttributes = (attributes = {}) => {
       .join(" / ");
 };
 
-export const getFilteredAndSortedRelations = ({ characters, search, typeFilter, relationFilter, sort }) => {
+export const getFilteredAndSortedRelations = ({
+   characters,
+   search,
+   typeFilter,
+   relationFilter,
+   yearFilter,
+   studentYearFilter,
+   sort,
+}) => {
    const normalizedSearch = normalizeText(search);
 
    const filtered = characters.filter((character) => {
@@ -39,13 +79,17 @@ export const getFilteredAndSortedRelations = ({ characters, search, typeFilter, 
          character.detalhes,
          character.caracteristicas,
          character.personalidade,
+         getNpcYear(character),
+         getNpcStudentYear(character),
       ].join(" "));
 
       const matchesSearch = !normalizedSearch || searchableText.includes(normalizedSearch);
       const matchesType = !typeFilter || typeFilter === "Todos" || character.tipo === typeFilter;
       const matchesRelation = !relationFilter || relationFilter === "Todos" || character.relacao === relationFilter;
+      const matchesYear = !yearFilter || yearFilter === "Todos" || String(getNpcYear(character)) === String(yearFilter);
+      const matchesStudentYear = !studentYearFilter || studentYearFilter === "Todos" || String(getNpcStudentYear(character)) === String(studentYearFilter);
 
-      return matchesSearch && matchesType && matchesRelation;
+      return matchesSearch && matchesType && matchesRelation && matchesYear && matchesStudentYear;
    });
 
    return [...filtered].sort((a, b) => {

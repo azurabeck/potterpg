@@ -18,6 +18,7 @@ const ItemDetailsModal = ({ item, onEdit }) => {
                <p>Atributo: {item.atributo || "-"}</p>
                <p>Valor do atributo: {item.valor_atributo || "-"}</p>
                <p>Onde encontrou: {item.onde_encontrou || "-"}</p>
+               <p>Detalhes: {item.detalhes || item.descricao || "-"}</p>
             </div>
          </div>
 

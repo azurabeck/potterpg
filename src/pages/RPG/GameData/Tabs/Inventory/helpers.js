@@ -22,6 +22,8 @@ export const createInventoryItem = (form) => ({
    atributo: form.atributo || "",
    valor_atributo: form.valor_atributo === "" ? "" : Number(form.valor_atributo),
    onde_encontrou: form.onde_encontrou || "",
+   detalhes: form.detalhes || "",
+   descricao: form.descricao || "",
 });
 
 export const filterItems = ({ items, search, category }) => {
@@ -35,6 +37,8 @@ export const filterItems = ({ items, search, category }) => {
          item.atributo,
          item.valor_atributo,
          item.onde_encontrou,
+         item.detalhes,
+         item.descricao,
       ].join(" "));
 
       return (!normalizedSearch || searchableText.includes(normalizedSearch)) && (!category || item.categoria === category);

@@ -1,5 +1,5 @@
 import { attributeLabels } from "./constants";
-import { getMainAttributes } from "./helpers";
+import { getMainAttributes, getNpcStudentYear, getNpcYear } from "./helpers";
 
 const InfoLine = ({ label, value }) => {
    if (value === undefined || value === null || value === "") return null;
@@ -54,7 +54,9 @@ const bullet = (
                      -
                      <span>{selectedRelation.house || selectedRelation.casa}</span>
                      -
-                     <span>{selectedRelation.ano || "-"}</span>
+                     <span>Ano {getNpcYear(selectedRelation) || "-"}</span>
+                     -
+                     <span>Campanha ano {getNpcStudentYear(selectedRelation) || "-"}</span>
                   </div>
                </h3>
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import CustomSelect from "../../../../../components/CustomSelect";
-import { relationOptions, typeOptions } from "./constants";
+import { attributeLabels, relationOptions, typeOptions } from "./constants";
 
 const inputClass = "w-full bg-white/10 px-3 py-2 text-xs text-white outline-none placeholder:text-white/30 focus:ring-1 focus:ring-yellow-400";
 const labelClass = "mb-2 block text-xs text-purple-100/70";
@@ -12,11 +12,20 @@ const RelationFormModal = ({ relation, onSubmit }) => {
       image_url: relation?.image_url || "",
       tipo: relation?.tipo || "Aluno",
       relacao: relation?.relacao || "Conhecido",
+      ano: String(relation?.ano ?? relation?.year ?? 1),
+      student_year: relation?.student_year === undefined || relation?.student_year === null ? "" : String(relation.student_year),
       confianca: String(relation?.confianca ?? 0),
       amizade: String(relation?.amizade ?? 0),
       caracteristicas: relation?.caracteristicas || "",
       personalidade: relation?.personalidade || "",
       detalhes: relation?.detalhes || "",
+      atributos: attributeLabels.reduce(
+         (attributes, attribute) => ({
+            ...attributes,
+            [attribute]: String(relation?.atributos?.[attribute] ?? 0),
+         }),
+         {}
+      ),
    }));
 
    const handleChange = (key, value) => {
@@ -24,24 +33,50 @@ const RelationFormModal = ({ relation, onSubmit }) => {
       setForm((current) => ({ ...current, [key]: value }));
    };
 
-   const handleNumberChange = (key, value) => {
+   const handleAttributeChange = (attribute, value) => {
       if (!/^\d*$/.test(value)) return;
       const numberValue = Number(value || 0);
-      if (numberValue < 0 || numberValue > 10) return;
+      if (numberValue < 0 || numberValue > 15) return;
+
+      setForm((current) => ({
+         ...current,
+         atributos: {
+            ...current.atributos,
+            [attribute]: value,
+         },
+      }));
+   };
+
+   const handleNumberChange = (key, value, max = 10) => {
+      if (!/^\d*$/.test(value)) return;
+      const numberValue = Number(value || 0);
+      if (numberValue < 0 || numberValue > max) return;
       handleChange(key, value);
    };
 
    const handleSubmit = () => {
+      const atributos = attributeLabels.reduce(
+         (attributes, attribute) => ({
+            ...attributes,
+            [attribute]: Number(form.atributos?.[attribute] || 0),
+         }),
+         {}
+      );
+
       onSubmit({
          ...relation,
          ...form,
+         ano: Number(form.ano || 1),
+         year: Number(form.ano || 1),
+         student_year: form.student_year === "" ? "" : Number(form.student_year || 0),
          confianca: Number(form.confianca || 0),
          amizade: Number(form.amizade || 0),
+         atributos,
       });
    };
 
    return (
-      <div className="space-y-4 text-xs text-purple-100/80">
+      <div className="space-y-5 text-xs text-purple-100/80">
          <div className="grid gap-4 md:grid-cols-[180px_1fr]">
             <div className="h-[220px] border border-white/10 bg-white/5">
                {form.image_url && !imageError ? (
@@ -71,7 +106,7 @@ const RelationFormModal = ({ relation, onSubmit }) => {
             </div>
          </div>
 
-         <div className="grid grid-cols-2 gap-3">
+         <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
             <div>
                <label className={labelClass}>Tipo</label>
                <CustomSelect value={form.tipo} options={typeOptions.filter((item) => item !== "Todos")} onChange={(value) => handleChange("tipo", value)} />
@@ -83,6 +118,16 @@ const RelationFormModal = ({ relation, onSubmit }) => {
             </div>
 
             <div>
+               <label className={labelClass}>Ano do personagem</label>
+               <input type="text" value={form.ano} onChange={(event) => handleNumberChange("ano", event.target.value, 15)} className={inputClass} />
+            </div>
+
+            <div>
+               <label className={labelClass}>Ano da campanha</label>
+               <input type="text" value={form.student_year} onChange={(event) => handleNumberChange("student_year", event.target.value, 15)} placeholder="Ex: 2" className={inputClass} />
+            </div>
+
+            <div>
                <label className={labelClass}>Confiança</label>
                <input type="text" value={form.confianca} onChange={(event) => handleNumberChange("confianca", event.target.value)} className={inputClass} />
             </div>
@@ -90,6 +135,23 @@ const RelationFormModal = ({ relation, onSubmit }) => {
             <div>
                <label className={labelClass}>Amizade</label>
                <input type="text" value={form.amizade} onChange={(event) => handleNumberChange("amizade", event.target.value)} className={inputClass} />
+            </div>
+         </div>
+
+         <div>
+            <p className="mb-3 text-[11px] uppercase tracking-[0.18em] text-yellow-400/80">Atributos do NPC</p>
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+               {attributeLabels.map((attribute) => (
+                  <label key={attribute} className="space-y-1">
+                     <span className="block text-[11px] text-purple-100/60">{attribute}</span>
+                     <input
+                        type="text"
+                        value={form.atributos?.[attribute] || ""}
+                        onChange={(event) => handleAttributeChange(attribute, event.target.value)}
+                        className={inputClass}
+                     />
+                  </label>
+               ))}
             </div>
          </div>
 

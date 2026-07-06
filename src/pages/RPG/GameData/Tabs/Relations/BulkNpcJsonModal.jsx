@@ -7,6 +7,8 @@ const npcTemplate = `[
       "tipo": "Aluno",
       "casa": "Corvinal",
       "ano": 1,
+      "year": 1,
+      "student_year": 2,
       "relacao": "Mistério",
 
       "amizade": 0,
