@@ -11,6 +11,7 @@ import { translatePotionsBatch } from "../../services/translator";
 import { dividirEmLotes } from "../../utils/array.utils";
 import { obterCache, salvarCache } from "../../utils/storage.utils";
 import potionsJson from "../../assets/json/potions.json";
+import { ApiAlbumGrid, getObjectValue } from "./Shared/ApiAlbumGrid";
 
 const CACHE_KEY = "translated-potions-v1";
 
@@ -167,7 +168,7 @@ const Potions = () => {
             </button>
          </section>
 
-         <main className="p-8">
+         <main className="p-5 md:p-8">
             <div className="mb-8 flex items-center justify-between">
                <p className="text-sm text-purple-300">
                   {filteredPotions.length} poções carregadas do JSON estático
@@ -250,71 +251,16 @@ const Potions = () => {
                </div>
             )}
 
-            <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-4">
-               {filteredPotions.map((item) => (
-                     <div
-                        key={item.id}
-                        className="overflow-hidden rounded bg-[#190020]"
-                     >
-                        {item.attributes.image && (
-                           <div className="flex h-40 w-full items-center justify-center bg-[#120018] p-3">
-                           <img
-                                 src={item.attributes.image}
-                                 alt={item.attributes.name}
-                                 className="max-h-full max-w-full object-contain"
-                           />
-                           </div>
-                        )}
-
-                        <div className="p-4">
-                           <h3 className="mb-2 text-sm font-semibold">
-                           {item.attributes.name}
-                           </h3>
-
-                           <p className="text-xs text-purple-200">
-                           {item.attributes.effect || "-"}
-                           </p>
-
-                           <div className="mt-3 space-y-1 text-xs text-purple-300">
-                           <p>
-                                 <strong>Dificuldade:</strong>{" "}
-                                 {item.attributes.difficulty || "-"}
-                           </p>
-
-                           <p>
-                                 <strong>Características:</strong>{" "}
-                                 {item.attributes.characteristics || "-"}
-                           </p>
-
-                           <p>
-                                 <strong>Ingredientes:</strong>{" "}
-                                 {item.attributes.ingredients || "-"}
-                           </p>
-
-                           <p>
-                                 <strong>Efeitos colaterais:</strong>{" "}
-                                 {item.attributes.side_effects || "-"}
-                           </p>
-
-                           <p>
-                                 <strong>Tempo:</strong>{" "}
-                                 {item.attributes.time || "-"}
-                           </p>
-
-                           <p>
-                                 <strong>Inventores:</strong>{" "}
-                                 {item.attributes.inventors || "-"}
-                           </p>
-
-                           <p>
-                                 <strong>Fabricantes:</strong>{" "}
-                                 {item.attributes.manufacturers || "-"}
-                           </p>
-                           </div>
-                        </div>
-                     </div>
-               ))}
-      </div>
+            <ApiAlbumGrid
+               items={filteredPotions}
+               getTitle={(item) => getObjectValue(item, ["attributes", "name"])}
+               getDescription={(item) => getObjectValue(item, ["attributes", "effect"])}
+               getImage={(item) => getObjectValue(item, ["attributes", "image"], "")}
+               getTags={(item) => [
+                  `Dificuldade ${getObjectValue(item, ["attributes", "difficulty"])}`,
+                  `Tempo ${getObjectValue(item, ["attributes", "time"])}`,
+               ]}
+            />
          </main>
       </div>
    );

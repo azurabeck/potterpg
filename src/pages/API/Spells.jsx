@@ -11,6 +11,7 @@ import { translateSpellsBatch } from "../../services/translator";
 import { dividirEmLotes } from "../../utils/array.utils";
 import { obterCache, salvarCache } from "../../utils/storage.utils";
 import spellsJson from "../../assets/json/spells.json";
+import { ApiAlbumGrid, getObjectValue } from "./Shared/ApiAlbumGrid";
 
 const CACHE_KEY = "translated-spells-v1";
 
@@ -166,7 +167,7 @@ const Spells = () => {
             </button>
          </section>
 
-         <main className="p-8">
+         <main className="p-5 md:p-8">
             <div className="mb-8 flex items-center justify-between">
                <p className="text-sm text-purple-300">
                   {filteredSpells.length} feitiços carregados do JSON estático
@@ -249,51 +250,16 @@ const Spells = () => {
                </div>
             )}
 
-            <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-4">
-               {filteredSpells.map((spell) => (
-                  <div key={spell.id} className="overflow-hidden rounded bg-[#190020]">
-                     {spell.attributes.image && (
-                        <img
-                           src={spell.attributes.image}
-                           alt={spell.attributes.name}
-                           className="h-32 w-full object-cover"
-                        />
-                     )}
-
-                     <div className="p-4">
-                        <h3 className="mb-2 text-sm font-semibold">
-                           {spell.attributes.name}
-                        </h3>
-
-                        <p className="text-xs text-purple-200">
-                           {spell.attributes.effect || "-"}
-                        </p>
-
-                        <div className="mt-3 space-y-1 text-xs text-purple-300">
-                           <p>
-                              <strong>Categoria:</strong>{" "}
-                              {spell.attributes.category || "-"}
-                           </p>
-
-                           <p>
-                              <strong>Movimento:</strong>{" "}
-                              {spell.attributes.hand || "-"}
-                           </p>
-
-                           <p>
-                              <strong>Luz:</strong>{" "}
-                              {spell.attributes.light || "-"}
-                           </p>
-
-                           <p>
-                              <strong>Encantamento:</strong>{" "}
-                              {spell.attributes.incantation || "-"}
-                           </p>
-                        </div>
-                     </div>
-                  </div>
-               ))}
-            </div>
+            <ApiAlbumGrid
+               items={filteredSpells}
+               getTitle={(spell) => getObjectValue(spell, ["attributes", "name"])}
+               getDescription={(spell) => getObjectValue(spell, ["attributes", "effect"])}
+               getImage={(spell) => getObjectValue(spell, ["attributes", "image"], "")}
+               getTags={(spell) => [
+                  `Categoria ${getObjectValue(spell, ["attributes", "category"])}`,
+                  `Luz ${getObjectValue(spell, ["attributes", "light"])}`,
+               ]}
+            />
          </main>
       </div>
    );

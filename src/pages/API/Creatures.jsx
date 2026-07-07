@@ -2,6 +2,7 @@ import { useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 import getCreatures from "../../assets/json/criaturas_animais_fantasticos.json";
+import { ApiAlbumGrid, getObjectValue } from "./Shared/ApiAlbumGrid";
 
 const Creatures = () => {
    // #region State
@@ -33,7 +34,7 @@ const Creatures = () => {
             </button>
          </section>
 
-         <main className="p-8">
+         <main className="p-5 md:p-8">
             {isLoading && (
                <div className="mb-8 rounded-xl border border-purple-900 bg-[#21002b] p-4">
                   <p className="text-sm font-semibold">Carregando criaturas...</p>
@@ -44,53 +45,15 @@ const Creatures = () => {
                </div>
             )}
 
-            <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-4">
-               {filteredCreatures.map((item) => (
-                  <div key={item.animal} className="overflow-hidden rounded bg-[#190020]">
-                     <div className="flex h-40 w-full items-center justify-center bg-[#120018] p-3">
-                        {item.image && (
-                           <img
-                              src={item.image}
-                              alt={item.animal}
-                              onError={(event) => {
-                                 event.currentTarget.style.display = "none";
-
-                                 const fallback = event.currentTarget.nextElementSibling;
-
-                                 if (fallback) {
-                                    fallback.style.display = "flex";
-                                 }
-                              }}
-                              className="max-h-full max-w-full object-contain"
-                           />
-                        )}
-
-                        <div
-                           className={`${
-                              item.image ? "hidden" : "flex"
-                           } h-full w-full items-center justify-center rounded border border-purple-900 text-center text-xs text-purple-400`}
-                        >
-                           Sem imagem
-                        </div>
-                     </div>
-
-                     <div className="p-4">
-                        <h3 className="mb-2 text-sm font-semibold">{item.animal}</h3>
-
-                        <p className="text-xs text-purple-200">
-                           {item.description || "-"}
-                        </p>
-
-                        <div className="mt-3 text-xs text-purple-300">
-                           <p>
-                              <strong>Classificação:</strong>{" "}
-                              {item.classification || "-"}
-                           </p>
-                        </div>
-                     </div>
-                  </div>
-               ))}
-            </div>
+            <ApiAlbumGrid
+               items={filteredCreatures}
+               getTitle={(item) => getObjectValue(item, ["animal"])}
+               getDescription={(item) => getObjectValue(item, ["description"])}
+               getImage={(item) => getObjectValue(item, ["image"], "")}
+               getTags={(item) => [
+                  `Classificação ${getObjectValue(item, ["classification"])}`,
+               ]}
+            />
          </main>
       </div>
    );
