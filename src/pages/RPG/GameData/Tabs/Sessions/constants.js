@@ -15,6 +15,8 @@ export const sessionModel = {
    user_id: "AUTH_USER_ID",
    character_id: "CHARACTER_ID",
    campaign_name: "Campanha 1 — Nome da campanha",
+   campaign_year: 1,
+   year: 1992,
    sessions: [
       {
          order: 1,

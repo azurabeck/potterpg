@@ -3,6 +3,7 @@ import {
    ChevronUpIcon,
    PencilSquareIcon,
 } from "@heroicons/react/24/outline";
+import { getCampaignYear, getTimelineYear } from "./helpers";
 
 const Timeline = ({
    campaigns,
@@ -34,6 +35,10 @@ const Timeline = ({
                            className="text-left text-yellow-400 transition hover:text-yellow-300"
                         >
                            {campaign.campaign_name}
+                           <span className="ml-2 text-purple-200/50">
+                              Ano campanha {getCampaignYear(campaign) || "-"}
+                              {getTimelineYear(campaign) ? ` • ${getTimelineYear(campaign)}` : ""}
+                           </span>
                         </button>
 
                         <div className="border-t border-dashed border-white/15" />

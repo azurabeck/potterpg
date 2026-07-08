@@ -14,6 +14,7 @@ import { db } from "../../../../../services/firebase";
 import Modal from "../../../../../components/Modal";
 import CampaignEditModal from "./CampaignEditModal";
 import ModelModal from "./ModelModal";
+import CopySessionsModal from "./CopySessionsModal";
 import MobileFilterDrawer from "../../Shared/MobileFilterDrawer";
 import Side from "./Side";
 import Timeline from "./Timeline";
@@ -22,6 +23,7 @@ import {
    buildCampaignPayload,
    findCampaignTarget,
    getDefaultCampaignName,
+   getCampaignYearOptions,
    getFilteredAndSortedCampaigns,
    getUserId,
    normalizeCampaign,
@@ -33,14 +35,17 @@ const SessionsTab = ({ selectedCharacter, setCharacters }) => {
    const [expandedCampaignId, setExpandedCampaignId] = useState("");
    const [search, setSearch] = useState("");
    const [sort, setSort] = useState("number-asc");
+   const [campaignYearFilter, setCampaignYearFilter] = useState("Todos");
    const [jsonValue, setJsonValue] = useState("");
    const [error, setError] = useState("");
    const [modal, setModal] = useState(null);
    const [isSaving, setIsSaving] = useState(false);
 
    const filteredCampaigns = useMemo(() => {
-      return getFilteredAndSortedCampaigns({ campaigns, search, sort });
-   }, [campaigns, search, sort]);
+      return getFilteredAndSortedCampaigns({ campaigns, search, sort, campaignYearFilter });
+   }, [campaigns, search, sort, campaignYearFilter]);
+
+   const campaignYearOptions = useMemo(() => getCampaignYearOptions(campaigns), [campaigns]);
 
    useEffect(() => {
       const loadCampaigns = async () => {
@@ -152,10 +157,15 @@ const SessionsTab = ({ selectedCharacter, setCharacters }) => {
       try {
          setIsSaving(true);
 
+         const { id, userid, created_at, updated_at, ...campaignFields } = parsedCampaign;
+
          const payload = {
+            ...campaignFields,
             user_id: parsedCampaign.user_id || parsedCampaign.userid || getUserId(selectedCharacter),
             character_id: selectedCharacter.id,
             campaign_name: parsedCampaign.campaign_name || parsedCampaign.campaing_name || getDefaultCampaignName(selectedCharacter),
+            campaign_year: parsedCampaign.campaign_year === "" ? "" : Number(parsedCampaign.campaign_year || 0),
+            year: parsedCampaign.year === "" ? "" : Number(parsedCampaign.year || 0),
             sessions: Array.isArray(parsedCampaign.sessions) ? parsedCampaign.sessions : [],
          };
 
@@ -168,43 +178,12 @@ const SessionsTab = ({ selectedCharacter, setCharacters }) => {
       }
    };
 
-   const getAllCampaignsText = () => {
-      const orderedCampaigns = [...campaigns].sort(
-         (a, b) => Number(b.order || 0) - Number(a.order || 0)
-      );
-
-      const text = orderedCampaigns
-         .map((campaign) => {
-            const orderedSessions = [...(campaign.sessions || [])].sort(
-               (a, b) => Number(b.order || 0) - Number(a.order || 0)
-            );
-
-            return [
-               `## Campanha ${campaign.order} - ${campaign.campaign_name}`,
-               "",
-               ...orderedSessions.map((session) => {
-                  const characters = Array.isArray(session.characters)
-                     ? session.characters.join(", ")
-                     : "";
-
-                  return [
-                     `${String(session.order).padStart(2, "0")}. ${session.event}`,
-                     `Local: ${session.local || "-"}`,
-                     `Personagens: ${characters || "-"}`,
-                  ].join("\n");
-               }),
-            ].join("\n\n");
-         })
-         .join("\n\n====================================\n\n");
-
-      return text;
-   };
-
    return (
       <div className="grid grid-cols-1 gap-8 pb-2 lg:grid-cols-2 lg:gap-12">
          <Modal isOpen={!!modal} title={modal?.title} onClose={() => setModal(null)}>
             {modal?.type === "edit" ? <CampaignEditModal campaign={modal.campaign} onSave={handleSaveCampaignJson} /> : null}
             {modal?.type === "model" ? <ModelModal /> : null}
+            {modal?.type === "copy" ? <CopySessionsModal campaigns={campaigns} /> : null}
          </Modal>
 
          <Timeline
@@ -218,15 +197,18 @@ const SessionsTab = ({ selectedCharacter, setCharacters }) => {
             <Side
                search={search}
                sort={sort}
+               campaignYearFilter={campaignYearFilter}
+               campaignYearOptions={campaignYearOptions}
                jsonValue={jsonValue}
                error={error}
                isSaving={isSaving}
                setSearch={setSearch}
                setSort={setSort}
+               setCampaignYearFilter={setCampaignYearFilter}
                setJsonValue={setJsonValue}
                onRegisterSession={handleRegisterSession}
                onOpenModel={() => setModal({ type: "model", title: "Modelo de JSON" })}
-               onCopyAllCampaigns={getAllCampaignsText}
+               onOpenCopyModal={() => setModal({ type: "copy", title: "Copiar sessões" })}
             />
          </MobileFilterDrawer>
 
@@ -234,15 +216,18 @@ const SessionsTab = ({ selectedCharacter, setCharacters }) => {
             <Side
                search={search}
                sort={sort}
+               campaignYearFilter={campaignYearFilter}
+               campaignYearOptions={campaignYearOptions}
                jsonValue={jsonValue}
                error={error}
                isSaving={isSaving}
                setSearch={setSearch}
                setSort={setSort}
+               setCampaignYearFilter={setCampaignYearFilter}
                setJsonValue={setJsonValue}
                onRegisterSession={handleRegisterSession}
                onOpenModel={() => setModal({ type: "model", title: "Modelo de JSON" })}
-               onCopyAllCampaigns={getAllCampaignsText}
+               onOpenCopyModal={() => setModal({ type: "copy", title: "Copiar sessões" })}
             />
          </div>
       </div>
