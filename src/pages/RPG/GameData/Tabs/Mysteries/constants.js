@@ -1,7 +1,8 @@
-export const categoryOptions = ["mistérios", "pendencias narrador", "proxima sessão"];
+export const categoryOptions = ["mistérios", "projetos", "pendencias narrador", "proxima sessão"];
 
 export const categoryLabels = {
    "mistérios": "Mistérios",
+   "projetos": "Projetos",
    "pendencias narrador": "Pendências do Narrador",
    "proxima sessão": "Próxima Sessão",
 };

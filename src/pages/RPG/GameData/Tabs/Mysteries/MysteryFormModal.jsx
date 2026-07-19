@@ -87,7 +87,7 @@ const MysteryFormModal = ({ mystery, onSubmit, isSaving }) => {
                className={inputClass}
             />
 
-            {category === "mistérios" ? (
+            {category === "mistérios" || category === "projetos" ? (
                <CustomSelect value={form.status} options={statusOptions} onChange={(value) => handleChange("status", value)} placeholder="Status" />
             ) : null}
          </div>
@@ -149,14 +149,14 @@ const MysteryFormModal = ({ mystery, onSubmit, isSaving }) => {
             </div>
          ) : null}
 
-         {category === "mistérios" ? (
+         {category === "mistérios" || category === "projetos" ? (
             <>
                <div className="grid grid-cols-[1fr_150px] gap-3">
                   <input
                      type="text"
                      value={form.name}
                      onChange={(event) => handleChange("name", event.target.value)}
-                     placeholder="Nome do mistério"
+                     placeholder={category === "projetos" ? "Nome do projeto" : "Nome do mistério"}
                      className={inputClass}
                   />
 
@@ -171,9 +171,19 @@ const MysteryFormModal = ({ mystery, onSubmit, isSaving }) => {
                   className={inputClass}
                />
 
+               {category === "projetos" ? (
+                  <textarea
+                     value={form.details}
+                     onChange={(event) => handleChange("details", event.target.value)}
+                     placeholder="Detalhes do projeto"
+                     rows={4}
+                     className={textareaClass}
+                  />
+               ) : null}
+
                <div className="border-t border-white/10 pt-5">
                   <div className="mb-4 flex items-center justify-between">
-                     <p className="uppercase tracking-[0.08em] text-white/70">Pistas</p>
+                     <p className="uppercase tracking-[0.08em] text-white/70">{category === "projetos" ? "Objetivos" : "Pistas"}</p>
 
                      <button
                         type="button"
@@ -181,7 +191,7 @@ const MysteryFormModal = ({ mystery, onSubmit, isSaving }) => {
                         className="flex items-center gap-2 bg-white/10 px-3 py-2 text-xs text-white/80 transition hover:bg-yellow-400 hover:text-[#2b0038]"
                      >
                         <PlusIcon className="h-4 w-4" />
-                        Adicionar pista
+                        {category === "projetos" ? "Adicionar objetivo" : "Adicionar pista"}
                      </button>
                   </div>
 
@@ -189,14 +199,14 @@ const MysteryFormModal = ({ mystery, onSubmit, isSaving }) => {
                      {form.clues.map((clue, index) => (
                         <div key={index} className="space-y-3 border border-white/10 bg-white/5 p-4">
                            <div className="flex items-center justify-between gap-3">
-                              <p className="text-yellow-400">Pista {index + 1}</p>
+                              <p className="text-yellow-400">{category === "projetos" ? "Objetivo" : "Pista"} {index + 1}</p>
 
                               {form.clues.length > 1 ? (
                                  <button
                                     type="button"
                                     onClick={() => handleRemoveClue(index)}
                                     className="text-red-300 transition hover:text-red-200"
-                                    title="Remover pista"
+                                    title={category === "projetos" ? "Remover objetivo" : "Remover pista"}
                                  >
                                     <TrashIcon className="h-4 w-4" />
                                  </button>
@@ -218,7 +228,7 @@ const MysteryFormModal = ({ mystery, onSubmit, isSaving }) => {
                                  type="text"
                                  value={clue.name}
                                  onChange={(event) => handleClueChange(index, "name", event.target.value)}
-                                 placeholder="Nome da pista"
+                                 placeholder={category === "projetos" ? "Nome do objetivo" : "Nome da pista"}
                                  className={inputClass}
                               />
 
@@ -233,7 +243,7 @@ const MysteryFormModal = ({ mystery, onSubmit, isSaving }) => {
                            <textarea
                               value={clue.question}
                               onChange={(event) => handleClueChange(index, "question", event.target.value)}
-                              placeholder="Pergunta levantada pela pista"
+                              placeholder={category === "projetos" ? "Resultado esperado ou pergunta do objetivo" : "Pergunta levantada pela pista"}
                               rows={2}
                               className={textareaClass}
                            />
@@ -241,7 +251,7 @@ const MysteryFormModal = ({ mystery, onSubmit, isSaving }) => {
                            <textarea
                               value={clue.details}
                               onChange={(event) => handleClueChange(index, "details", event.target.value)}
-                              placeholder="Detalhes da pista"
+                              placeholder={category === "projetos" ? "Detalhes do objetivo" : "Detalhes da pista"}
                               rows={3}
                               className={textareaClass}
                            />
@@ -249,7 +259,7 @@ const MysteryFormModal = ({ mystery, onSubmit, isSaving }) => {
                            <textarea
                               value={clue.resolution}
                               onChange={(event) => handleClueChange(index, "resolution", event.target.value)}
-                              placeholder="Resolução ou teoria atual"
+                              placeholder={category === "projetos" ? "Conclusão ou resultado atual" : "Resolução ou teoria atual"}
                               rows={3}
                               className={textareaClass}
                            />

@@ -6,7 +6,7 @@ const CardImageModal = ({ spell, savedData, saving, onSave }) => {
 
    useEffect(() => {
       if (!spell) return;
-      setImageUrl(getSpellCardImage({ spell, savedData }) || "");
+      setImageUrl(getSpellCardImage({ spell, isKnown: true }) || "");
    }, [spell, savedData]);
 
    if (!spell) return null;

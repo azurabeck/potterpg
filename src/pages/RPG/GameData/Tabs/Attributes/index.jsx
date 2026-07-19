@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { db } from "@/services/firebase";
 import Modal from "@/components/Modal";
@@ -66,12 +66,45 @@ const getAttributeRulesText = () => {
    return lines.join("\n");
 };
 
+const ATTRIBUTE_MAXIMUM_BY_YEAR = {
+   1: 5,
+   2: 7,
+   3: 9,
+   4: 11,
+   5: 12,
+   6: 13,
+   7: 14,
+};
+
+const ADULT_ATTRIBUTE_MAXIMUM = 15;
+
+const getAttributeMaximumByYear = (year) => {
+   const normalizedYear = Number(year) || 1;
+
+   if (normalizedYear >= 8) {
+      return ADULT_ATTRIBUTE_MAXIMUM;
+   }
+
+   return ATTRIBUTE_MAXIMUM_BY_YEAR[Math.max(1, normalizedYear)] ?? ATTRIBUTE_MAXIMUM_BY_YEAR[1];
+};
+
 const AttributesTab = ({ selectedCharacter, setCharacters }) => {
    const [search, setSearch] = useState("");
    const [typeFilter, setTypeFilter] = useState("all");
    const [orderBy, setOrderBy] = useState("default");
    const [modal, setModal] = useState(null);
    const [isSaving, setIsSaving] = useState(false);
+   const [resourceDrafts, setResourceDrafts] = useState({ hp: "0", xp: "0" });
+
+   const characterYear = Number(selectedCharacter?.ano || 1);
+   const attributeMaximum = getAttributeMaximumByYear(characterYear);
+
+   useEffect(() => {
+      setResourceDrafts({
+         hp: String(selectedCharacter?.hp ?? 0),
+         xp: String(selectedCharacter?.xp ?? 0),
+      });
+   }, [selectedCharacter?.id, selectedCharacter?.hp, selectedCharacter?.xp]);
 
    const atributos = selectedCharacter?.atributos || {};
    const talentos = normalizeList(selectedCharacter?.talentos);
@@ -79,13 +112,12 @@ const AttributesTab = ({ selectedCharacter, setCharacters }) => {
 
    const rows = useMemo(() => {
       const attributeRows = atributoOrdem
-         .filter((name) => name in atributos)
          .map((name) => ({
             id: name,
             tipo: "atributo",
             nome: name,
-            nivel: atributos[name],
-            maximo: 10,
+            nivel: atributos[name] ?? 0,
+            maximo: attributeMaximum,
          }));
 
       const talentRows = talentos.map((item) => ({
@@ -123,7 +155,7 @@ const AttributesTab = ({ selectedCharacter, setCharacters }) => {
       }
 
       return result;
-   }, [atributos, talentos, titulos, search, typeFilter, orderBy]);
+   }, [atributos, talentos, titulos, search, typeFilter, orderBy, attributeMaximum]);
 
    const updateLocalCharacter = (payload) => {
       setCharacters((currentCharacters) =>
@@ -154,11 +186,28 @@ const AttributesTab = ({ selectedCharacter, setCharacters }) => {
    };
 
    const handleSaveAttribute = async (attributeName, value) => {
+      const normalizedValue = Math.min(
+         attributeMaximum,
+         Math.max(0, Number(value || 0))
+      );
+
       await saveCharacterFields({
          atributos: {
             ...atributos,
-            [attributeName]: Number(value || 0),
+            [attributeName]: normalizedValue,
          },
+      });
+   };
+
+   const handleResourceChange = (field, value) => {
+      if (!/^\d*$/.test(value)) return;
+      setResourceDrafts((current) => ({ ...current, [field]: value }));
+   };
+
+   const handleSaveResources = async () => {
+      await saveCharacterFields({
+         hp: Math.max(0, Number(resourceDrafts.hp || 0)),
+         xp: Math.max(0, Number(resourceDrafts.xp || 0)),
       });
    };
 
@@ -290,20 +339,59 @@ const AttributesTab = ({ selectedCharacter, setCharacters }) => {
             ) : null}
          </Modal>
 
-         <Table
-            rows={rows}
-            isSaving={isSaving}
-            onSaveAttribute={handleSaveAttribute}
-            onEditExtra={openEditExtraModal}
-            onDeleteExtra={handleDeleteExtra}
-            onOpenRules={(item) =>
-               setModal({
-                  item,
-                  type: "rules",
-                  title: `Regras — ${item.nome}`,
-               })
-            }
-         />
+         <div className="space-y-7 border-0 border-dashed border-white/20 pr-0 md:border-e md:pr-[60px]">
+            <section className="border border-white/10 bg-white/[0.035] p-4">
+               <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+                  <div>
+                     <p className="text-xs uppercase tracking-[0.18em] text-yellow-400">Recursos do personagem</p>
+                     <p className="mt-1 text-[11px] text-purple-100/45">Salvos diretamente na ficha do Firestore.</p>
+                  </div>
+
+                  <button
+                     type="button"
+                     disabled={isSaving}
+                     onClick={handleSaveResources}
+                     className="bg-yellow-400 px-4 py-2 text-xs text-[#2b0038] transition hover:bg-yellow-300 disabled:opacity-50"
+                  >
+                     Salvar HP e XP
+                  </button>
+               </div>
+
+               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  {[{ key: "hp", label: "HP" }, { key: "xp", label: "XP" }].map((resource) => (
+                     <label key={resource.key} className="space-y-1">
+                        <span className="text-[11px] text-purple-100/60">{resource.label}</span>
+                        <input
+                           type="text"
+                           inputMode="numeric"
+                           value={resourceDrafts[resource.key]}
+                           onChange={(event) => handleResourceChange(resource.key, event.target.value)}
+                           className="w-full bg-white/10 px-3 py-2 text-sm text-white outline-none ring-1 ring-white/10 focus:ring-yellow-400"
+                        />
+                     </label>
+                  ))}
+               </div>
+            </section>
+
+            <p className="text-[11px] text-purple-100/45">
+               Limite dos atributos no {characterYear}º ano: <span className="text-yellow-400">{attributeMaximum}</span>.
+            </p>
+
+            <Table
+               rows={rows}
+               isSaving={isSaving}
+               onSaveAttribute={handleSaveAttribute}
+               onEditExtra={openEditExtraModal}
+               onDeleteExtra={handleDeleteExtra}
+               onOpenRules={(item) =>
+                  setModal({
+                     item,
+                     type: "rules",
+                     title: `Regras — ${item.nome}`,
+                  })
+               }
+            />
+         </div>
 
          <MobileFilterDrawer title="Filtros de Atributos">
             <Side

@@ -34,23 +34,29 @@ const renderMysteryDetails = (mystery) => {
       );
    }
 
+   const isProject = mystery.category === "projetos";
+
    return (
       <div className="mt-5 space-y-5 pl-3 text-purple-100/80 sm:pl-8">
+         {isProject && mystery.details ? (
+            <p><span className="text-white/70">Detalhes:</span> {mystery.details}</p>
+         ) : null}
+
          {mystery.clues?.length ? (
             mystery.clues.map((clue, index) => (
                <article key={`${mystery.id}-${index}`} className="border-l border-white/10 pl-4 leading-5">
                   <div className="mb-2 flex items-center gap-3">
-                     <p className="text-yellow-400">{clue.order}. {clue.name || "Pista sem nome"}</p>
+                     <p className="text-yellow-400">{clue.order}. {clue.name || (isProject ? "Objetivo sem nome" : "Pista sem nome")}</p>
                      <span className={statusClasses[clue.status] || "text-purple-100/50"}>{clue.status}</span>
                   </div>
 
-                  <p><span className="text-white/70">Pergunta:</span> {clue.question || "-"}</p>
+                  <p><span className="text-white/70">{isProject ? "Meta" : "Pergunta"}:</span> {clue.question || "-"}</p>
                   <p><span className="text-white/70">Detalhes:</span> {clue.details || "-"}</p>
-                  <p><span className="text-white/70">Resolução:</span> {clue.resolution || "-"}</p>
+                  <p><span className="text-white/70">{isProject ? "Resultado" : "Resolução"}:</span> {clue.resolution || "-"}</p>
                </article>
             ))
          ) : (
-            <p className="text-purple-200/50">Nenhuma pista registrada.</p>
+            <p className="text-purple-200/50">{isProject ? "Nenhum objetivo registrado." : "Nenhuma pista registrada."}</p>
          )}
       </div>
    );
@@ -129,7 +135,7 @@ const Timeline = ({ mysteries, expandedMysteryId, setExpandedMysteryId, onEditMy
 
                                  <div className="mt-2 pl-5 text-[11px] text-purple-100/50">
                                     Ano {mystery.year || "-"}
-                                    {category === "mistérios" ? (
+                                    {category === "mistérios" || category === "projetos" ? (
                                        <> • <span className={statusClasses[mystery.status] || "text-purple-100/60"}>{mystery.status}</span> • Última aparição: {mystery.last_appearance || "-"}</>
                                     ) : null}
                                  </div>

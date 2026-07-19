@@ -74,12 +74,6 @@ const Table = ({
             space-y-7
             text-xs
             text-purple-100
-            pr-0
-            md:pr-[60px]
-            border-0
-            md:border-e
-            border-dashed
-            border-white/20
          ">
          {["atributo", "talento", "titulo"].map((type) => {
             const items = groupedRows[type] || [];
@@ -142,6 +136,8 @@ const Table = ({
                                           type="text"
                                           value={draftValue}
                                           onChange={handleDraftChange}
+                                          max={item.maximo ?? 10}
+                                          min="0"
                                           className="w-[40px] bg-[#9d564c] px-3 py-1 text-center text-xs text-white outline-none ring-1 ring-white/20 focus:ring-yellow-400"
                                        />
                                     ) : (

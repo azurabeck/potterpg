@@ -4,6 +4,7 @@ export const atributoOrdem = [
    "Agilidade",
    "Carisma",
    "Percepção",
+   "Furtividade",
    "Sorte",
    "Magia",
    "Resistência",

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
    collection,
+   deleteDoc,
    deleteField,
    doc,
    getDocs,
@@ -332,6 +333,57 @@ const SpellsTab = ({ selectedCharacter, setCharacters }) => {
       }
    };
 
+   const handleDeleteSpellFromCatalog = async (spell) => {
+      if (!spell?.id) return;
+
+      const confirmed = window.confirm(
+         `Excluir o feitiço "${getSpellName(spell)}" do banco? Ele também será removido da ficha deste personagem, caso esteja aprendido.`
+      );
+
+      if (!confirmed) return;
+
+      try {
+         setSavingSpellId(spell.id);
+
+         await deleteDoc(doc(db, "spells", spell.id));
+
+         if (selectedCharacter?.id && savedSpells[spell.id]) {
+            await updateDoc(doc(db, "characters", selectedCharacter.id), {
+               [`habilidades.${spell.id}`]: deleteField(),
+               updated_at: serverTimestamp(),
+            });
+
+            setCharacters((characters) =>
+               characters.map((character) => {
+                  if (character.id !== selectedCharacter.id) return character;
+
+                  const habilidades = { ...(character.habilidades || {}) };
+                  delete habilidades[spell.id];
+
+                  return { ...character, habilidades };
+               })
+            );
+         }
+
+         setSpellOverrides((current) => {
+            const nextSpells = { ...current };
+            delete nextSpells[spell.id];
+            return nextSpells;
+         });
+
+         setDetailsModal((current) =>
+            current?.spell?.id === spell.id ? null : current
+         );
+         setCardImageModal((current) =>
+            current?.spell?.id === spell.id ? null : current
+         );
+      } catch (error) {
+         console.error("Erro ao excluir feitiço do banco:", error);
+      } finally {
+         setSavingSpellId("");
+      }
+   };
+
    const handleSaveCardImage = async (spellId, imageUrl) => {
       if (!spellId) return;
 
@@ -540,6 +592,7 @@ const SpellsTab = ({ selectedCharacter, setCharacters }) => {
                      mastery={detailsModal.mastery}
                      selectedCharacter={selectedCharacter}
                      saving={savingSpellId === detailsModal.spell?.id}
+                     initialMode={detailsModal.initialMode || "view"}
                      onSaveSpellConfig={handleSaveSpellConfig}
                   />
                ) : null}
@@ -553,6 +606,7 @@ const SpellsTab = ({ selectedCharacter, setCharacters }) => {
                savingSpellId={savingSpellId}
                onAddSpell={handleAddSpell}
                onDeleteSpell={handleDeleteSpell}
+               onDeleteSpellFromCatalog={handleDeleteSpellFromCatalog}
                onOpenImageEditor={(spell) =>
                   setCardImageModal({
                      spell,
@@ -560,7 +614,10 @@ const SpellsTab = ({ selectedCharacter, setCharacters }) => {
                   })
                }
                onOpenDetails={(spell, savedData, mastery) =>
-                  setDetailsModal({ spell, savedData, mastery })
+                  setDetailsModal({ spell, savedData, mastery, initialMode: "view" })
+               }
+               onOpenEdit={(spell, savedData, mastery) =>
+                  setDetailsModal({ spell, savedData, mastery, initialMode: "edit" })
                }
             />
          ) : (

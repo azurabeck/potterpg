@@ -1,4 +1,3 @@
-import spellsJson from "../../../../../assets/json/spells_rpg.json";
 import masteryRules from "../../../../../assets/json/mastery_rpg.json";
 
 export const SPELL_CATEGORIES = [
@@ -15,25 +14,8 @@ export const getSpellName = (spell) =>
    spell.name ||
    "-";
 
-const getBaseSpells = () =>
-   Array.isArray(spellsJson)
-      ? spellsJson
-      : spellsJson.data || spellsJson.spells || [];
-
 export const getSpells = (firestoreSpells = {}) =>
-   getBaseSpells().map((spell) => {
-      const firestoreSpell = firestoreSpells[spell.id];
-      if (!firestoreSpell) return spell;
-
-      return {
-         ...spell,
-         ...firestoreSpell,
-         attributes: {
-            ...(spell.attributes || {}),
-            ...(firestoreSpell.attributes || {}),
-         },
-      };
-   });
+   Object.values(firestoreSpells).filter((spell) => spell?.id);
 
 export const normalize = (value) =>
    String(value ?? "")
@@ -62,16 +44,26 @@ export const getSpellCategory = (spell) => {
    return "utilitários";
 };
 
-export const getSpellCardImage = ({ spell } = {}) => {
+export const getSpellCardImage = ({ spell, isKnown = false } = {}) => {
    const attributes = spell?.attributes || {};
 
+   if (isKnown) {
+      return (
+         attributes.card_image_url ||
+         spell?.card_image_url ||
+         attributes.image ||
+         spell?.image ||
+         attributes.image_url ||
+         spell?.image_url ||
+         ""
+      );
+   }
+
    return (
-      attributes.card_image_url ||
-      attributes.image_url ||
       attributes.image ||
-      spell?.card_image_url ||
-      spell?.image_url ||
       spell?.image ||
+      attributes.image_url ||
+      spell?.image_url ||
       ""
    );
 };

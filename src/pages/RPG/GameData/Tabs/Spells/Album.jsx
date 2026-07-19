@@ -2,6 +2,7 @@ import {
    EyeIcon,
    LockClosedIcon,
    PencilSquareIcon,
+   PhotoIcon,
    PlusIcon,
    TrashIcon,
 } from "@heroicons/react/24/outline";
@@ -28,14 +29,16 @@ const SpellAlbumCard = ({
    savingSpellId,
    onAddSpell,
    onDeleteSpell,
+   onDeleteSpellFromCatalog,
    onOpenDetails,
+   onOpenEdit,
    onOpenImageEditor,
 }) => {
    const { spell, savedData, isKnown } = item;
    const attributes = spell.attributes || {};
    const name = getSpellName(spell);
    const mastery = getSpellMasteryByXp(spell, savedData?.xp ?? 0);
-   const cardImage = getSpellCardImage({ spell, savedData });
+   const cardImage = getSpellCardImage({ spell, isKnown });
    const currentMasteryEffect = getCurrentMasteryEffect(spell, mastery);
 
    return (
@@ -114,10 +117,11 @@ const SpellAlbumCard = ({
                <button
                   type="button"
                   onClick={() => onOpenImageEditor(spell)}
-                  className="flex h-8 items-center gap-1.5 bg-white/10 px-2 text-[11px] text-white/70 transition hover:bg-white/20 hover:text-white"
+                  className="flex h-8 w-8 items-center justify-center bg-white/10 text-white/70 transition hover:bg-white/20 hover:text-white"
+                  title="Editar imagem"
+                  aria-label="Editar imagem"
                >
-                  <PencilSquareIcon className="h-4 w-4" />
-                  Imagem
+                  <PhotoIcon className="h-4 w-4" />
                </button>
 
                <div className="flex gap-1.5">
@@ -133,24 +137,61 @@ const SpellAlbumCard = ({
                         </button>
                         <button
                            type="button"
+                           onClick={() => onOpenEdit(spell, savedData, mastery)}
+                           className="flex h-8 w-8 items-center justify-center bg-white/10 text-white/60 transition hover:bg-white/20 hover:text-white"
+                           title="Editar feitiço"
+                        >
+                           <PencilSquareIcon className="h-4 w-4" />
+                        </button>
+                        <button
+                           type="button"
                            disabled={savingSpellId === spell.id}
                            onClick={() => onDeleteSpell(spell.id)}
-                           className="flex h-8 w-8 items-center justify-center bg-white/10 text-white/40 transition hover:bg-red-500/70 hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+                           className="flex h-8 w-8 items-center justify-center bg-white/10 text-white/40 transition hover:bg-orange-500/70 hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
                            title="Remover da ficha"
+                        >
+                           <LockClosedIcon className="h-4 w-4" />
+                        </button>
+                        <button
+                           type="button"
+                           disabled={savingSpellId === spell.id}
+                           onClick={() => onDeleteSpellFromCatalog(spell)}
+                           className="flex h-8 w-8 items-center justify-center bg-white/10 text-white/40 transition hover:bg-red-500/70 hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+                           title="Excluir do banco"
                         >
                            <TrashIcon className="h-4 w-4" />
                         </button>
                      </>
                   ) : (
-                     <button
-                        type="button"
-                        disabled={savingSpellId === spell.id}
-                        onClick={() => onAddSpell(spell)}
-                        className="flex h-8 items-center gap-1.5 bg-yellow-400 px-2 text-[11px] font-semibold text-[#2b0038] transition hover:bg-yellow-300 disabled:cursor-not-allowed disabled:opacity-50"
-                     >
-                        <PlusIcon className="h-4 w-4" />
-                        Aprender
-                     </button>
+                     <>
+                        <button
+                           type="button"
+                           onClick={() => onOpenEdit(spell, savedData, mastery)}
+                           className="flex h-8 w-8 items-center justify-center bg-white/10 text-white/60 transition hover:bg-white/20 hover:text-white"
+                           title="Editar feitiço"
+                        >
+                           <PencilSquareIcon className="h-4 w-4" />
+                        </button>
+                        <button
+                           type="button"
+                           disabled={savingSpellId === spell.id}
+                           onClick={() => onDeleteSpellFromCatalog(spell)}
+                           className="flex h-8 w-8 items-center justify-center bg-white/10 text-white/40 transition hover:bg-red-500/70 hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+                           title="Excluir do banco"
+                        >
+                           <TrashIcon className="h-4 w-4" />
+                        </button>
+                        <button
+                           type="button"
+                           disabled={savingSpellId === spell.id}
+                           onClick={() => onAddSpell(spell)}
+                           className="flex h-8 w-8 items-center justify-center bg-yellow-400 text-[#2b0038] transition hover:bg-yellow-300 disabled:cursor-not-allowed disabled:opacity-50"
+                           title="Aprender feitiço"
+                           aria-label="Aprender feitiço"
+                        >
+                           <PlusIcon className="h-4 w-4" />
+                        </button>
+                     </>
                   )}
                </div>
             </div>
@@ -165,7 +206,9 @@ const Album = ({
    savingSpellId,
    onAddSpell,
    onDeleteSpell,
+   onDeleteSpellFromCatalog,
    onOpenDetails,
+   onOpenEdit,
    onOpenImageEditor,
 }) => {
    if (!albumItems.length) {
@@ -186,7 +229,9 @@ const Album = ({
                savingSpellId={savingSpellId}
                onAddSpell={onAddSpell}
                onDeleteSpell={onDeleteSpell}
+               onDeleteSpellFromCatalog={onDeleteSpellFromCatalog}
                onOpenDetails={onOpenDetails}
+               onOpenEdit={onOpenEdit}
                onOpenImageEditor={onOpenImageEditor}
             />
          ))}

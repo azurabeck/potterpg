@@ -163,6 +163,18 @@ const MysteriesTab = ({ selectedCharacter, setCharacters }) => {
                ].join("\n");
             }
 
+            if (mystery.category === "projetos") {
+               return [
+                  `Categoria: Projetos`,
+                  `Projeto: ${mystery.title || mystery.name || ""}`,
+                  `Ano: ${mystery.year || ""}`,
+                  `Status: ${mystery.status || ""}`,
+                  `Última aparição: ${mystery.last_appearance || ""}`,
+                  `Detalhes: ${mystery.details || ""}`,
+                  `Objetivos: ${(mystery.clues || []).map((clue) => clue.name || clue.details || "").filter(Boolean).join(", ")}`,
+               ].join("\n");
+            }
+
             return [
                `Categoria: Mistérios`,
                `Mistério: ${mystery.title || mystery.name || ""}`,

@@ -63,6 +63,10 @@ const diceAndConsequenceRules = [
    "Em cenas perigosas, usar atributos, maestria, dificuldade e estado da cena.",
 ];
 
+const endRegisterRules = [
+   "A timeline global deve ser detalhada o suficiente para que alguém consiga reconstruir 100% da campanha lendo apenas ela."
+]
+
 const IA = () => {
    const narrativeRows = ruleTables["Regra Narrativa"] || [];
    const schoolStructure = narrativeRows.slice(33, 43);

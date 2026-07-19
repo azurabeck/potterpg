@@ -31,7 +31,8 @@ export const createCharacter = async ({ user_id, character }) => {
 
    const docRef = await addDoc(charactersRef, {
       ...character,
-      user_id: user_id,
+      // Campo legado mantido enquanto as consultas ainda dependem de user_id.
+      user_id: character.user_id || user_id,
       habilidades: {},
       pocoes: {},
       created_at: serverTimestamp(),

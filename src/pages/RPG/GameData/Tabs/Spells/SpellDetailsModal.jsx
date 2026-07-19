@@ -124,7 +124,7 @@ const FormField = ({ label, value, onChange, type = "text", options, textarea = 
 );
 
 const SpellCardPreview = ({ spell, savedData }) => {
-   const cardImage = getSpellCardImage({ spell, savedData });
+   const cardImage = getSpellCardImage({ spell, isKnown: true });
    const name = getSpellName(spell);
 
    return (
@@ -371,10 +371,11 @@ const SpellDetailsModal = ({
    savedData,
    selectedCharacter,
    saving,
+   initialMode = "view",
    onSaveSpellConfig,
 }) => {
    const initialForm = useMemo(() => buildEditableSpellConfig(spell), [spell]);
-   const [mode, setMode] = useState("view");
+   const [mode, setMode] = useState(initialMode);
    const [form, setForm] = useState(initialForm);
    const [jsonDraft, setJsonDraft] = useState(JSON.stringify(initialForm, null, 2));
    const [jsonError, setJsonError] = useState("");
@@ -383,8 +384,8 @@ const SpellDetailsModal = ({
       setForm(initialForm);
       setJsonDraft(JSON.stringify(initialForm, null, 2));
       setJsonError("");
-      setMode("view");
-   }, [initialForm]);
+      setMode(initialMode);
+   }, [initialForm, initialMode]);
 
    const handleSave = async () => {
       try {

@@ -8,6 +8,7 @@ import RelationsTab from "../Tabs/Relations";
 import GoalsTab from "../Tabs/Goals";
 import EnemiesTab from "../Tabs/Enemies";
 import LocationsTab from "../Tabs/Locations";
+import MagicObjectsTab from "../Tabs/MagicObjects";
 
 export const tabs = [
    { key: "attributes", label: "Atributos", component: AttributesTab, hideRules: true  },
@@ -18,6 +19,7 @@ export const tabs = [
    { key: "sessions", label: "Sessões", component: SessionsTab, hideRules: true },
    { key: "relations", label: "Relações", component: RelationsTab, hideRules: true },
    { key: "enemies", label: "Adversários", component: EnemiesTab, hideRules: true },
+   { key: "magic-objects", label: "Objetos Mágicos", component: MagicObjectsTab, hideRules: true },
    { key: "locations", label: "Locais", component: LocationsTab, hideRules: true },
    { key: "goals", label: "Meta atual", component: GoalsTab, hideRules: true },
 ];
@@ -112,6 +114,17 @@ export const regrasPorAba = {
       highlight: "Inimigos",
       description:
          "Use esta aba para registrar criaturas, construtos, bruxos inimigos e obstáculos perigosos.",
+   },
+   "magic-objects": {
+      title: "REGRAS DE OBJETOS MÁGICOS.",
+      text: [
+         "Objetos mágicos são globais e ficam salvos na coleção objects do Firestore.",
+         "Eles podem ser obtidos em missões, comprados em lojas ou criados durante a campanha.",
+      ],
+      subtitle: "ITENS MÁGICOS",
+      highlight: "Objetos",
+      description:
+         "Use esta aba para cadastrar efeitos, dados, duração, preço e demais detalhes dos objetos mágicos.",
    },
    locations: {
       title: "REGRAS DE LOCAIS.",

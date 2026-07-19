@@ -14,12 +14,14 @@ export const getMysteryCategory = (category) => {
    const normalizedCategory = normalizeText(category);
 
    if (normalizedCategory.includes("proxima") || normalizedCategory.includes("sessao")) return "proxima sessão";
+   if (normalizedCategory.includes("projeto")) return "projetos";
    if (normalizedCategory.includes("pendencia") || normalizedCategory.includes("narrador") || normalizedCategory.includes("narrativa")) return "pendencias narrador";
    return "mistérios";
 };
 
 export const getMysteryDisplayName = (mystery) => {
    if (mystery.category === "pendencias narrador") return mystery.awaited_event || mystery.name || "Pendência sem evento";
+   if (mystery.category === "projetos") return mystery.name || "Projeto sem nome";
    return mystery.name || "Mistério sem nome";
 };
 
@@ -91,9 +93,20 @@ export const buildMysteryPayload = ({ form, selectedCharacter }) => {
       };
    }
 
+   if (category === "projetos") {
+      return {
+         ...basePayload,
+         name: form.name || "Projeto sem nome",
+         details: form.details || "",
+         last_appearance: form.last_appearance || "",
+         clues: normalizeClues(form.clues || []),
+      };
+   }
+
    return {
       ...basePayload,
       name: form.name || "Mistério sem nome",
+      details: form.details || "",
       last_appearance: form.last_appearance || "",
       clues: normalizeClues(form.clues || []),
    };
