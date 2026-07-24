@@ -12,8 +12,8 @@ import {
    getFilteredAndSortedPotions,
    getNextSortDirection,
    getPotionDisplayName,
-   getPotionsList,
    getYears,
+   loadPotionsList,
 } from "./helpers";
 
 const PotionsTab = ({ selectedCharacter, setCharacters }) => {
@@ -31,6 +31,7 @@ const PotionsTab = ({ selectedCharacter, setCharacters }) => {
    const [locationDrafts, setLocationDrafts] = useState({});
    const [ingredientsInfoDrafts, setIngredientsInfoDrafts] = useState({});
    const [savingPotionId, setSavingPotionId] = useState("");
+   const [potions, setPotions] = useState([]);
 
    const [tableSearch, setTableSearch] = useState("");
    const [yearFilter, setYearFilter] = useState("");
@@ -38,9 +39,21 @@ const PotionsTab = ({ selectedCharacter, setCharacters }) => {
    const [locationFilter, setLocationFilter] = useState("");
    const [sortConfig, setSortConfig] = useState({ key: "year", direction: "asc" });
 
-   const potions = useMemo(() => getPotionsList(), []);
    const savedPotions = useMemo(() => selectedCharacter?.pocoes || {}, [selectedCharacter]);
    const knownPotionIds = useMemo(() => Object.keys(savedPotions), [savedPotions]);
+
+   useEffect(() => {
+      const loadPotions = async () => {
+         try {
+            const potionCatalog = await loadPotionsList({ force: true });
+            setPotions(potionCatalog);
+         } catch (error) {
+            console.error("Erro ao carregar poções do Firestore:", error);
+         }
+      };
+
+      loadPotions();
+   }, []);
 
    useEffect(() => {
       const handleClickOutside = (event) => {
@@ -159,7 +172,7 @@ const PotionsTab = ({ selectedCharacter, setCharacters }) => {
 
       const potionData = {
          xp: 0,
-         nivel: selectedPotion.attributes?.nivel || "",
+         nivel: selectedPotion.nivel || "",
          local_ingredientes: "",
          ingredientes_info: [],
       };
@@ -186,7 +199,7 @@ const PotionsTab = ({ selectedCharacter, setCharacters }) => {
 
    const handleSavePotion = async (potionId, potion, savedData) => {
       const currentXp = savedData?.xp ?? 0;
-      const currentLevel = savedData?.nivel || potion.attributes?.nivel || "";
+      const currentLevel = savedData?.nivel || potion.nivel || "";
       const currentLocation = savedData?.local_ingredientes || "";
       const currentIngredientsInfo = savedData?.ingredientes_info || [];
 

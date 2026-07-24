@@ -136,10 +136,10 @@ const Table = ({
 
                   const currentXp = savedData?.xp ?? 0;
                   const currentLevel =
-                     savedData?.nivel || potion.attributes?.nivel || "";
+                     savedData?.nivel || potion.nivel || "";
                   const currentLocation =
                      savedData?.local_ingredientes ||
-                     potion.attributes?.local_ingredientes ||
+                     potion.local_ingredientes ||
                      "";
                   const currentIngredientsInfo =
                      savedData?.ingredientes_info || [];
@@ -166,7 +166,7 @@ const Table = ({
                         key={potionId}
                         className={`grid ${tableColumns} min-h-12 items-center gap-5 text-xs text-[#736868] transition hover:bg-white/5`}
                      >
-                        <span className="p-2">{potion.attributes?.ano_letivo || "-"}</span>
+                        <span className="p-2">{potion.ano || "-"}</span>
 
                         <span className="flex items-center gap-2 text-white/80  p-2">
                            {getPotionDisplayName(potion)}

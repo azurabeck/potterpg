@@ -1,4 +1,23 @@
-import potionsJson from "../../../../../assets/json/potions_rpg.json";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../../../../services/firebase";
+
+let potionsCatalogCache = [];
+
+export const setPotionsList = (potions = []) => {
+   potionsCatalogCache = Array.isArray(potions) ? potions : [];
+   return potionsCatalogCache;
+};
+
+export const getPotionsList = () => potionsCatalogCache;
+
+export const loadPotionsList = async ({ force = false } = {}) => {
+   if (!force && potionsCatalogCache.length) return potionsCatalogCache;
+
+   const snapshot = await getDocs(collection(db, "potions"));
+   return setPotionsList(
+      snapshot.docs.map((document) => ({ id: document.id, ...document.data() }))
+   );
+};
 
 export const normalizeText = (text = "") =>
    String(text ?? "")
@@ -7,16 +26,7 @@ export const normalizeText = (text = "") =>
       .toLowerCase()
       .trim();
 
-export const getPotionsList = () => {
-   if (Array.isArray(potionsJson)) return potionsJson;
-   if (Array.isArray(potionsJson.data)) return potionsJson.data;
-   if (Array.isArray(potionsJson.potions)) return potionsJson.potions;
-
-   return [];
-};
-
-export const getPotionDisplayName = (potion) =>
-   potion.attributes?.name_pt || "-";
+export const getPotionDisplayName = (potion) => potion?.name || "-";
 
 export const getNextSortDirection = (currentSort, key) => {
    if (currentSort.key !== key) return "asc";
@@ -31,12 +41,17 @@ export const filterAvailablePotions = ({ potions, knownPotionIds, potionSearch }
       if (!search) return true;
 
       const searchableText = normalizeText([
-         potion.attributes?.name_pt,
-         potion.attributes?.effect,
-         potion.attributes?.ingredients,
-         potion.attributes?.characteristics,
-         potion.attributes?.nivel,
-         potion.attributes?.ano_letivo,
+         potion.name,
+         potion.effect,
+         potion.cooking,
+         potion.nivel,
+         potion.ano,
+         ...(potion.ingredientes_info || []).flatMap((ingredient) => [
+            ingredient.name,
+            ingredient.shop,
+            ingredient.drop,
+            ingredient.note,
+         ]),
       ].join(" "));
 
       return searchableText.includes(search);
@@ -50,18 +65,22 @@ export const getCharacterPotions = ({ knownPotionIds, savedPotions, potions }) =
          if (!potion) return null;
 
          const savedData = savedPotions[potionId];
+         const ingredients = (potion.ingredientes_info || [])
+            .map((ingredient) => ingredient.name)
+            .filter(Boolean)
+            .join(", ");
 
          return {
             potion,
             savedData,
             id: potionId,
             name: getPotionDisplayName(potion),
-            year: potion.attributes?.ano_letivo || 0,
-            effect: potion.attributes?.effect || potion.attributes?.characteristics || "-",
-            ingredients: potion.attributes?.ingredients || "-",
+            year: potion.ano || 0,
+            effect: potion.effect || "-",
+            ingredients: ingredients || "-",
             ingredientLocation: savedData?.local_ingredientes || "",
             xp: savedData?.xp ?? 0,
-            level: savedData?.nivel || potion.attributes?.nivel || "",
+            level: savedData?.nivel || potion.nivel || "",
          };
       })
       .filter(Boolean);
@@ -84,7 +103,7 @@ export const getFilteredAndSortedPotions = ({
 
    const filtered = rows.filter((item) => {
       const searchableText = normalizeText([
-         item.name_pt,
+         item.name,
          item.effect,
          item.ingredients,
          item.ingredientLocation,

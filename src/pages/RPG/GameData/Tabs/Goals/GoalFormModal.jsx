@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Modal from "../../../../../components/Modal";
 import CustomSelect from "../../../../../components/CustomSelect";
 import attributeRules from "../../../../../assets/json/attributeRules.json";
-import { getPotionsList, getPotionDisplayName } from "../Potions/helpers";
+import { getPotionDisplayName, loadPotionsList } from "../Potions/helpers";
 import { getSpellName, getSpells } from "../Spells/helpers";
 import { defaultGoals, goalTypes } from "./defaultGoals";
 
@@ -107,10 +107,10 @@ const buildSpellOptions = (year) => {
    return mergeDefaultOptions({ options, type: "spell", year });
 };
 
-const buildPotionOptions = (year) => {
+const buildPotionOptions = (year, potions = []) => {
    const seen = new Set();
 
-   const options = getPotionsList()
+   const options = potions
       .map((potion) => {
             const title = getPotionDisplayName(potion) || potion.attributes?.name || "Poção";
             const defaultGoal = getDefaultGoalForOption({
@@ -241,17 +241,36 @@ const GoalSearchSelect = ({ value, options, onChange, placeholder, type }) => {
 
 const GoalFormModal = ({ open, onClose, onSave, isSaving, initialYear }) => {
    const [form, setForm] = useState({ ...emptyForm, year: initialYear || 1 });
+   const [potionsCatalog, setPotionsCatalog] = useState([]);
 
    useEffect(() => {
       if (open) setForm({ ...emptyForm, year: initialYear || 1 });
    }, [open, initialYear]);
 
+   useEffect(() => {
+      if (!open || form.type !== "potion") return;
+
+      let active = true;
+
+      loadPotionsList()
+         .then((items) => {
+            if (active) setPotionsCatalog(items);
+         })
+         .catch((error) => {
+            console.error("Erro ao carregar poções para as metas:", error);
+         });
+
+      return () => {
+         active = false;
+      };
+   }, [open, form.type]);
+
    const goalOptions = useMemo(() => {
       if (form.type === "spell") return buildSpellOptions(form.year);
-      if (form.type === "potion") return buildPotionOptions(form.year);
+      if (form.type === "potion") return buildPotionOptions(form.year, potionsCatalog);
       if (form.type === "attribute") return buildAttributeOptions(form.year);
       return [];
-   }, [form.type, form.year]);
+   }, [form.type, form.year, potionsCatalog]);
 
    const applyGoalOption = (sourceKey, currentForm = form) => {
       const selectedOption = goalOptions.find((option) => option.value === sourceKey);

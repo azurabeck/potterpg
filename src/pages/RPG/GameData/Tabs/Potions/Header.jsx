@@ -69,7 +69,7 @@ const Header = ({
                                  </span>
 
                                  <span className="mt-1 text-[11px] text-[#736868]">
-                                    {potion.attributes?.nivel || "-"} • Ano {potion.attributes?.ano_letivo || "-"}
+                                    {potion.nivel || "-"} • Ano {potion.ano || "-"}
                                  </span>
                               </button>
                            ))

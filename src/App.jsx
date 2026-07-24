@@ -21,6 +21,7 @@ import Books from "@/pages/API/Books";
 import Creatures from "@/pages/API/Creatures";
 
 import RPG_Spells from "@/pages/RPG/Spells/index.jsx";
+import RPG_POTIONS from "@/pages/RPG/Potions/index.jsx";
 import RPG_USER_PROFILE from "@/pages/RPG/GameData/index.jsx";
 import RPG_RULES from "@/pages/RPG/GameRules/index.jsx";
 import { rulesTabs } from "@/pages/RPG/GameRules/Shared/rules_tabs";
@@ -36,6 +37,7 @@ const potterDbLinks = [
 
 const rpgMenuLinks = [
    { to: "/rpg/spells", label: "Feitiços RPG" },
+   { to: "/rpg/potions", label: "Poções RPG" },
 ];
 
 const ruleMenuLinks = rulesTabs.map((tab) => ({
@@ -333,6 +335,7 @@ const App = () => {
             <Route path="/movies" element={<Movies />} />
             <Route path="/books" element={<Books />} />
             <Route path="/rpg/spells" element={<RPG_Spells />} />
+            <Route path="/rpg/potions" element={<RPG_POTIONS />} />
             <Route path="/rpg/rules/*" element={<RPG_RULES />} />
             <Route path="/rpg/user-profile/*" element={<RPG_USER_PROFILE />} />
          </Routes>
