@@ -13,23 +13,18 @@ import {
    getNextSortDirection,
    getPotionDisplayName,
    getYears,
-   loadPotionsList,
+   subscribePotionsList,
 } from "./helpers";
 
 const PotionsTab = ({ selectedCharacter, setCharacters }) => {
    const dropdownRef = useRef(null);
-   const levelDropdownRef = useRef(null);
 
    const [potionSearch, setPotionSearch] = useState("");
    const [selectedPotion, setSelectedPotion] = useState(null);
    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
    const [showRules, setShowRules] = useState(false);
 
-   const [editingLevelPotionId, setEditingLevelPotionId] = useState("");
    const [xpDrafts, setXpDrafts] = useState({});
-   const [levelDrafts, setLevelDrafts] = useState({});
-   const [locationDrafts, setLocationDrafts] = useState({});
-   const [ingredientsInfoDrafts, setIngredientsInfoDrafts] = useState({});
    const [savingPotionId, setSavingPotionId] = useState("");
    const [potions, setPotions] = useState([]);
 
@@ -43,22 +38,17 @@ const PotionsTab = ({ selectedCharacter, setCharacters }) => {
    const knownPotionIds = useMemo(() => Object.keys(savedPotions), [savedPotions]);
 
    useEffect(() => {
-      const loadPotions = async () => {
-         try {
-            const potionCatalog = await loadPotionsList({ force: true });
-            setPotions(potionCatalog);
-         } catch (error) {
-            console.error("Erro ao carregar poções do Firestore:", error);
-         }
-      };
+      const unsubscribe = subscribePotionsList({
+         onData: setPotions,
+         onError: () => setPotions([]),
+      });
 
-      loadPotions();
+      return unsubscribe;
    }, []);
 
    useEffect(() => {
       const handleClickOutside = (event) => {
          if (dropdownRef.current && !dropdownRef.current.contains(event.target)) setIsDropdownOpen(false);
-         if (levelDropdownRef.current && !levelDropdownRef.current.contains(event.target)) setEditingLevelPotionId("");
       };
 
       document.addEventListener("mousedown", handleClickOutside);
@@ -98,9 +88,6 @@ const PotionsTab = ({ selectedCharacter, setCharacters }) => {
 
    const clearDrafts = (potionId) => {
       removeDraftItem(setXpDrafts, potionId);
-      removeDraftItem(setLevelDrafts, potionId);
-      removeDraftItem(setLocationDrafts, potionId);
-      removeDraftItem(setIngredientsInfoDrafts, potionId);
    };
 
    const handleSort = (key) => {
@@ -150,31 +137,18 @@ const PotionsTab = ({ selectedCharacter, setCharacters }) => {
       setXpDrafts((currentDrafts) => ({ ...currentDrafts, [potionId]: value }));
    };
 
-   const handleLocationChange = (potionId, value) => {
-      setLocationDrafts((currentDrafts) => ({ ...currentDrafts, [potionId]: value }));
-   };
 
-   const handleIngredientsInfoChange = (potionId, ingredientsInfo) => {
-      setIngredientsInfoDrafts((currentDrafts) => ({ ...currentDrafts, [potionId]: ingredientsInfo }));
-   };
 
-   const handleSelectLevel = (potionId, level) => {
-      setLevelDrafts((currentDrafts) => ({ ...currentDrafts, [potionId]: level }));
-      setEditingLevelPotionId("");
-   };
 
-   const handleOpenLevelDropdown = (potionId) => {
-      setEditingLevelPotionId((currentPotionId) => currentPotionId === potionId ? "" : potionId);
-   };
 
    const handleAddPotion = async () => {
       if (!selectedPotion?.id || !selectedCharacter?.id) return;
 
+      const mastery = getMasteryByXp(selectedPotion.nivel || "", 0);
       const potionData = {
+         id: selectedPotion.id,
          xp: 0,
-         nivel: selectedPotion.nivel || "",
-         local_ingredientes: "",
-         ingredientes_info: [],
+         maestria: mastery.maestria === "-" ? "M0" : mastery.maestria,
       };
 
       try {
@@ -199,42 +173,29 @@ const PotionsTab = ({ selectedCharacter, setCharacters }) => {
 
    const handleSavePotion = async (potionId, potion, savedData) => {
       const currentXp = savedData?.xp ?? 0;
-      const currentLevel = savedData?.nivel || potion.nivel || "";
-      const currentLocation = savedData?.local_ingredientes || "";
-      const currentIngredientsInfo = savedData?.ingredientes_info || [];
+      const nextXp =
+         xpDrafts[potionId] === undefined || xpDrafts[potionId] === ""
+            ? currentXp
+            : Number(xpDrafts[potionId]);
 
-      const nextXp = xpDrafts[potionId] === undefined || xpDrafts[potionId] === "" ? currentXp : Number(xpDrafts[potionId]);
-      const nextLevel = levelDrafts[potionId] ?? currentLevel;
-      const nextLocation = locationDrafts[potionId] ?? currentLocation;
-      const nextIngredientsInfo = ingredientsInfoDrafts[potionId] ?? currentIngredientsInfo;
+      if (Number.isNaN(nextXp) || Number(nextXp) === Number(currentXp)) return;
 
-      const hasChanged =
-         Number(nextXp) !== Number(currentXp) ||
-         nextLevel !== currentLevel ||
-         nextLocation !== currentLocation ||
-         JSON.stringify(nextIngredientsInfo) !== JSON.stringify(currentIngredientsInfo);
-
-      if (!hasChanged || Number.isNaN(nextXp)) return;
+      const mastery = getMasteryByXp(potion.nivel || "", nextXp);
+      const potionData = {
+         id: potionId,
+         xp: nextXp,
+         maestria: mastery.maestria === "-" ? "M0" : mastery.maestria,
+      };
 
       try {
          setSavingPotionId(potionId);
 
          await updateDoc(doc(db, "characters", selectedCharacter.id), {
-            [`pocoes.${potionId}.xp`]: nextXp,
-            [`pocoes.${potionId}.nivel`]: nextLevel,
-            [`pocoes.${potionId}.local_ingredientes`]: nextLocation,
-            [`pocoes.${potionId}.ingredientes_info`]: nextIngredientsInfo,
+            [`pocoes.${potionId}`]: potionData,
             updated_at: serverTimestamp(),
          });
 
-         updateCharacterPotion(potionId, {
-            ...(savedPotions[potionId] || {}),
-            xp: nextXp,
-            nivel: nextLevel,
-            local_ingredientes: nextLocation,
-            ingredientes_info: nextIngredientsInfo,
-         });
-
+         updateCharacterPotion(potionId, potionData);
          clearDrafts(potionId);
       } catch (error) {
          console.error("Erro ao salvar poção:", error);
@@ -303,19 +264,10 @@ const PotionsTab = ({ selectedCharacter, setCharacters }) => {
          <Table
             filteredAndSortedPotions={filteredAndSortedPotions}
             xpDrafts={xpDrafts}
-            levelDrafts={levelDrafts}
-            locationDrafts={locationDrafts}
-            ingredientsInfoDrafts={ingredientsInfoDrafts}
             savingPotionId={savingPotionId}
-            editingLevelPotionId={editingLevelPotionId}
-            levelDropdownRef={levelDropdownRef}
             handleSort={handleSort}
             renderSortIcon={renderSortIcon}
             handleXpChange={handleXpChange}
-            handleLocationChange={handleLocationChange}
-            handleIngredientsInfoChange={handleIngredientsInfoChange}
-            handleOpenLevelDropdown={handleOpenLevelDropdown}
-            handleSelectLevel={handleSelectLevel}
             handleSavePotion={handleSavePotion}
             handleDeletePotion={handleDeletePotion}
          />

@@ -1,4 +1,4 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, onSnapshot } from "firebase/firestore";
 import { db } from "../../../../../services/firebase";
 
 let potionsCatalogCache = [];
@@ -18,6 +18,22 @@ export const loadPotionsList = async ({ force = false } = {}) => {
       snapshot.docs.map((document) => ({ id: document.id, ...document.data() }))
    );
 };
+
+
+export const subscribePotionsList = ({ onData, onError } = {}) =>
+   onSnapshot(
+      collection(db, "potions"),
+      (snapshot) => {
+         const potions = setPotionsList(
+            snapshot.docs.map((document) => ({ id: document.id, ...document.data() }))
+         );
+         onData?.(potions);
+      },
+      (error) => {
+         console.error("Erro ao acompanhar poções do Firestore:", error);
+         onError?.(error);
+      }
+   );
 
 export const normalizeText = (text = "") =>
    String(text ?? "")
@@ -70,6 +86,11 @@ export const getCharacterPotions = ({ knownPotionIds, savedPotions, potions }) =
             .filter(Boolean)
             .join(", ");
 
+         const ingredientLocation = (potion.ingredientes_info || [])
+            .flatMap((ingredient) => [ingredient.shop, ingredient.drop])
+            .filter(Boolean)
+            .join(", ");
+
          return {
             potion,
             savedData,
@@ -78,9 +99,10 @@ export const getCharacterPotions = ({ knownPotionIds, savedPotions, potions }) =
             year: potion.ano || 0,
             effect: potion.effect || "-",
             ingredients: ingredients || "-",
-            ingredientLocation: savedData?.local_ingredientes || "",
+            ingredientLocation,
             xp: savedData?.xp ?? 0,
-            level: savedData?.nivel || potion.nivel || "",
+            mastery: savedData?.maestria || "M0",
+            level: potion.nivel || "",
          };
       })
       .filter(Boolean);

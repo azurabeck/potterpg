@@ -1,8 +1,12 @@
-import masteryRules from "../../../../../assets/json/mastery_rpg.json";
-
-export const levelOptions = masteryRules.maestria.map(
-   (item) => item.aprendizado
-);
+export const levelOptions = [
+   "Muito Fácil",
+   "Fácil",
+   "Médio",
+   "Pouco Difícil",
+   "Difícil",
+   "Muito Difícil",
+   "Profissional",
+];
 
 export const tableColumns =
-   "grid-cols-[52px_minmax(160px,1.1fr)_minmax(180px,1.2fr)_minmax(180px,1.2fr)_minmax(150px,1fr)_110px_90px_110px_82px]";
+   "grid-cols-[52px_minmax(170px,1.1fr)_minmax(200px,1.2fr)_minmax(190px,1.2fr)_120px_90px_120px_82px]";
