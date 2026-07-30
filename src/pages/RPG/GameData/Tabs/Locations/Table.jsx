@@ -1,4 +1,4 @@
-import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { MapPinIcon, PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 import LocationsFilters from "./LocationsFilters";
 
 const Table = ({
@@ -7,6 +7,10 @@ const Table = ({
    onSelectLocation,
    onEditLocation,
    onDeleteLocation,
+   onMarkLocationAsKnown,
+   hasSelectedCharacter,
+   knownLocationIds,
+   markingKnownId,
    search,
    typeFilter,
    accessFilter,
@@ -43,10 +47,12 @@ const Table = ({
             <div className="space-y-4">
                {locations.map((location) => {
                   const isSelected = selectedLocationId === location.id;
+                  const isKnown = Boolean(knownLocationIds?.has(location.id));
+                  const isMarking = markingKnownId === location.id;
 
                   return (
                      <section key={location.id}>
-                        <div className="grid grid-cols-[minmax(160px,1fr)_28px_28px] items-center gap-2">
+                        <div className="grid grid-cols-[minmax(160px,1fr)_28px_28px_28px] items-center gap-2">
                            <button
                               type="button"
                               onClick={() => onSelectLocation(location)}
@@ -75,6 +81,22 @@ const Table = ({
                               title="Excluir local"
                            >
                               <TrashIcon className="h-4 w-4" />
+                           </button>
+
+                           <button
+                              type="button"
+                              onClick={() => onMarkLocationAsKnown(location)}
+                              disabled={!hasSelectedCharacter || isMarking}
+                              className={`transition disabled:cursor-not-allowed disabled:opacity-40 ${
+                                 isKnown ? "text-red-400" : "text-purple-100/50 hover:text-red-400"
+                              }`}
+                              title={
+                                 isKnown
+                                    ? "O personagem selecionado já conhece este local"
+                                    : "Relacionar este local ao personagem selecionado"
+                              }
+                           >
+                              <MapPinIcon className="h-4 w-4" />
                            </button>
                         </div>
                      </section>

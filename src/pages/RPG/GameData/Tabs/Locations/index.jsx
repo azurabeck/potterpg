@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
    addDoc,
+   arrayUnion,
    collection,
    deleteDoc,
    doc,
@@ -24,7 +25,12 @@ import {
    normalizeLocationPayload,
 } from "./helpers";
 
-const LocationsTab = ({ selectedCharacter }) => {
+// Prop `characters` (estado local, os personagens usados no picker
+// "Quem tem acesso" do formulário) não deve ser confundida com o
+// `setCharacters` do personagem do jogador (vem de
+// CharacterSheet/tabs_json.js, igual pras outras abas) — usado só pra
+// marcar um local como conhecido, ver handleMarkLocationAsKnown.
+const LocationsTab = ({ selectedCharacter, setCharacters: setPlayerCharacters }) => {
    const [locations, setLocations] = useState([]);
    const [characters, setCharacters] = useState([]);
    const [selectedLocationId, setSelectedLocationId] = useState("");
@@ -34,8 +40,13 @@ const LocationsTab = ({ selectedCharacter }) => {
    const [sort, setSort] = useState("name-asc");
    const [modal, setModal] = useState(null);
    const [isLoading, setIsLoading] = useState(false);
+   const [markingKnownId, setMarkingKnownId] = useState("");
 
    const detailsRef = useRef(null);
+
+   const knownLocationIds = useMemo(() => {
+      return new Set(selectedCharacter?.locais_conhecidos || []);
+   }, [selectedCharacter]);
 
    const filteredLocations = useMemo(() => {
       return getFilteredAndSortedLocations({
@@ -69,23 +80,24 @@ const LocationsTab = ({ selectedCharacter }) => {
 
    useEffect(() => {
       const loadData = async () => {
-         const userId = getCharacterUserId(selectedCharacter);
-         if (!userId) return;
-
          setIsLoading(true);
 
          try {
-            const charactersRef = collection(db, "characters");
-            const charactersQuery = query(charactersRef, where("user_id", "==", userId));
-            const charactersSnapshot = await getDocs(charactersQuery);
-
-            setCharacters(charactersSnapshot.docs.map((document) => ({ id: document.id, ...document.data() })));
-
-            const locationsRef = collection(db, "locations");
-            const locationsQuery = query(locationsRef, where("user_id", "==", userId));
-            const locationsSnapshot = await getDocs(locationsQuery);
-
+            // Locais agora são globais, igual a enemies/npcs — mostra a
+            // coleção inteira, não só os do `user_id` do personagem
+            // selecionado. Quem marca "este personagem conhece este
+            // local" é o botão de relacionar (ver handleMarkLocationAsKnown),
+            // não mais o dono do documento.
+            const locationsSnapshot = await getDocs(collection(db, "locations"));
             setLocations(locationsSnapshot.docs.map((document) => ({ id: document.id, ...document.data() })));
+
+            const userId = getCharacterUserId(selectedCharacter);
+            if (userId) {
+               const charactersRef = collection(db, "characters");
+               const charactersQuery = query(charactersRef, where("user_id", "==", userId));
+               const charactersSnapshot = await getDocs(charactersQuery);
+               setCharacters(charactersSnapshot.docs.map((document) => ({ id: document.id, ...document.data() })));
+            }
          } catch (error) {
             console.error("Erro ao carregar locais:", error);
          } finally {
@@ -120,6 +132,41 @@ const LocationsTab = ({ selectedCharacter }) => {
          }
       } catch (error) {
          console.error("Erro ao excluir local:", error);
+      }
+   };
+
+   // Marca este local como conhecido pelo personagem selecionado — mesma
+   // mecânica de `adversarios_conhecidos` (ver Enemies/Relations): grava
+   // no documento do PERSONAGEM, não no local (diferente de
+   // `access_character_ids`, que é "quem tem acesso", um campo do DM
+   // separado e continua existindo). Sem `tipo` aqui porque só existe
+   // uma coleção de locais, ao contrário de adversário (enemy ou npc).
+   const handleMarkLocationAsKnown = async (location) => {
+      if (!selectedCharacter?.id || !location?.id) return;
+
+      setMarkingKnownId(location.id);
+
+      try {
+         await updateDoc(doc(db, "characters", selectedCharacter.id), {
+            locais_conhecidos: arrayUnion(location.id),
+            updated_at: serverTimestamp(),
+         });
+
+         setPlayerCharacters?.((players) =>
+            players.map((player) => {
+               if (player.id !== selectedCharacter.id) return player;
+
+               const current = player.locais_conhecidos || [];
+               if (current.includes(location.id)) return player;
+
+               return { ...player, locais_conhecidos: [...current, location.id] };
+            })
+         );
+      } catch (error) {
+         console.error("Erro ao relacionar local ao personagem:", error);
+         alert("Não foi possível relacionar este local ao personagem.");
+      } finally {
+         setMarkingKnownId("");
       }
    };
 
@@ -235,6 +282,10 @@ const LocationsTab = ({ selectedCharacter }) => {
             onSelectLocation={handleSelectLocation}
             onEditLocation={handleEditLocation}
             onDeleteLocation={handleDeleteLocation}
+            onMarkLocationAsKnown={handleMarkLocationAsKnown}
+            hasSelectedCharacter={Boolean(selectedCharacter?.id)}
+            knownLocationIds={knownLocationIds}
+            markingKnownId={markingKnownId}
             search={search}
             typeFilter={typeFilter}
             accessFilter={accessFilter}

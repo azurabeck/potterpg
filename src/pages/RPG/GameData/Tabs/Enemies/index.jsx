@@ -1,5 +1,15 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { addDoc, collection, deleteDoc, deleteField, doc, getDocs, serverTimestamp, updateDoc } from "firebase/firestore";
+import {
+   addDoc,
+   arrayUnion,
+   collection,
+   deleteDoc,
+   deleteField,
+   doc,
+   getDocs,
+   serverTimestamp,
+   updateDoc,
+} from "firebase/firestore";
 import { db } from "../../../../../services/firebase";
 import Modal from "../../../../../components/Modal";
 import MobileFilterDrawer from "../../Shared/MobileFilterDrawer";
@@ -10,7 +20,7 @@ import EnemyFormModal from "./EnemyFormModal";
 import BulkEnemyJsonModal from "./BulkEnemyJsonModal";
 import { getFilteredAndSortedEnemies, normalizeEnemy, normalizeText } from "./helpers";
 
-const EnemiesTab = () => {
+const EnemiesTab = ({ selectedCharacter, setCharacters }) => {
    const [enemies, setEnemies] = useState([]);
    const [selectedEnemyId, setSelectedEnemyId] = useState("");
    const [search, setSearch] = useState("");
@@ -19,8 +29,14 @@ const EnemiesTab = () => {
    const [sort, setSort] = useState("name-asc");
    const [modal, setModal] = useState(null);
    const [isLoading, setIsLoading] = useState(false);
+   const [markingKnownId, setMarkingKnownId] = useState("");
 
    const detailsRef = useRef(null);
+
+   const knownEnemyIds = useMemo(() => {
+      const known = selectedCharacter?.adversarios_conhecidos || [];
+      return new Set(known.filter((item) => item.tipo === "enemy").map((item) => item.id));
+   }, [selectedCharacter]);
 
    const filteredEnemies = useMemo(() => {
       return getFilteredAndSortedEnemies({
@@ -86,6 +102,41 @@ const EnemiesTab = () => {
          if (selectedEnemyId === enemy.id) setSelectedEnemyId("");
       } catch (error) {
          console.error("Erro ao excluir adversário:", error);
+      }
+   };
+
+   // Marca este adversário como conhecido/enfrentado pelo personagem
+   // selecionado — mesma key usada pelo potter-pg (app do jogador) pra
+   // filtrar a aba "Adversários" dele: `adversarios_conhecidos`, um
+   // array de `{ id, tipo }` (tipo "enemy" aqui, "npc" na aba Relações).
+   const handleMarkEnemyAsKnown = async (enemy) => {
+      if (!selectedCharacter?.id || !enemy?.id) return;
+
+      const entry = { id: enemy.id, tipo: "enemy" };
+
+      setMarkingKnownId(enemy.id);
+
+      try {
+         await updateDoc(doc(db, "characters", selectedCharacter.id), {
+            adversarios_conhecidos: arrayUnion(entry),
+            updated_at: serverTimestamp(),
+         });
+
+         setCharacters((characters) =>
+            characters.map((character) => {
+               if (character.id !== selectedCharacter.id) return character;
+
+               const current = character.adversarios_conhecidos || [];
+               if (current.some((item) => item.id === entry.id && item.tipo === entry.tipo)) return character;
+
+               return { ...character, adversarios_conhecidos: [...current, entry] };
+            })
+         );
+      } catch (error) {
+         console.error("Erro ao marcar adversário como conhecido:", error);
+         alert("Não foi possível marcar este adversário como conhecido.");
+      } finally {
+         setMarkingKnownId("");
       }
    };
 
@@ -334,6 +385,10 @@ const EnemiesTab = () => {
             onSelectEnemy={handleSelectEnemy}
             onEditEnemy={handleEditEnemy}
             onDeleteEnemy={handleDeleteEnemy}
+            onMarkEnemyAsKnown={handleMarkEnemyAsKnown}
+            knownEnemyIds={knownEnemyIds}
+            markingKnownId={markingKnownId}
+            hasSelectedCharacter={Boolean(selectedCharacter?.id)}
             onOpenFormModal={handleOpenCreateModal}
             onOpenBulkJsonModal={() => setModal({ type: "bulk-json", title: "Importar adversários por JSON" })}
             onCleanObsoleteFields={handleCleanObsoleteFields}

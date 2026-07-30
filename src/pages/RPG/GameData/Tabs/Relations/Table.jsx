@@ -1,4 +1,5 @@
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
+import SwordIcon from "../../../../../components/SwordIcon";
 import RelationsFilters from "./RelationsFilters";
 
 const Table = ({
@@ -7,6 +8,10 @@ const Table = ({
    onSelectRelation,
    onEditRelation,
    onDeleteRelation,
+   onMarkNpcAsKnown,
+   knownAdversaryNpcIds,
+   markingKnownId,
+   hasSelectedCharacter,
    search,
    typeFilter,
    relationFilter,
@@ -49,10 +54,12 @@ const Table = ({
             <div className="space-y-4">
                {relations.map((relation) => {
                   const isSelected = selectedRelationId === relation.id;
+                  const isKnownAdversary = knownAdversaryNpcIds?.has(relation.id);
+                  const isMarking = markingKnownId === relation.id;
 
                   return (
                      <section key={relation.id}>
-                        <div className="grid grid-cols-[minmax(160px,1fr)_28px_28px] items-center gap-2">
+                        <div className="grid grid-cols-[minmax(160px,1fr)_28px_28px_28px] items-center gap-2">
                            <button
                               type="button"
                               onClick={() => onSelectRelation(relation)}
@@ -80,6 +87,22 @@ const Table = ({
                               title="Excluir NPC"
                            >
                               <TrashIcon className="h-4 w-4" />
+                           </button>
+
+                           <button
+                              type="button"
+                              onClick={() => onMarkNpcAsKnown(relation)}
+                              disabled={!hasSelectedCharacter || isMarking}
+                              className={`transition disabled:cursor-not-allowed disabled:opacity-40 ${
+                                 isKnownAdversary ? "text-red-400" : "text-purple-100/50 hover:text-red-400"
+                              }`}
+                              title={
+                                 isKnownAdversary
+                                    ? "Já está na lista de adversários do personagem"
+                                    : "Marcar como adversário conhecido/enfrentado pelo personagem selecionado"
+                              }
+                           >
+                              <SwordIcon className="h-4 w-4" />
                            </button>
                         </div>
                      </section>

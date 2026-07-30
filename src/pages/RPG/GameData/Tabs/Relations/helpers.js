@@ -14,7 +14,13 @@ export const getRelatedCharacters = ({ characters, selectedCharacter }) => {
    if (!selectedCharacter?.id) return [];
 
    return characters.filter((character) => {
-      return isNpc(character) && character.id !== selectedCharacter.id && character.relacionado === selectedCharacter.id;
+      const relatedIds = Array.isArray(character.relacionado)
+         ? character.relacionado
+         : character.relacionado
+           ? [character.relacionado]
+           : [];
+
+      return isNpc(character) && character.id !== selectedCharacter.id && relatedIds.includes(selectedCharacter.id);
    });
 };
 

@@ -1,4 +1,5 @@
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
+import SwordIcon from "../../../../../components/SwordIcon";
 import EnemiesFilters from "./EnemiesFilters";
 
 const Table = ({
@@ -7,6 +8,10 @@ const Table = ({
    onSelectEnemy,
    onEditEnemy,
    onDeleteEnemy,
+   onMarkEnemyAsKnown,
+   knownEnemyIds,
+   markingKnownId,
+   hasSelectedCharacter,
    search,
    typeFilter,
    difficultyFilter,
@@ -43,10 +48,12 @@ const Table = ({
             <div className="space-y-4">
                {enemies.map((enemy) => {
                   const isSelected = selectedEnemyId === enemy.id;
+                  const isKnown = knownEnemyIds?.has(enemy.id);
+                  const isMarking = markingKnownId === enemy.id;
 
                   return (
                      <section key={enemy.id}>
-                        <div className="grid grid-cols-[minmax(160px,1fr)_28px_28px] items-center gap-2">
+                        <div className="grid grid-cols-[minmax(160px,1fr)_28px_28px_28px] items-center gap-2">
                            <button
                               type="button"
                               onClick={() => onSelectEnemy(enemy)}
@@ -75,6 +82,22 @@ const Table = ({
                               title="Excluir adversário"
                            >
                               <TrashIcon className="h-4 w-4" />
+                           </button>
+
+                           <button
+                              type="button"
+                              onClick={() => onMarkEnemyAsKnown(enemy)}
+                              disabled={!hasSelectedCharacter || isMarking}
+                              className={`transition disabled:cursor-not-allowed disabled:opacity-40 ${
+                                 isKnown ? "text-red-400" : "text-purple-100/50 hover:text-red-400"
+                              }`}
+                              title={
+                                 isKnown
+                                    ? "Já está na lista de adversários do personagem"
+                                    : "Marcar como conhecido/enfrentado pelo personagem selecionado"
+                              }
+                           >
+                              <SwordIcon className="h-4 w-4" />
                            </button>
                         </div>
                      </section>
